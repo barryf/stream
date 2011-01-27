@@ -3,6 +3,7 @@ require 'sinatra'
 require 'json'
 require 'net/http'
 require 'active_record'
+require 'erb'
 
 configure do
   ActiveRecord::Base.establish_connection(:adapter => 'postgresql',
@@ -37,10 +38,7 @@ get '/build/?' do
 end
 
 get '/' do
-  items = Item.order('created_at').find(:all)
-  output = ""
-  items.each do |i|
-    output << "<p>#{i.created_at} - #{i.body}</p>"
-  end
-  return output
+  @items = Item.order('created_at').find(:all)
+  erb :index
 end
+
