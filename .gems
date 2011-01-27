@@ -1,4 +1,4 @@
 sinatra
 json
-active_record
+activerecord
 erb
