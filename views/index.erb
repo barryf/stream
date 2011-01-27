@@ -1,0 +1,12 @@
+<!doctype html>
+<html>
+	<head>
+	</head>
+	<body>
+
+		<% @items.each do |i| %>
+			<p><%= i.created_at %> - <%= i.body %></p>
+		<% end %>
+
+	</body>
+</html>
