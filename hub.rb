@@ -2,11 +2,11 @@ require 'rubygems'
 require 'sinatra'
 require 'json'
 require 'net/http'
-require 'active_record'
-
+require 'activerecord'
+  
 configure do
-  ActiveRecord::Base.establish_connection(:adapter => 'postgresql',
-                                          :database => ENV['SHARED_DATABASE_URL'] ||= 'hub')
+  dbconfig = YAML.load(File.read('config/database.yml'))
+  ActiveRecord::Base.establish_connection dbconfig['production']
 end
 
 class Item < ActiveRecord::Base
