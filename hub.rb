@@ -6,7 +6,7 @@ require 'active_record'
 
 configure do
   ActiveRecord::Base.establish_connection(:adapter => 'postgresql',
-                                          :database => ENV['DATABASE_URL'])
+                                          :database => ENV['SHARED_DATABASE_URL'] ||= 'hub')
 end
 
 class Item < ActiveRecord::Base
