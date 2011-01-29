@@ -2,7 +2,7 @@ require 'rubygems'
 require 'sinatra'
 require 'json'
 require 'net/http'
-require 'activerecord'
+require 'active_record'
   
 configure do
   dbconfig = YAML.load(File.read('config/database.yml'))
