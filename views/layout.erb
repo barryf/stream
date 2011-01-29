@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+	<head>
+		<title><%= @title ||= '' %></title>
+		<link rel="stylesheet" href="screen.css" type="text/css" />
+	</head>
+	<body id="home"> 
+		<h1> 
+			<a href="http://barryfrost.com/"><img src="images/barryf-small.jpg" alt="Barry Frost" /></a> Hello, I'm <a href="http://barryfrost.com/">Barry Frost</a> and this is my work-in-progress life stream aggregator project.
+		</h1> 
+
+		<ul id="nav"> 
+			<li class="home active"><span>&nbsp;</span></li> 
+			<li class="blog"><a href="#">Entries</a></li> 
+			<li class="tweets"><a href="#">Tweets</a></li> 
+			<li class="links"><a href="#">Links</a></li> 
+			<li class="photos"><a href="#">Photos</a></li> 
+			<li class="music"><a href="#">Music</a></li> 
+			<li class="videos"><a href="#">Videos</a></li> 
+		</ul> 
+
+		<div id="stream" class="main"> 
+			<%= yield %>
+		</div>	
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+		<script>
+			function load_next(ts) {
+				$.ajax({ url: "/?ts=" + ts, success: function(data){
+					$('#stream').append(data);
+				}});
+			}
+		</script>
+	</body>
+</html>
