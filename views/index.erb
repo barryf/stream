@@ -1,46 +1,58 @@
-<!doctype html>
-<html>
-	<head>
-		<title>Merging tweets</title>
-	</head>
-	<body>
-		
-		<div id="content">
-			<% 
-				last_day = Time.now.strftime('%Y-%m-%d') 
-				last_epoch = 0
-			%>
-			<% @items.each do |item| %>
-				<% 
-				item_date = ParseDate.parsedate(item.created_at.to_s)
-				item_day = "#{'%02d' % item_date[0]}-#{'%02d' % item_date[1]}-#{'%02d' % item_date[2]}"
-				if last_day != item_day 
-				%>
-					<h4><%= item_day %></h4>
-					<% last_day = item_day %>
-				<% end %>
-				<dl>
-					<% case item.source
-						when 'delicious' %>
-							<dt><%= item.title %></dt>
-							<% if item.body != '' %><dd><%= item.body %></dd><% end %>
-						<% when 'twitter' %>
-							<dt>&ldquo;<%= parse_tweet item.body %>&rdquo;</dt>
-					<% end %>
-				</dl>
-				<% last_epoch = item.created_at.to_i %>
-			<% end %>
-		</div>
-		
-		<p><a href="/?ts=<%= last_epoch %>" onclick="load_next(<%= last_epoch %>); $(this).hide(); return false">Next</a></p>
+<% 
+	last_day = ''
+	last_epoch = 0
+%>
 
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
-		<script>
-			function load_next(e) {
-				$.ajax({ url: "/?ts=<%= last_epoch %>", success: function(data){
-					$('#content').append(data);
-				}});
-			}
-		</script>
-	</body>
-</html>
+<ol>
+<% @items.each do |item| %>
+
+	<% 
+	item_date = ParseDate.parsedate(item.created_at.to_s)
+	item_day = "#{'%02d' % item_date[0]}-#{'%02d' % item_date[1]}-#{'%02d' % item_date[2]}"
+	
+	if last_day != item_day
+		if last_day != ''
+			%></ol></li><%
+		end
+	%>
+		<li>
+		<h4><%= item.created_at.strftime('%d %b') %></h4>
+		<ol>
+		<% last_day = item_day 
+	end %>
+	
+	<li class="<%= item.source %>">
+	<dl>
+		<% case item.source
+			when 'delicious' %>
+				<dd class="what"><a href="<%= item.url %>"><%= item.title %></a></dd>
+				<% if item.body != '' %><dd class="body"><%= item.body %></dd><% end %>
+				<dd class="when">
+					<abbr><%= item.created_at.strftime('%H:%M')%></abbr>
+					&middot;
+					<a href="http://www.delicious.com/url/<%= Digest::MD5.hexdigest(item.url) %>">Delicious</a>
+					<% 
+						if item.tags != ''
+							%> // <%
+							item.tags.split(' ').each do |tag|
+								%><a href="http://delicious.com/tag/<%= tag %>"><%= tag %></a> <%
+							end
+						end
+					%>
+				</dd>
+			<% when 'twitter' %>
+				<dd class="what"><%= parse_tweet item.body %></dd>
+				<dd class="when">
+					<abbr><%= item.created_at.strftime('%H:%M on %d %b')%></abbr>
+					&middot;
+					<a href="http://twitter.com/barryf/status/<%= item.uid %>">Tweet</a>
+				</dd>
+		<% end %>
+	</dl>
+	</li>
+	
+	<% last_epoch = item.created_at.to_i %>
+<% end %>
+</ol></li>
+
+<p style="text-align: center;"><a href="/?ts=<%= last_epoch %>" onclick="load_next(<%= last_epoch %>); $(this).hide(); return false">&darr; More&hellip;</a></p>

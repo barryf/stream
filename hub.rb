@@ -4,6 +4,7 @@ require 'json'
 require 'net/http'
 require 'active_record'
 require 'parsedate'
+require 'digest/md5'
   
 configure do
   dbconfig = YAML.load(File.read('config/database.yml'))
@@ -13,13 +14,13 @@ end
 class Item < ActiveRecord::Base
 end
 
-def get_tweets(screen_name='barryf',count=10)
+def get_tweets(screen_name='barryf',count=50)
   url = "http://api.twitter.com/1/statuses/user_timeline.json?screen_name=#{screen_name}&count=#{count}"
   resp = Net::HTTP.get_response(URI.parse(url))
   JSON.parse(resp.body)
 end
 
-def get_links(user='barryf',count=10)
+def get_links(user='barryf')
   url = "http://feeds.delicious.com/v2/json/#{user}"
   resp = Net::HTTP.get_response(URI.parse(url))
   JSON.parse(resp.body)
@@ -34,7 +35,7 @@ def parse_tweet(tweet)
   tweet.gsub!(re, '<a href="http://twitter.com/\2">@\2</a>')
   # hashtags
   re = Regexp.new('(\#)([\w]+)')
-  tweet.gsub!(re, '<a href="http://twitter.com/search/\2">@\2</a>')
+  tweet.gsub!(re, '<a href="http://twitter.com/search/\2">#\2</a>')
   tweet
 end
 
@@ -72,8 +73,9 @@ get '/' do
   ts = params[:ts] ||= 99999999999
   @items = Item.find(:all, 
                      :conditions => ['extract(epoch from created_at) < ?', ts],
-                     :limit => 10,
+                     :limit => 30,
                      :order => 'created_at DESC')
-  erb :index
+  @title = "Barry Frost&rsquo;s Aggregator"
+  erb :index, :layout => !request.xhr?
 end
 
