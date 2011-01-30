@@ -81,7 +81,7 @@ get '/build/?' do
   loved_tracks['lovedtracks']['track'].each do |remote|
     if !Item.find_by_uid(remote['url'].hash.to_s)
       Item.create(:uid => remote['url'].hash.to_s,
-                  :title => remote['name'] + ' &mdash; ' + remote['artist']['name'],
+                  :title => '&lsquo;' + remote['name'] + '&rsquo; by ' + remote['artist']['name'],
                   :url => remote['url'],
                   :source => 'lastfm',
                   :imported_at => Time.now,
@@ -94,7 +94,7 @@ end
 get '/' do
   ts = params[:ts] ||= 99999999999
   @items = Item.find(:all, 
-                     :conditions => ['extract(epoch from created_at) < ?', ts],
+                     :conditions => ['created_at < ?', Time.at(ts.to_i)],
                      :limit => 30,
                      :order => 'created_at DESC')
   @title = "Barry Frost&rsquo;s Aggregator"
