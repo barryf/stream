@@ -80,9 +80,11 @@ get '/build/?' do
   loved_tracks = get_loved_tracks
   loved_tracks['lovedtracks']['track'].each do |remote|
     if !Item.find_by_uid(remote['url'].hash.to_s)
+      thumbnail_url = remote.has_key?('image') ? remote['image'][1]['#text'] : ''
       Item.create(:uid => remote['url'].hash.to_s,
                   :title => '&lsquo;' + remote['name'] + '&rsquo; by ' + remote['artist']['name'],
                   :url => remote['url'],
+                  :thumbnail_url => thumbnail_url,
                   :source => 'lastfm',
                   :imported_at => Time.now,
                   :created_at => Time.at(remote['date']['uts'].to_i))

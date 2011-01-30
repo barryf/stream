@@ -139,6 +139,14 @@ p {
 #stream .when a:hover, #stream .entry .when a:hover {
 	color: #c60;
 }
+#stream .what a:hover img {
+  background-color: #c60;
+}
+#stream .what img {
+  display: block;
+  padding: 1px;
+  margin: 5px 0;
+}
 #stream dl {
 	padding: 0 20px 0 10px;
 	margin: 0 0 20px 0;
