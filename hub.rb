@@ -26,6 +26,12 @@ def get_links(user='barryf')
   JSON.parse(resp.body)
 end
 
+def get_loved_tracks(user='barryf',api_key='1288fde3d6ed69a00b6671cf032e7668',limit=10)
+  url = "http://ws.audioscrobbler.com/2.0/?method=user.getlovedtracks&format=json&user=#{user}&api_key=#{api_key}&limit=#{limit}"
+  resp = Net::HTTP.get_response(URI.parse(url))
+  JSON.parse(resp.body)
+end
+
 def parse_tweet(tweet)
   # urls
   re = Regexp.new('(^|[\n ])([\w]+?://[\w]+[^ \"\n\r\t<]*)')
@@ -39,11 +45,15 @@ def parse_tweet(tweet)
   tweet
 end
 
+before do
+  headers "Content-Type" => "text/html; charset=utf-8"
+end
+
 get '/build/?' do
   # import tweets
   tweets = get_tweets
   tweets.each do |remote|
-    if !Item.find_by_uid(remote['id'].to_s)
+    if !Item.find_by_uid(remote['id'].to_s) && remote['text'][0..0] != '@'
       Item.create(:uid => remote['id'],
                   :title => remote['text'],
                   :body => remote['text'],
@@ -52,11 +62,11 @@ get '/build/?' do
                   :created_at => remote['created_at'])
     end
   end
-  # import links
+  # import links from delicious
   links = get_links
   links.each do |remote|
     if !Item.find_by_uid(remote['u'].hash.to_s)
-      Item.create(:uid => remote['u'].hash,
+      Item.create(:uid => remote['u'].hash.to_s,
                   :title => remote['d'],
                   :body => remote['n'],
                   :url => remote['u'],
@@ -64,6 +74,18 @@ get '/build/?' do
                   :source => 'delicious',
                   :imported_at => Time.now,
                   :created_at => remote['dt'])
+    end
+  end
+  # import last.fm loved tracks
+  loved_tracks = get_loved_tracks
+  loved_tracks['lovedtracks']['track'].each do |remote|
+    if !Item.find_by_uid(remote['url'].hash.to_s)
+      Item.create(:uid => remote['url'].hash.to_s,
+                  :title => remote['name'] + ' &mdash; ' + remote['artist']['name'],
+                  :url => remote['url'],
+                  :source => 'lastfm',
+                  :imported_at => Time.now,
+                  :created_at => Time.at(remote['date']['uts'].to_i))
     end
   end
   "Built"

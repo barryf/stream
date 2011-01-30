@@ -116,17 +116,11 @@ p {
 	margin-bottom: 2px;
 }
 #stream>ol>li {
-	margin: 0 0 40px 160px;
+	margin: 0 0 20px 160px;
 	background: url(/images/stream.png);
 }
 #stream>ol>li:first-child {
 	border: 0;
-}
-#stream .when abbr:before {
-	scontent: ' # ';
-}
-#stream .body:before {
-	scontent: ' â€” ';
 }
 #stream .when {
 	font-family: "Helvetica Neue", Arial, sans-serif;
@@ -292,3 +286,5 @@ p {
 	padding-left: 10px;
 	border-left: #c60 solid 10px;
 }
+
+/*.when { display: none !important; }*/

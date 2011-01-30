@@ -43,9 +43,16 @@
 			<% when 'twitter' %>
 				<dd class="what"><%= parse_tweet item.body %></dd>
 				<dd class="when">
-					<abbr><%= item.created_at.strftime('%H:%M on %d %b')%></abbr>
+					<abbr><%= item.created_at.strftime('%H:%M')%></abbr>
 					&middot;
 					<a href="http://twitter.com/barryf/status/<%= item.uid %>">Tweet</a>
+				</dd>
+			<% when 'lastfm' %>
+				<dd class="what"><%= item.title %></dd>
+				<dd class="when">
+					<abbr><%= item.created_at.strftime('%H:%M')%></abbr>
+					&middot;
+					<a href="<%= item.url %>">Last.fm Loved</a>
 				</dd>
 		<% end %>
 	</dl>
