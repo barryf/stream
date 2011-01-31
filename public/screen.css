@@ -125,19 +125,22 @@ p {
 #stream .when {
 	font-family: "Helvetica Neue", Arial, sans-serif;
 	font-weight: bold;
-	font-size: 11px;
-	line-height: 11px;
+	font-size: 10px;
+	line-height: 10px;
 	margin-top: 5px;
 	text-transform: uppercase;
-	color: #334;
+	color: #445;
 	white-space: nowrap;
 	display: block;
 }
 #stream .when a {
-	color: #334;
+  color: #445;
 }
 #stream .when a:hover, #stream .entry .when a:hover {
 	color: #c60;
+}
+#stream .what img {
+  background-color: #99a;
 }
 #stream .what a:hover img {
   background-color: #c60;
@@ -176,21 +179,17 @@ p {
 #stream .delicious a {
 	font-weight: bold;
 }
-#stream .youtube dl {
-	border-color: #FF3333;
-	margin-left: 400px
-}
 #stream .flickr dl {
 	border-color: #FF0084;
 	margin-left: 240px;
 }
+#stream .youtube dl {
+	border-color: #FF3333;
+	margin-left: 320px
+}
 #stream .lastfm dl {
 	border-color: #D10E05;
-	margin-left: 320px;	
-}
-#stream .photo, #stream .video {
-	margin: 5px 0;
-	display: block;
+	margin-left: 400px;	
 }
 
 /*** NAV ***/
@@ -295,4 +294,4 @@ p {
 	border-left: #c60 solid 10px;
 }
 
-/*.when { display: none !important; }*/
+#stream img { display: none !important; }

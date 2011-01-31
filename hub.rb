@@ -11,8 +11,7 @@ configure do
   ActiveRecord::Base.establish_connection dbconfig['production']
 end
 
-class Item < ActiveRecord::Base
-end
+class Item < ActiveRecord::Base; end
 
 def get_tweets(screen_name='barryf',count=50)
   url = "http://api.twitter.com/1/statuses/user_timeline.json?screen_name=#{screen_name}&count=#{count}"
@@ -32,6 +31,12 @@ def get_loved_tracks(user='barryf',api_key='1288fde3d6ed69a00b6671cf032e7668',li
   JSON.parse(resp.body)
 end
 
+def get_loved_videos(user='barryfrost',limit=10)
+  url = "http://gdata.youtube.com/feeds/api/users/#{user}/favorites?v=2&alt=json&max-results=#{limit}"
+  resp = Net::HTTP.get_response(URI.parse(url))
+  JSON.parse(resp.body)
+end
+
 def parse_tweet(tweet)
   # urls
   re = Regexp.new('(^|[\n ])([\w]+?://[\w]+[^ \"\n\r\t<]*)')
@@ -45,11 +50,43 @@ def parse_tweet(tweet)
   tweet
 end
 
+helpers do
+  def relative_date(time)
+    today_date = Time.utc(Time.now.year, Time.now.month, Time.now.day)
+    date = Time.utc(time.year, time.month, time.day)
+    day_diff = ((today_date-date)/86400).ceil
+    if day_diff == 0 then return 'Today' end
+    if day_diff == 1 then return 'Yesterday' end
+    if day_diff == 7 then return '1 week ago' end
+    if day_diff >= 2 && day_diff <= 10 then return "#{day_diff} days ago" end
+    #if day_diff >= 7 && day_diff < 14 then return '1 week ago' end
+    #if day_diff <= 28
+    #  week_diff = (day_diff/7).ceil 
+    #  return "#{week_diff} weeks ago"
+    #end
+    if time.year != Time.now.year then return time.strftime('%d %b %Y') end
+    time.strftime('%d %B')
+  end
+end
+
 before do
   headers "Content-Type" => "text/html; charset=utf-8"
 end
 
 get '/build/?' do
+  # import youtube favorites tracks
+  loved_videos = get_loved_videos
+  loved_videos['feed']['entry'].each do |remote|
+    if !Item.find_by_uid(remote['id']['$t'].hash.to_s)
+      Item.create(:uid => remote['id']['$t'].hash.to_s,
+                  :title => "&lsquo;#{remote['title']['$t']}&rsquo;",
+                  :url => remote['link'][0]['href'],
+                  :thumbnail_url => remote['media$group']['media$thumbnail'][1]['url'],
+                  :source => 'youtube',
+                  :imported_at => Time.now,
+                  :created_at => remote['published']['$t'])
+    end
+  end
   # import tweets
   tweets = get_tweets
   tweets.each do |remote|
@@ -102,4 +139,3 @@ get '/' do
   @title = "Barry Frost&rsquo;s Aggregator"
   erb :index, :layout => !request.xhr?
 end
-

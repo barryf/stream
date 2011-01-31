@@ -7,8 +7,7 @@
 <% @items.each do |item| %>
 
 	<% 
-	item_date = ParseDate.parsedate(item.created_at.to_s)
-	item_day = "#{'%02d' % item_date[0]}-#{'%02d' % item_date[1]}-#{'%02d' % item_date[2]}"
+	item_day = relative_date(item.created_at)
 	
 	if last_day != item_day
 		if last_day != ''
@@ -16,7 +15,7 @@
 		end
 	%>
 		<li>
-		<h4><%= item.created_at.strftime('%d %b') %></h4>
+		<h4><%= item_day %></h4>
 		<ol>
 		<% last_day = item_day 
 	end %>
@@ -35,7 +34,7 @@
 						if item.tags != ''
 							%> // <%
 							item.tags.split(' ').each do |tag|
-								%><a href="http://delicious.com/tag/<%= tag %>"><%= tag %></a> <%
+								%><a href="http://delicious.com/barryf/<%= tag %>"><%= tag %></a> <%
 							end
 						end
 					%>
@@ -60,6 +59,19 @@
 					&middot;
 					<a href="<%= item.url %>">Last.fm Loved</a>
 				</dd>
+			<% when 'youtube' %>
+				<dd class="what">
+					Favourited 
+					<a href="<%= item.url %>">
+						<%= item.title %>
+						<% if item.thumbnail_url != '' %><br /><img src="<%= item.thumbnail_url %>" height="60" /><% end %>
+					</a>
+				</dd>
+				<dd class="when">
+					<abbr><%= item.created_at.strftime('%H:%M')%></abbr>
+					&middot;
+					<a href="<%= item.url %>">YouTube Favourite</a>
+				</dd>
 		<% end %>
 	</dl>
 	</li>
@@ -68,4 +80,6 @@
 <% end %>
 </ol></li>
 
-<p style="text-align: center;"><a href="/?ts=<%= last_epoch %>" onclick="load_next(<%= last_epoch %>); $(this).hide(); return false">&darr; More&hellip;</a></p>
+<% if last_epoch != 0 %>
+	<p><a style="text-align: center; display: block;" href="/?ts=<%= last_epoch %>" onclick="load_next(<%= last_epoch %>); $(this).hide(); return false">&darr; More&hellip;</a></p>
+<% end %>
