@@ -72,6 +72,18 @@
 					&middot;
 					<a href="<%= item.url %>">YouTube Favourite</a>
 				</dd>
+			<% when 'flickr' %>
+				<dd class="what">
+					<a href="<%= item.url %>">
+						<%= item.title %>
+						<% if item.thumbnail_url != '' %><br /><img src="<%= item.thumbnail_url %>" height="60" /><% end %>
+					</a>
+				</dd>
+				<dd class="when">
+					<abbr><%= item.created_at.strftime('%H:%M')%></abbr>
+					&middot;
+					<a href="<%= item.url %>">Flickr Photo</a>
+				</dd>	
 		<% end %>
 	</dl>
 	</li>
