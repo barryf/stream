@@ -255,8 +255,8 @@ p {
 
 /*** SMALL SCREENS ***/
 
-@media screen and (max-width: 600px) {
-
+@media handheld and (max-width: 480px), screen and (max-device-width: 480px), screen and (max-width: 600px)  {
+  
   #nav { 
     margin-left: 20px;
   }
