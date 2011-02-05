@@ -51,7 +51,7 @@ blockquote, q {
 
 html {
 	border-top: #c60 solid 10px;
-	border-bottom: #c60 solid 10px;
+	/*border-bottom: #c60 solid 10px;*/
 }
 body {
 	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Arial, sans-serif;
@@ -68,6 +68,7 @@ a {
 a:hover {
 	color: #c60;
 }
+
 strong {
 	font-weight: bold;
 }
@@ -117,7 +118,7 @@ p {
 }
 #stream>ol>li {
 	margin: 0 0 20px 160px;
-	background: url(/images/stream.png);
+	background: url(/images/stream2.png) repeat-y;
 }
 #stream>ol>li:first-child {
 	border: 0;
@@ -158,6 +159,7 @@ p {
 	font-size: 14px;
 	line-height: 18px;
 }
+#stream dt, #stream dd { display: inline; }
 #stream .entry dl {
 	border-color: #c60;
 	margin-left: 0;
@@ -172,9 +174,15 @@ p {
 	border-color: #34CCFF;
 	margin-left: 80px;	
 }
+#stream .twitter a:hover { 
+  color: #34CCFF;
+}
 #stream .delicious dl {
 	border-color: #3274D1;
 	margin-left: 160px;
+}
+#stream .delicious a:hover { 
+  color: #3274D1;
 }
 #stream .delicious a {
 	font-weight: bold;
@@ -183,24 +191,32 @@ p {
 	border-color: #FF0084;
 	margin-left: 240px;
 }
+#stream .flickr a:hover { 
+  color: #FF0084;
+}
 #stream .youtube dl {
 	border-color: #FF3333;
 	margin-left: 320px
 }
+#stream .youtube a:hover { 
+  color: #FF3333;
+}
 #stream .lastfm dl {
 	border-color: #D10E05;
 	margin-left: 400px;	
+}
+#stream .lastfm a:hover { 
+  color: #D10E05;
 }
 
 /*** NAV ***/
 
 #nav {
 	display: block;
-	width: 100%;
 	float: left;
 	font-size: 14px;
 	line-height: 14px;
-	margin-bottom: 20px;
+	margin: 0 0 20px 160px;
 }
 #nav li {
 	display: block;
@@ -221,76 +237,43 @@ p {
   border-color: #001F35;
   color: #334;
 }
-#nav .home {
-	width: 160px;
-	background: #000818;
-}
 #nav .active * {
 	font-weight: bold;
 }
-#nav .home *   { border-color: #000818; }
-#nav .blog *   { border-color: #c60; }
-#nav .links *  { border-color: #3274D1; }
-#nav .tweets * { border-color: #34CCFF; }
-#nav .photos * { border-color: #FF0084; }
-#nav .music *  { border-color: #D10E05; }
-#nav .videos * { border-color: #FF3333; }
+#nav .entry *           { border-color: #c60;    } 
+#nav .entry a:hover     { color: #c60;           }
+#nav .delicious *       { border-color: #3274D1; }
+#nav .delicious a:hover { color: #3274D1;        }
+#nav .twitter *         { border-color: #34CCFF; }
+#nav .twitter a:hover   { color: #34CCFF;        }
+#nav .flickr *          { border-color: #FF0084; }
+#nav .flickr a:hover    { color: #FF0084;        }
+#nav .lastfm *          { border-color: #D10E05; }
+#nav .lastfm a:hover    { color: #D10E05;        }
+#nav .youtube *         { border-color: #FF3333; }
+#nav .youtube a:hover   { color: #FF3333;        }
 
-/*** ITEMS ***/
+/*** SMALL SCREENS ***/
 
-#item #entry {
-	margin: 40px 20px 0 20px;
-}
-#item #meta {
-	position: absolute;
-	left: 20px;
-	width: 140px;
-	font-size: 14px;
-	line-height: 22px;
-}
-#item #body {
-	background: url(/images/stream.png) repeat-y;
-	margin-left: 140px;
-}
-#item #body p {
-	/*
-	font-family: "Helvetica Neue", Arial, sans-serif;
-	font-weight: normal;
-	*/
-	padding-left: 20px;
-	max-width: 520px;
-}
-#item #body h3 {
-	padding-left: 10px;
-	border-left: #c60 solid 10px;
-}
-#item #body blockquote p {
-	font-style: italic;
-	margin-left: 0;
-	border-left: #c60 solid 10px;
-	padding-left: 10px;
-	font-size: 13px;
-}
-#item #body blockquote p:before {
-	font-weight: bold;
-	content: 'â€œ';
-}
-#item #body blockquote p:after {
-	font-weight: bold;
-	content: 'â€';
-}
-#item #body ul {
-	padding-bottom: 12px;
-	max-width: 520px;
-	/*
-	font-family: "Helvetica Neue", Arial, sans-serif;
-	font-weight: normal;
-	*/
-}
-#item #body li {
-	margin-bottom: 10px;
-	padding-left: 10px;
-	border-left: #c60 solid 10px;
-}
+@media screen and (max-width: 600px) {
 
-#stream img { display: none !important; }
+  #nav { 
+    margin-left: 20px;
+  }
+
+  #stream h4 {
+    position: relative;
+    margin: 0 0 20px -20px;
+  	display: block;
+  }
+
+  #stream>ol>li {
+    margin-left: 20px;
+    background: none;
+  }
+  
+  #stream dl {
+    margin-left: 0 !important;
+  }
+
+}

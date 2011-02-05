@@ -54,7 +54,7 @@ def parse_tweet(tweet)
   tweet.gsub!(re, '<a href="http://twitter.com/\2">@\2</a>')
   # hashtags
   re = Regexp.new('(\#)([\w]+)')
-  tweet.gsub!(re, '<a href="http://twitter.com/search/\2">#\2</a>')
+  tweet.gsub!(re, '<a href="http://twitter.com/search/%23\2">#\2</a>')
   tweet
 end
 
@@ -66,7 +66,7 @@ helpers do
     if day_diff == 0 then return 'Today' end
     if day_diff == 1 then return 'Yesterday' end
     if day_diff == 7 then return '1 week ago' end
-    if day_diff >= 2 && day_diff <= 10 then return "#{day_diff} days ago" end
+    if day_diff >= 2 && day_diff < 7 then return "#{day_diff} days ago" end
     if time.year != Time.now.year then return time.strftime('%d %b %Y') end
     time.strftime('%d %B')
   end
@@ -90,59 +90,59 @@ get '/build/?' do
                   :created_at => remote['datetaken'])
     end
   end
-  ## import youtube favorites tracks
-  #loved_videos = get_loved_videos
-  #loved_videos['feed']['entry'].each do |remote|
-  #  if !Item.find_by_uid(remote['id']['$t'].hash.to_s)
-  #    Item.create(:uid => remote['id']['$t'].hash.to_s,
-  #                :title => "&lsquo;#{remote['title']['$t']}&rsquo;",
-  #                :url => remote['link'][0]['href'],
-  #                :thumbnail_url => remote['media$group']['media$thumbnail'][1]['url'],
-  #                :source => 'youtube',
-  #                :imported_at => Time.now,
-  #                :created_at => remote['published']['$t'])
-  #  end
-  #end
-  ## import tweets
-  #tweets = get_tweets
-  #tweets.each do |remote|
-  #  if !Item.find_by_uid(remote['id'].to_s) && remote['text'][0..0] != '@'
-  #    Item.create(:uid => remote['id'],
-  #                :title => remote['text'],
-  #                :body => remote['text'],
-  #                :source => 'twitter',
-  #                :imported_at => Time.now,
-  #                :created_at => remote['created_at'])
-  #  end
-  #end
-  ## import links from delicious
-  #links = get_links
-  #links.each do |remote|
-  #  if !Item.find_by_uid(remote['u'].hash.to_s)
-  #    Item.create(:uid => remote['u'].hash.to_s,
-  #                :title => remote['d'],
-  #                :body => remote['n'],
-  #                :url => remote['u'],
-  #                :tags => remote['t'].join(' '),
-  #                :source => 'delicious',
-  #                :imported_at => Time.now,
-  #                :created_at => remote['dt'])
-  #  end
-  #end
-  ## import last.fm loved tracks
-  #loved_tracks = get_loved_tracks
-  #loved_tracks['lovedtracks']['track'].each do |remote|
-  #  if !Item.find_by_uid(remote['url'].hash.to_s)
-  #    thumbnail_url = remote.has_key?('image') ? remote['image'][1]['#text'] : ''
-  #    Item.create(:uid => remote['url'].hash.to_s,
-  #                :title => '&lsquo;' + remote['name'] + '&rsquo; by ' + remote['artist']['name'],
-  #                :url => remote['url'],
-  #                :thumbnail_url => thumbnail_url,
-  #                :source => 'lastfm',
-  #                :imported_at => Time.now,
-  #                :created_at => Time.at(remote['date']['uts'].to_i))
-  #  end
-  #end
+  # import youtube favorites tracks
+  loved_videos = get_loved_videos
+  loved_videos['feed']['entry'].each do |remote|
+    if !Item.find_by_uid(remote['id']['$t'].hash.to_s)
+      Item.create(:uid => remote['id']['$t'].hash.to_s,
+                  :title => "&lsquo;#{remote['title']['$t']}&rsquo;",
+                  :url => remote['link'][0]['href'],
+                  :thumbnail_url => remote['media$group']['media$thumbnail'][1]['url'],
+                  :source => 'youtube',
+                  :imported_at => Time.now,
+                  :created_at => remote['published']['$t'])
+    end
+  end
+  # import tweets
+  tweets = get_tweets
+  tweets.each do |remote|
+    if !Item.find_by_uid(remote['id'].to_s) && remote['text'][0..0] != '@'
+      Item.create(:uid => remote['id'],
+                  :title => remote['text'],
+                  :body => remote['text'],
+                  :source => 'twitter',
+                  :imported_at => Time.now,
+                  :created_at => remote['created_at'])
+    end
+  end
+  # import links from delicious
+  links = get_links
+  links.each do |remote|
+    if !Item.find_by_uid(remote['u'].hash.to_s)
+      Item.create(:uid => remote['u'].hash.to_s,
+                  :title => remote['d'],
+                  :body => remote['n'],
+                  :url => remote['u'],
+                  :tags => remote['t'].join(' '),
+                  :source => 'delicious',
+                  :imported_at => Time.now,
+                  :created_at => remote['dt'])
+    end
+  end
+  # import last.fm loved tracks
+  loved_tracks = get_loved_tracks
+  loved_tracks['lovedtracks']['track'].each do |remote|
+    if !Item.find_by_uid(remote['url'].hash.to_s)
+      thumbnail_url = remote.has_key?('image') ? remote['image'][1]['#text'] : ''
+      Item.create(:uid => remote['url'].hash.to_s,
+                  :title => '&lsquo;' + remote['name'] + '&rsquo; by ' + remote['artist']['name'],
+                  :url => remote['url'],
+                  :thumbnail_url => thumbnail_url,
+                  :source => 'lastfm',
+                  :imported_at => Time.now,
+                  :created_at => Time.at(remote['date']['uts'].to_i))
+    end
+  end
   "Built"
 end
 
@@ -154,4 +154,21 @@ get '/' do
                      :order => 'created_at DESC')
   @title = "Barry Frost&rsquo;s Aggregator"
   erb :index, :layout => !request.xhr?
+end
+
+get '/:year/:month/:day/?' do
+  date = Time.utc(params[:year], params[:month], params[:day])
+  @items = Item.find(:all,
+                     :conditions => ['created_at > ? and created_at < ?', date, date+86400],
+                     :limit => 30,
+                     :order => 'created_at DESC')
+  erb :index
+end
+
+get %r{/(twitter|delicious|flickr|youtube|lastfm)/?} do |source|
+  @items = Item.find(:all,
+                     :conditions => ['source = ?', source],
+                     :limit => 30,
+                     :order => 'created_at DESC')
+  erb :index
 end

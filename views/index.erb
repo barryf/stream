@@ -15,7 +15,7 @@
 		end
 	%>
 		<li>
-		<h4><%= item_day %></h4>
+		<h4><a href="<%= item.created_at.strftime('/%Y/%m/%d') %>" title="<%= item.created_at.strftime('%F') %>"><%= item_day %></a></h4>
 		<ol>
 		<% last_day = item_day 
 	end %>
@@ -32,7 +32,7 @@
 					<a href="http://www.delicious.com/url/<%= Digest::MD5.hexdigest(item.url) %>">Delicious</a>
 					<% 
 						if item.tags != ''
-							%> // <%
+							%> &middot; <%
 							item.tags.split(' ').each do |tag|
 								%><a href="http://delicious.com/barryf/<%= tag %>"><%= tag %></a> <%
 							end
@@ -64,7 +64,9 @@
 					Favourited 
 					<a href="<%= item.url %>">
 						<%= item.title %>
-						<% if item.thumbnail_url != '' %><br /><img src="<%= item.thumbnail_url %>" height="60" /><% end %>
+						<% if item.thumbnail_url != '' %>
+							<img src="<%= item.thumbnail_url %>" style="height: 60px;" />
+						<% end %>
 					</a>
 				</dd>
 				<dd class="when">
@@ -76,7 +78,9 @@
 				<dd class="what">
 					<a href="<%= item.url %>">
 						<%= item.title %>
-						<% if item.thumbnail_url != '' %><br /><img src="<%= item.thumbnail_url %>" height="60" /><% end %>
+						<% if item.thumbnail_url != '' %>
+							<img src="<%= item.thumbnail_url %>" />
+						<% end %>
 					</a>
 				</dd>
 				<dd class="when">

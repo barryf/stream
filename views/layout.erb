@@ -2,21 +2,20 @@
 <html>
 	<head>
 		<title><%= @title ||= '' %></title>
-		<link rel="stylesheet" href="screen.css" type="text/css" />
+		<link rel="stylesheet" href="/screen.css" type="text/css" />
 	</head>
 	<body id="home"> 
 		<h1> 
-			<a href="http://barryfrost.com/"><img src="images/barryf-small.jpg" alt="Barry Frost" /></a> Hello, I'm <a href="http://barryfrost.com/">Barry Frost</a> and this is my work-in-progress life stream aggregator project.
+			<a href="http://barryfrost.com/"><img src="/images/barryf-small.jpg" alt="Barry Frost" /></a> Hello, I'm <a href="http://barryfrost.com/">Barry Frost</a> and this is my work-in-progress life stream aggregator project.
 		</h1> 
 
 		<ul id="nav"> 
-			<li class="home active"><span>&nbsp;</span></li> 
-			<li class="blog"><a href="#">Entries</a></li>
-			<li class="tweets"><a href="http://twitter.com/barryf" title="Tweets from Twitter (@barryf)">Tweets</a></li> 
-			<li class="links"><a href="http://delicious.com/barryf" title="Bookmarked links on Delicious (barryf)">Links</a></li> 
-			<li class="photos"><a href="http://flickr.com/photos/barryf" title="My Flickr photos (barryf)">Photos</a></li> 
-			<li class="videos"><a href="http://www.youtube.com/user/barryfrost#g/f" title="Favourite YouTube videos (barryfrost)">Videos</a></li> 
-			<li class="music"><a href="http://www.last.fm/user/barryf" title="Tracks I've loved and scrobbled to Last.fm (barryf)">Music</a></li> 
+			<li class="entry"><a href="#">Entries</a></li>
+			<li class="twitter"><a href="http://twitter.com/barryf" title="Tweets from Twitter (@barryf)">Tweets</a></li> 
+			<li class="delicious"><a href="http://delicious.com/barryf" title="Bookmarked links on Delicious (barryf)">Links</a></li> 
+			<li class="flickr"><a href="http://flickr.com/photos/barryf" title="My Flickr photos (barryf)">Photos</a></li> 
+			<li class="youtube"><a href="http://www.youtube.com/user/barryfrost#g/f" title="Favourite YouTube videos (barryfrost)">Videos</a></li> 
+			<li class="lastfm"><a href="http://www.last.fm/user/barryf" title="Tracks I've loved and scrobbled to Last.fm (barryf)">Music</a></li> 
 		</ul> 
 
 		<div id="stream" class="main"> 
