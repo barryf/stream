@@ -74,7 +74,7 @@ strong {
 }
 h1 {
 	font-size: 20px;
-	line-height: 30px;
+	line-height: 25px;
 	padding: 20px;
 	min-height: 120px;
 }
@@ -131,7 +131,6 @@ p {
 	margin-top: 5px;
 	text-transform: uppercase;
 	color: #445;
-	white-space: nowrap;
 	display: block;
 }
 #stream .when a {
@@ -216,7 +215,7 @@ p {
 	float: left;
 	font-size: 14px;
 	line-height: 14px;
-	margin: 0 0 20px 160px;
+	margin: 0 0 10px 160px;
 }
 #nav li {
 	display: block;
@@ -228,6 +227,7 @@ p {
 	border-left-style: solid;
 	border-left-width: 10px;
 	padding: 0 0 0 10px;
+	margin-bottom: 10px;
 }
 #nav a:hover, #nav a:hover.inactive {
   color: #c60;
@@ -255,16 +255,24 @@ p {
 
 /*** SMALL SCREENS ***/
 
-@media handheld and (max-width: 480px), screen and (max-device-width: 480px), screen and (max-width: 600px)  {
+@media handheld and (max-width: 480px), screen and (max-device-width: 480px), screen and (max-width: 700px)  {
   
   #nav { 
     margin-left: 20px;
   }
 
   #stream h4 {
+  	position: absolute;
+  	left: 20px;
+  	padding-top: 0;
+  	font-size: 14px;
+  	line-height: 18px;
+
+
     position: relative;
-    margin: 0 0 20px -20px;
-  	display: block;
+    left: 0;
+    margin: 0 0 20px 0;
+  	
   }
 
   #stream>ol>li {

@@ -1,6 +1,7 @@
 <% 
 	last_day = ''
 	last_epoch = 0
+	last_source = ''
 %>
 
 <ol>
@@ -8,6 +9,11 @@
 
 	<% 
 	item_day = relative_date(item.created_at)
+
+	# only show the first flickr photo uploaded in a batch
+	if item.source == 'flickr' && last_source == 'flickr' && last_day == item_day
+		next
+	end
 	
 	if last_day != item_day
 		if last_day != ''
@@ -87,15 +93,18 @@
 					<abbr><%= item.created_at.strftime('%H:%M')%></abbr>
 					&middot;
 					<a href="<%= item.url %>">Flickr Photo</a>
-				</dd>	
+				</dd>
 		<% end %>
 	</dl>
 	</li>
 	
-	<% last_epoch = item.created_at.to_i %>
+	<% 
+		last_epoch = item.created_at.to_i 
+		last_source = item.source
+	%>
 <% end %>
 </ol></li>
 
-<% if last_epoch != 0 %>
+<% if last_epoch != 0 && @items.length == 30 %>
 	<p><a style="text-align: center; display: block;" href="/?ts=<%= last_epoch %>" onclick="load_next(<%= last_epoch %>); $(this).hide(); return false">&darr; More&hellip;</a></p>
 <% end %>
