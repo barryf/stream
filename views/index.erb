@@ -30,8 +30,8 @@
 	<dl>
 		<% case item.source
 			when 'delicious' %>
-				<dd class="what"><a href="<%= item.url %>"><%= item.title %></a></dd>
-				<% if item.body != '' %><dd class="body"><%= item.body %></dd><% end %>
+				<dd class="what"><a href="<%= item.url %>"><%= h item.title %></a></dd>
+				<% if item.body != '' %><dd class="body"><%= h item.body %></dd><% end %>
 				<dd class="when">
 					<abbr><%= item.created_at.strftime('%H:%M')%></abbr>
 					&middot;
@@ -40,7 +40,7 @@
 						if item.tags != ''
 							%> &middot; <%
 							item.tags.split(' ').each do |tag|
-								%><a href="http://delicious.com/barryf/<%= tag %>"><%= tag %></a> <%
+								%><a href="http://delicious.com/<%= ACCOUNTS['delicious']['user'] %>/<%= tag %>"><%= tag %></a> <%
 							end
 						end
 					%>
@@ -50,14 +50,14 @@
 				<dd class="when">
 					<abbr><%= item.created_at.strftime('%H:%M')%></abbr>
 					&middot;
-					<a href="http://twitter.com/barryf/status/<%= item.uid %>">Tweet</a>
+					<a href="http://twitter.com/<%= ACCOUNTS['twitter']['screen_name'] %>/status/<%= item.uid %>">Tweet</a>
 				</dd>
 			<% when 'lastfm' %>
 				<dd class="what">
 					Loved 
 					<a href="<%= item.url %>">
 						<%= item.title %>
-						<% if item.thumbnail_url != '' %><br /><img src="<%= item.thumbnail_url %>" /><% end %>
+						<% if item.thumbnail_url != '' %><br /><img src="<%= item.thumbnail_url %>" style="height: 60px;" /><% end %>
 					</a>
 				</dd>
 				<dd class="when">
@@ -83,7 +83,7 @@
 			<% when 'flickr' %>
 				<dd class="what">
 					<a href="<%= item.url %>">
-						<%= item.title %>
+						<%= h item.title %>
 						<% if item.thumbnail_url != '' %>
 							<img src="<%= item.thumbnail_url %>" />
 						<% end %>

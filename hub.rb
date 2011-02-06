@@ -5,8 +5,11 @@ require 'net/http'
 require 'active_record'
 require 'parsedate'
 require 'digest/md5'
-  
+
+ACCOUNTS = {}
+
 configure do
+  ACCOUNTS = YAML.load(File.read('config/accounts.yml'))
   dbconfig = YAML.load(File.read('config/database.yml'))
   ActiveRecord::Base.establish_connection dbconfig['production']
 end
@@ -15,7 +18,7 @@ class Item < ActiveRecord::Base; end
 
 # import tweets
 
-def fetch_twitter(count=10, screen_name='barryf')
+def fetch_twitter(count=10, screen_name=ACCOUNTS['twitter']['screen_name'])
   url = "http://api.twitter.com/1/statuses/user_timeline.json?screen_name=#{screen_name}&count=#{count}"
   resp = Net::HTTP.get_response(URI.parse(url))
   twitter = JSON.parse(resp.body)
@@ -38,7 +41,7 @@ end
 
 # import links from delicious
 
-def fetch_delicious(count=10,user='barryf')
+def fetch_delicious(count=10, user=ACCOUNTS['delicious']['user'])
   url = "http://feeds.delicious.com/v2/json/#{user}?count=#{count}"
   resp = Net::HTTP.get_response(URI.parse(url))
   delicious = JSON.parse(resp.body)
@@ -62,7 +65,7 @@ end
 
 # import last.fm loved tracks
 
-def fetch_lastfm(count=10,user='barryf',api_key='1288fde3d6ed69a00b6671cf032e7668')
+def fetch_lastfm(count=10, user=ACCOUNTS['lastfm']['user'], api_key=ACCOUNTS['lastfm']['api_key'])
   url = "http://ws.audioscrobbler.com/2.0/?method=user.getlovedtracks&format=json&user=#{user}&api_key=#{api_key}&limit=#{count}"
   resp = Net::HTTP.get_response(URI.parse(url))
   lastfm = JSON.parse(resp.body)
@@ -86,7 +89,7 @@ end
 
 # import youtube favorites tracks
 
-def fetch_youtube(count=10,user='barryfrost')
+def fetch_youtube(count=10, user=ACCOUNTS['youtube']['user'])
   url = "http://gdata.youtube.com/feeds/api/users/#{user}/favorites?v=2&alt=json&max-results=#{count}"
   resp = Net::HTTP.get_response(URI.parse(url))
   youtube = JSON.parse(resp.body)
@@ -110,7 +113,7 @@ end
 
 # import flickr photos
 
-def fetch_flickr(count=10,user_id='32626558@N00',api_key='00bd943e7e761623f70e50b09f537629')
+def fetch_flickr(count=10, user_id=ACCOUNTS['flickr']['user_id'], api_key=ACCOUNTS['flickr']['api_key'])
   url = "http://api.flickr.com/services/rest/?method=flickr.people.getPublicPhotos&format=json&api_key=#{api_key}&user_id=#{user_id}&extras=date_taken,geo,url_sq,description&per_page=#{count}"
   resp = Net::HTTP.get_response(URI.parse(url))
   # remove callback function name and trailing bracket
@@ -123,7 +126,7 @@ def fetch_flickr(count=10,user_id='32626558@N00',api_key='00bd943e7e761623f70e50
     if !Item.find_by_uid(source + remote['id'].to_s)
       Item.create(:uid => source + remote['id'].to_s,
                   :title => remote['title'],
-                  :url => "http://www.flickr.com/photos/barryf/#{remote['id']}",
+                  :url => "http://www.flickr.com/photos/#{ACCOUNTS['flickr']['user']}/#{remote['id']}",
                   :thumbnail_url => remote['url_sq'],
                   :source => source,
                   :imported_at => Time.now,
@@ -135,6 +138,8 @@ def fetch_flickr(count=10,user_id='32626558@N00',api_key='00bd943e7e761623f70e50
 end
 
 helpers do
+  include Rack::Utils
+  alias_method :h, :escape_html
   def parse_tweet(tweet)
     # urls
     re = Regexp.new('(^|[\n ])([\w]+?://[\w]+[^ \"\n\r\t<]*)')
