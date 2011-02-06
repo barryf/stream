@@ -98,13 +98,12 @@ h3 {
 p {
 	margin-bottom: 22px;
 }
-.main {
-	clear: both;
-}
 
 /*** STREAM ***/
 
-#stream {}
+#stream {
+  clear: both;
+}
 #stream h4 {
 	position: absolute;
 	left: 20px;

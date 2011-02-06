@@ -1,13 +1,12 @@
 <!doctype html>
 <html>
 	<head>
-		<meta charset="utf-8" />
 		<title><%= @title ||= '' %></title>
 		<link rel="stylesheet" href="/screen.css" type="text/css" />
 		<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;" />
 	</head>
-	<body id="home"> 
-		<h1> 
+	<body>
+		<h1>
 			<a href="http://barryfrost.com/"><img src="/images/barryf-small.jpg" alt="Barry Frost" /></a> Hello, I'm <a href="http://barryfrost.com/">Barry Frost</a> and this is my work-in-progress life stream aggregator project.
 		</h1> 
 
@@ -20,7 +19,7 @@
 			<li class="lastfm"><a href="http://www.last.fm/user/barryf" title="Tracks I've loved and scrobbled to Last.fm (barryf)">Music</a></li> 
 		</ul> 
 
-		<div id="stream" class="main"> 
+		<div id="stream">
 			<%= yield %>
 		</div>	
 
