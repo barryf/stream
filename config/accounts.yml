@@ -1,18 +1,17 @@
-# private api accounts
-
-lastfm:
-  user: barryf
-  api_key: 1288fde3d6ed69a00b6671cf032e7668
 flickr:
   user: barryf
   user_id: 32626558@N00
-  api_key: 00bd943e7e761623f70e50b09f537629
-  
-# public non-api accounts
+  # api_key:
+
+lastfm:
+  user: barryf
+  # api_key:
 
 delicious:
   user: barryf
+
 twitter:
   screen_name: barryf
+
 youtube:
   user: barryfrost

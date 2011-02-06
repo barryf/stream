@@ -6,10 +6,12 @@ require 'digest/md5'
 
 require 'fetchers'
 
-ACCOUNTS = {}
-
 configure do
   ACCOUNTS = YAML.load(File.read('config/accounts.yml'))
+  # if private api keys weren't included in accounts.yml, try to get from env vars
+  ACCOUNTS['lastfm']['api_key'] ||= ENV['LASTFM_API_KEY']
+  ACCOUNTS['flickr']['api_key'] ||= ENV['FLICKR_API_KEY']
+  # activerecord setup
   dbconfig = YAML.load(File.read('config/database.yml'))
   ActiveRecord::Base.establish_connection dbconfig['production']
 end
