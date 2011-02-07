@@ -33,7 +33,7 @@
 				<dd class="what"><a href="<%= item.url %>"><%= h item.title %></a></dd>
 				<% if item.body != '' %><dd class="body"><%= h item.body %></dd><% end %>
 				<dd class="when">
-					<abbr><%= item.created_at.strftime('%H:%M')%></abbr>
+					<abbr title="<%= item.created_at %>"><%= item.created_at.strftime('%H:%M')%></abbr>
 					&middot;
 					<a href="http://www.delicious.com/url/<%= Digest::MD5.hexdigest(item.url) %>">Delicious</a>
 					<% 
@@ -48,7 +48,7 @@
 			<% when 'twitter' %>
 				<dd class="what"><%= parse_tweet item.body %></dd>
 				<dd class="when">
-					<abbr><%= item.created_at.strftime('%H:%M')%></abbr>
+					<abbr title="<%= item.created_at %>"><%= item.created_at.strftime('%H:%M')%></abbr>
 					&middot;
 					<a href="http://twitter.com/<%= ACCOUNTS['twitter']['screen_name'] %>/status/<%= item.uid %>">Tweet</a>
 				</dd>
@@ -61,7 +61,7 @@
 					</a>
 				</dd>
 				<dd class="when">
-					<abbr><%= item.created_at.strftime('%H:%M')%></abbr>
+					<abbr title="<%= item.created_at %>"><%= item.created_at.strftime('%H:%M')%></abbr>
 					&middot;
 					<a href="<%= item.url %>">Last.fm Loved</a>
 				</dd>
@@ -76,7 +76,7 @@
 					</a>
 				</dd>
 				<dd class="when">
-					<abbr><%= item.created_at.strftime('%H:%M')%></abbr>
+					<abbr title="<%= item.created_at %>"><%= item.created_at.strftime('%H:%M')%></abbr>
 					&middot;
 					<a href="<%= item.url %>">YouTube Favourite</a>
 				</dd>
@@ -90,7 +90,7 @@
 					</a>
 				</dd>
 				<dd class="when">
-					<abbr><%= item.created_at.strftime('%H:%M')%></abbr>
+					<abbr title="<%= item.created_at %>"><%= item.created_at.strftime('%H:%M')%></abbr>
 					&middot;
 					<a href="<%= item.url %>">Flickr Photo</a>
 				</dd>

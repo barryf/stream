@@ -1,8 +1,6 @@
 require 'rubygems'
 require 'sinatra'
 require 'active_record'
-require 'parsedate'
-require 'digest/md5'
 
 require 'fetchers'
 
@@ -73,19 +71,13 @@ end
 
 get '/' do
   ts = params[:ts] ||= 99999999999
-  @items = Item.find(:all, 
-                     :conditions => ['created_at < ?', Time.at(ts.to_i)],
-                     :limit => 30,
-                     :order => 'created_at DESC')
+  @items = Item.where('created_at < ?',Time.at(ts.to_i)).limit(30).order('created_at DESC')
   @title = "Barry Frost&rsquo;s Aggregator"
   erb :index, :layout => !request.xhr?
 end
 
 get '/:year/:month/:day/?' do
   date = Time.local(params[:year], params[:month], params[:day])
-  @items = Item.find(:all,
-                     :conditions => ['created_at >= ? and created_at < ?', date, date+86400],
-                     :limit => 30,
-                     :order => 'created_at DESC')
+  @items = Item.where(:created_at => date..(date+86400)).limit(30).order('created_at DESC')
   erb :index
 end

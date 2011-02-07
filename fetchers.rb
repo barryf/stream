@@ -1,5 +1,4 @@
 require 'rubygems'
-require 'sinatra'
 require 'json'
 require 'net/http'
 require 'active_record'
@@ -16,8 +15,8 @@ def fetch_twitter(count=10, screen_name=ACCOUNTS['twitter']['screen_name'])
   imported = 0
   twitter.each do |remote|
     # don't import replies/mentions
-    if !Item.find_by_uid(source + remote['id'].to_s) && remote['text'][0..0] != '@'
-      Item.create(:uid => source + remote['id'].to_s,
+    if Item.where('uid = ? and source = ?', remote['id'].to_s, source).count.zero? && remote['text'][0..0] != '@'
+      Item.create(:uid => remote['id'].to_s,
                   :title => remote['text'],
                   :body => remote['text'],
                   :source => source,
@@ -38,8 +37,8 @@ def fetch_delicious(count=10, user=ACCOUNTS['delicious']['user'])
   source = 'delicious'
   imported = 0
   delicious.each do |remote|
-    if !Item.find_by_uid(source + remote['u'].hash.to_s)
-      Item.create(:uid => source + remote['u'].hash.to_s,
+    if Item.where('uid = ? and source = ?', remote['u'].hash.to_s, source).count.zero?
+      Item.create(:uid => remote['u'].hash.to_s,
                   :title => remote['d'],
                   :body => remote['n'],
                   :url => remote['u'],
@@ -62,9 +61,9 @@ def fetch_lastfm(count=10, user=ACCOUNTS['lastfm']['user'], api_key=ACCOUNTS['la
   source = 'lastfm'
   imported = 0
   lastfm['lovedtracks']['track'].each do |remote|
-    if !Item.find_by_uid(source + remote['url'].hash.to_s)
+    if Item.where('uid = ? and source = ?', remote['url'].hash.to_s, source).count.zero?
       thumbnail_url = remote.has_key?('image') ? remote['image'][1]['#text'] : ''
-      Item.create(:uid => source + remote['url'].hash.to_s,
+      Item.create(:uid => remote['url'].hash.to_s,
                   :title => '&lsquo;' + remote['name'] + '&rsquo; by ' + remote['artist']['name'],
                   :url => remote['url'],
                   :thumbnail_url => thumbnail_url,
@@ -87,8 +86,8 @@ def fetch_youtube(count=10, user=ACCOUNTS['youtube']['user'])
   source = 'youtube'
   imported = 0
   youtube['feed']['entry'].each do |remote|
-    if !Item.find_by_uid(source + remote['id']['$t'].hash.to_s)
-      Item.create(:uid => source + remote['id']['$t'].hash.to_s,
+    if Item.where('uid = ? and source = ?', remote['id']['$t'].hash.to_s, source).count.zero?
+      Item.create(:uid => remote['id']['$t'].hash.to_s,
                   :title => "&lsquo;#{remote['title']['$t']}&rsquo;",
                   :url => remote['link'][0]['href'],
                   :thumbnail_url => remote['media$group']['media$thumbnail'][1]['url'],
@@ -113,8 +112,8 @@ def fetch_flickr(count=10, user_id=ACCOUNTS['flickr']['user_id'], api_key=ACCOUN
   source = 'flickr'
   imported = 0
   flickr['photos']['photo'].each do |remote|
-    if !Item.find_by_uid(source + remote['id'].to_s)
-      Item.create(:uid => source + remote['id'].to_s,
+    if Item.where('uid = ? and source = ?', remote['id'].to_s, source).count.zero?
+      Item.create(:uid => remote['id'].to_s,
                   :title => remote['title'],
                   :url => "http://www.flickr.com/photos/#{ACCOUNTS['flickr']['user']}/#{remote['id']}",
                   :thumbnail_url => remote['url_sq'],
