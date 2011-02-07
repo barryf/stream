@@ -34,8 +34,8 @@ helpers do
     tweet
   end
   def relative_date(time)
-    today_date = Time.utc(Time.now.year, Time.now.month, Time.now.day)
-    date = Time.utc(time.year, time.month, time.day)
+    today_date = Time.local(Time.now.year, Time.now.month, Time.now.day)
+    date = Time.local(time.year, time.month, time.day)
     day_diff = ((today_date-date)/86400).ceil
     if day_diff == 0 then return 'Today' end
     if day_diff == 1 then return 'Yesterday' end
@@ -82,7 +82,7 @@ get '/' do
 end
 
 get '/:year/:month/:day/?' do
-  date = Time.utc(params[:year], params[:month], params[:day])
+  date = Time.local(params[:year], params[:month], params[:day])
   @items = Item.find(:all,
                      :conditions => ['created_at >= ? and created_at < ?', date, date+86400],
                      :limit => 30,
