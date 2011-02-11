@@ -58,11 +58,11 @@ body {
 	font-weight: 300;
 	font-size: 16px;
 	line-height: 22px;
-	background: #000818;
-	color: #99a;
+	background: #141414;
+	color: #a8a8a8;
 }
 a {
-	color: #dde;
+	color: #e8e8e8;
 	text-decoration: none;
 }
 a:hover {
@@ -73,6 +73,7 @@ strong {
 	font-weight: bold;
 }
 h1 {
+	background: #141414;
 	font-size: 20px;
 	line-height: 25px;
 	padding: 20px;
@@ -117,7 +118,7 @@ p {
 }
 #stream>ol>li {
 	margin: 0 0 20px 160px;
-	background: url(/images/stream2.png) repeat-y;
+	background: url(/images/stream3.png) repeat-y;
 }
 #stream>ol>li:first-child {
 	border: 0;
@@ -129,17 +130,17 @@ p {
 	line-height: 10px;
 	margin-top: 5px;
 	text-transform: uppercase;
-	color: #445;
+	color: #666;
 	display: block;
 }
 #stream .when a {
-  color: #445;
+  color: #666;
 }
 #stream .when a:hover, #stream .entry .when a:hover {
 	color: #c60;
 }
 #stream .what img {
-  background-color: #99a;
+  background-color: #bbb;
 }
 #stream .what a:hover img {
   background-color: #c60;
@@ -156,6 +157,7 @@ p {
 	border-left-width: 10px;
 	font-size: 14px;
 	line-height: 18px;
+	max-width: 500px;
 }
 #stream dt, #stream dd { display: inline; }
 #stream .entry dl {
@@ -251,6 +253,24 @@ p {
 #nav .lastfm a:hover    { color: #D10E05;        }
 #nav .youtube *         { border-color: #FF3333; }
 #nav .youtube a:hover   { color: #FF3333;        }
+
+/*** CONTENT ***/
+
+body.content {
+  background: #e8e8e8;
+}
+#content {
+  margin: 20px;
+}
+#content h2 {
+  margin-left: 160px;
+}
+#content .article {
+  margin-left: 160px;
+  max-width: 500px;
+  color: #181818;
+}
+
 
 /*** SMALL SCREENS ***/
 

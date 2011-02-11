@@ -81,3 +81,8 @@ get '/:year/:month/:day/?' do
   @items = Item.where(:created_at => date..(date+86400)).limit(30).order('created_at DESC')
   erb :index
 end
+
+get '/post' do
+  @body_class = 'content'
+  erb :post
+end
