@@ -59,7 +59,8 @@ end
 get '/build/:source/:count?' do
   @imports = {}
   # make sure a blank count is maxed at 10
-  params[:count] ||= 10
+  count = params[:count].to_i
+  count = count < 10 ? count : 10
   # is the param a valid source?
   if ["flickr", "youtube", "twitter", "delicious", "lastfm"].include?(params[:source])
     @imports[params[:source]] = send('fetch_' + params[:source], params[:count])

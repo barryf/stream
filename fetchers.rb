@@ -7,7 +7,7 @@ class Item < ActiveRecord::Base; end
 
 # import tweets
 
-def fetch_twitter(count=10, screen_name=ACCOUNTS['twitter']['screen_name'])
+def fetch_twitter(count=5, screen_name=ACCOUNTS['twitter']['screen_name'])
   url = "http://api.twitter.com/1/statuses/user_timeline.json?screen_name=#{screen_name}&count=#{count}"
   resp = Net::HTTP.get_response(URI.parse(url))
   twitter = JSON.parse(resp.body)
@@ -30,7 +30,7 @@ end
 
 # import links from delicious
 
-def fetch_delicious(count=10, user=ACCOUNTS['delicious']['user'])
+def fetch_delicious(count=5, user=ACCOUNTS['delicious']['user'])
   url = "http://feeds.delicious.com/v2/json/#{user}?count=#{count}"
   resp = Net::HTTP.get_response(URI.parse(url))
   delicious = JSON.parse(resp.body)
@@ -54,7 +54,7 @@ end
 
 # import last.fm loved tracks
 
-def fetch_lastfm(count=10, user=ACCOUNTS['lastfm']['user'], api_key=ACCOUNTS['lastfm']['api_key'])
+def fetch_lastfm(count=5, user=ACCOUNTS['lastfm']['user'], api_key=ACCOUNTS['lastfm']['api_key'])
   url = "http://ws.audioscrobbler.com/2.0/?method=user.getlovedtracks&format=json&user=#{user}&api_key=#{api_key}&limit=#{count}"
   resp = Net::HTTP.get_response(URI.parse(url))
   lastfm = JSON.parse(resp.body)
@@ -78,7 +78,7 @@ end
 
 # import youtube favorites tracks
 
-def fetch_youtube(count=10, user=ACCOUNTS['youtube']['user'])
+def fetch_youtube(count=5, user=ACCOUNTS['youtube']['user'])
   url = "http://gdata.youtube.com/feeds/api/users/#{user}/favorites?v=2&alt=json&max-results=#{count}"
   resp = Net::HTTP.get_response(URI.parse(url))
   youtube = JSON.parse(resp.body)
@@ -102,7 +102,7 @@ end
 
 # import flickr photos
 
-def fetch_flickr(count=10, user_id=ACCOUNTS['flickr']['user_id'], api_key=ACCOUNTS['flickr']['api_key'])
+def fetch_flickr(count=5, user_id=ACCOUNTS['flickr']['user_id'], api_key=ACCOUNTS['flickr']['api_key'])
   url = "http://api.flickr.com/services/rest/?method=flickr.people.getPublicPhotos&format=json&api_key=#{api_key}&user_id=#{user_id}&extras=date_taken,geo,url_sq,description&per_page=#{count}"
   resp = Net::HTTP.get_response(URI.parse(url))
   # remove callback function name and trailing bracket

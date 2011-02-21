@@ -3,6 +3,7 @@
 	last_epoch = 0
 	last_source = ''
 
+	# don't show nav if this is an ajax request
 	if !request.xhr?
 		%>
 		<ul id="nav"> 
@@ -13,13 +14,13 @@
 			<li class="youtube"><a href="http://www.youtube.com/user/barryfrost#g/f" title="Favourite YouTube videos (barryfrost)">Videos</a></li> 
 			<li class="lastfm"><a href="http://www.last.fm/user/barryf" title="Tracks I've loved and scrobbled to Last.fm (barryf)">Music</a></li> 
 		</ul>
+		<div id="stream">
 		<%
 	end
 %>
 
-<div id="stream">
-
 <ol>
+
 <% @items.each do |item| %>
 
 	<% 
@@ -45,7 +46,7 @@
 	<dl>
 		<% case item.source
 			when 'delicious' %>
-				<dd class="what"><a href="<%= item.url %>"><%= h item.title %></a></dd>
+				<dt class="what"><a href="<%= item.url %>"><%= h item.title %></a></dt>
 				<% if item.body != '' %><dd class="body"><%= h item.body %></dd><% end %>
 				<dd class="when">
 					<abbr title="<%= item.created_at %>"><%= item.created_at.strftime('%H:%M')%></abbr>
@@ -69,7 +70,6 @@
 				</dd>
 			<% when 'lastfm' %>
 				<dd class="what">
-					Loved 
 					<a href="<%= item.url %>">
 						<%= item.title %>
 						<% if item.thumbnail_url != '' %><br /><img src="<%= item.thumbnail_url %>" style="height: 60px;" /><% end %>
@@ -82,7 +82,6 @@
 				</dd>
 			<% when 'youtube' %>
 				<dd class="what">
-					Favourited 
 					<a href="<%= item.url %>">
 						<%= item.title %>
 						<% if item.thumbnail_url != '' %>
