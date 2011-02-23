@@ -54,15 +54,14 @@ html {
 	/*border-bottom: #c60 solid 10px;*/
 }
 body {
-	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Arial, sans-serif;
-	font-weight: 300;
-	font-size: 16px;
-	line-height: 22px;
-	background: #000818;
-	color: #99a;
+  font-family: "etica-1", "etica-2", Helvetica, Arial, sans-serif;
+	font-weight: 200;
+	background: #141414;
+	color: #bbb;
+	margin-bottom: 20px;
 }
 a {
-	color: #dde;
+	color: #fff;
 	text-decoration: none;
 }
 a:hover {
@@ -70,11 +69,13 @@ a:hover {
 }
 
 strong {
-	font-weight: bold;
+	font-weight: 600;
 }
 h1 {
+	background: #141414;
 	font-size: 20px;
 	line-height: 25px;
+  font-weight: 400;
 	padding: 20px;
 	min-height: 120px;
 }
@@ -82,21 +83,6 @@ h1 img {
 	display: block;
 	float: left;
 	margin-right: 22px;
-}
-h2 {
-	font-size: 35px;
-	line-height: 49px;
-	margin: 0 0 40px 0;
-	color: #c60;
-}
-h3 {
-	font-size: 24px;
-	line-height: 28px;
-	margin-bottom: 22px;
-	color: #c60;
-}
-p {
-	margin-bottom: 22px;
 }
 
 /*** STREAM ***/
@@ -108,7 +94,7 @@ p {
 	position: absolute;
 	left: 20px;
 	padding-top: 0;
-	font-size: 14px;
+	font-size: 15px;
 	line-height: 18px;
 }
 #stream dd {
@@ -117,29 +103,27 @@ p {
 }
 #stream>ol>li {
 	margin: 0 0 20px 160px;
-	background: url(/images/stream2.png) repeat-y;
+	background: url(/images/stream3.png) repeat-y;
 }
 #stream>ol>li:first-child {
 	border: 0;
 }
 #stream .when {
-	font-family: "Helvetica Neue", Arial, sans-serif;
-	font-weight: bold;
-	font-size: 10px;
-	line-height: 10px;
-	margin-top: 5px;
+	font-size: 11px;
+	line-height: 11px;
+	margin-top: 4px;
 	text-transform: uppercase;
-	color: #445;
-	display: block;
+	color: #666;
+	display: none;
 }
 #stream .when a {
-  color: #445;
+  color: #666;
 }
 #stream .when a:hover, #stream .entry .when a:hover {
 	color: #c60;
 }
 #stream .what img {
-  background-color: #99a;
+  background-color: #bbb;
 }
 #stream .what a:hover img {
   background-color: #c60;
@@ -154,8 +138,10 @@ p {
 	margin: 0 0 20px 0;
 	border-style: solid;
 	border-left-width: 10px;
-	font-size: 14px;
+	font-size: 15px;
 	line-height: 18px;
+	font-weight: 200;
+	max-width: 550px;
 }
 #stream dt, #stream dd { display: inline; }
 #stream .entry dl {
@@ -163,10 +149,7 @@ p {
 	margin-left: 0;
 }
 #stream .entry .what {
-	font-size: 20px;
-	line-height: 28px;
-	font-weight: bold;
-	padding-bottom: 10px;
+	font-weight: 400;
 }
 #stream .twitter dl {
 	border-color: #34CCFF;
@@ -182,9 +165,13 @@ p {
 #stream .delicious a:hover { 
   color: #3274D1;
 }
-#stream .delicious a {
-	font-weight: bold;
+#stream .delicious dt {
+	font-weight: 400;	
+	display: block;
 }
+/*#stream .delicious .body:before {
+  content: " - ";
+}*/
 #stream .flickr dl {
 	border-color: #FF0084;
 	margin-left: 240px;
@@ -212,8 +199,8 @@ p {
 #nav {
 	display: block;
 	float: left;
-	font-size: 14px;
-	line-height: 14px;
+	font-size: 15px;
+	line-height: 15px;
 	margin: 0 0 10px 160px;
 }
 #nav li {
@@ -237,7 +224,7 @@ p {
   color: #334;
 }
 #nav .active * {
-	font-weight: bold;
+	font-weight: 400;
 }
 #nav .entry *           { border-color: #c60;    } 
 #nav .entry a:hover     { color: #c60;           }
@@ -252,6 +239,57 @@ p {
 #nav .youtube *         { border-color: #FF3333; }
 #nav .youtube a:hover   { color: #FF3333;        }
 
+/*** CONTENT ***/
+
+body.content {
+  background: #eee;
+}
+#content {
+  margin: 20px;
+}
+#content p {
+	margin-bottom: 25px;
+}
+#content h2 {
+  margin: 25px 0 25px 160px;
+  max-width: 500px;
+  font-size: 28px;
+  font-weight: 200;
+  line-height: 35px;
+	color: #c60;
+}
+#content h4 {
+	position: absolute;
+	left: 20px;
+	padding-top: 0;
+	font-weight: 200;
+	font-size: 16px;
+	line-height: 25px;
+	color: #666;
+}
+#content .article {
+  margin-left: 160px;
+  max-width: 450px;
+  color: #141414;
+  font-size: 16px;
+  line-height: 25px;
+}
+#content blockquote {
+  border-left: #c60 solid 10px;
+  margin-left: 0px;
+  padding-left: 20px;
+}
+#content a {
+  color: #eee;
+  background: #c60;
+  margin: -1px 0;
+  padding: 1px 2px;
+}
+#content a:hover {
+  background: #141414;
+}
+
+
 /*** SMALL SCREENS ***/
 
 @media handheld and (max-width: 480px), screen and (max-device-width: 480px), screen and (max-width: 700px)  {
@@ -261,19 +299,11 @@ p {
   }
 
   #stream h4 {
-  	position: absolute;
-  	left: 20px;
-  	padding-top: 0;
-  	font-size: 14px;
-  	line-height: 18px;
-
-
     position: relative;
     left: 0;
     margin: 0 0 20px 0;
-  	
   }
-
+  
   #stream>ol>li {
     margin-left: 20px;
     background: none;
@@ -281,6 +311,7 @@ p {
   
   #stream dl {
     margin-left: 0 !important;
+    max-width: 100%;
   }
 
 }
