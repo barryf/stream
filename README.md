@@ -6,6 +6,7 @@ It's a simple experiment that I'm using to help me learn and experiment with Rub
 
 ## TODO
 
+- Use memcached to store pages
 - Event feeds?
 - Add blog posts
 

@@ -20,8 +20,10 @@ end
 class Item < ActiveRecord::Base; end
 
 helpers do
+  # html escaping
   include Rack::Utils
   alias_method :h, :escape_html
+  # tweet/date parsing
   def parse_tweet(tweet)
     # urls
     re = Regexp.new('(^|[\n ])([\w]+?://[\w]+[^ \"\n\r\t<]*)')
@@ -67,6 +69,8 @@ get '/build/:source/:count?' do
   # is the param a valid source?
   if ["flickr", "youtube", "twitter", "delicious", "lastfm"].include?(params[:source])
     @imports[params[:source]] = send('fetch_' + params[:source], params[:count])
+    # do we need to flush the cache?
+    CACHE.flush if @imports[params[:source]] > 0
     erb :build, :layout => false
   else
     redirect '/'
@@ -76,7 +80,12 @@ end
 get '/' do
   page = params[:page].to_i
   page = page > 0 ? page : 1
-  @items = Item.offset((page-1)*50).limit(50).order('created_at DESC')
+  begin
+    @items = CACHE.get("page_#{page}")
+  rescue Memcached::NotFound
+    @items = Item.offset((page-1)*50).limit(50).order('created_at DESC')
+    CACHE.set("page_#{page}",@items)
+  end
   @title = "Barry Frost&rsquo;s Aggregator"
   @page = page
   erb :index, :layout => !request.xhr?
