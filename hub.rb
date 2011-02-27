@@ -12,6 +12,9 @@ configure do
   # activerecord setup
   dbconfig = YAML.load(File.read('config/database.yml'))
   ActiveRecord::Base.establish_connection dbconfig['production']
+  # setup memcached
+  require 'memcached'
+  CACHE = Memcached.new
 end
 
 class Item < ActiveRecord::Base; end
@@ -71,15 +74,17 @@ get '/build/:source/:count?' do
 end  
 
 get '/' do
-  ts = params[:ts] ||= 99999999999
-  @items = Item.where('created_at < ?',Time.at(ts.to_i)).limit(30).order('created_at DESC')
+  page = params[:page].to_i
+  page = page > 0 ? page : 1
+  @items = Item.offset((page-1)*50).limit(50).order('created_at DESC')
   @title = "Barry Frost&rsquo;s Aggregator"
+  @page = page
   erb :index, :layout => !request.xhr?
 end
 
 get '/:year/:month/:day/?' do
   date = Time.local(params[:year], params[:month], params[:day])
-  @items = Item.where(:created_at => date..(date+86400)).limit(30).order('created_at DESC')
+  @items = Item.where(:created_at => date..(date+86400)).order('created_at DESC')
   erb :index
 end
 

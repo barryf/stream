@@ -2,12 +2,12 @@
 <html>
 	<head>
 		<title><%= @title ||= '' %></title>
-		<link rel="stylesheet" href="/screen.css" type="text/css" />
+		<link rel="stylesheet" href="/css/screen.css" type="text/css" />
 		<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;" />
 		<script type="text/javascript" src="http://use.typekit.com/jxy6qmc.js"></script>
 		<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 	</head>
-	<body class="tk-etica <%= @body_class ||= '' %>">
+	<body class="<%= @body_class ||= '' %>">
 		<h1>
 			<a href="http://barryfrost.com/"><img src="/images/barryf-small.jpg" alt="Barry Frost" /></a> Hello, I'm <a href="http://barryfrost.com/">Barry Frost</a> and this is my work-in-progress life stream aggregator project.
 		</h1> 
@@ -15,12 +15,14 @@
 <%= yield %>
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+		<script src="/js/jquery.infinitescroll.js"></script>
 		<script>
-			function load_next(ts) {
-				$.ajax({ url: "/?ts=" + ts, success: function(data){
-					$('#stream').append(data);
-				}});
-			}
+			$(window).infinitescroll({
+			    url: window.location.href,
+			    page: <%= @page %>,
+			    triggerAt: 500,
+			    appendTo: '#stream'
+			 });
 		</script>
 	</body>
 </html>

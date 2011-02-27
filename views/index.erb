@@ -1,6 +1,5 @@
 <% 
 	last_day = ''
-	last_epoch = 0
 	last_source = ''
 
 	# don't show nav if this is an ajax request
@@ -112,17 +111,8 @@
 	</dl>
 	</li>
 	
-	<% 
-		last_epoch = item.created_at.to_i 
-		last_source = item.source
-	%>
+	<% last_source = item.source %>
 <% end %>
 </ol></li>
 
-<%  # show "more" link if the last ajax call wasn't empty and we've shown all 30 results
-	if last_epoch != 0 && @items.length == 30 %>
-	<p><a style="text-align: center; display: block;" href="/?ts=<%= last_epoch %>" onclick="load_next(<%= last_epoch %>); $(this).hide(); return false">&darr; More&hellip;</a></p>
-<% else %>
-	</ol>
-	</div>
-<% end %>
+<% if !request.xhr? %></div><% end %>
