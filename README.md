@@ -8,6 +8,8 @@ It's a simple experiment that I'm using to help me learn and experiment with Rub
 
 - Event feeds?
 - Add blog posts
+- Expand URLs in Tweets
+- Show media in Tweets (eg YouTube videos)
 
 ## COPYRIGHT
 
