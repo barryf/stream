@@ -4,14 +4,10 @@
 
 /*** GLOBAL ***/
 
-html {
-	border-top: #c60 solid 10px;
-	/*border-bottom: #c60 solid 10px;*/
-}
 body {
   font-family: "etica-1", "etica-2", Helvetica, Arial, sans-serif;
 	font-weight: 200;
-	background: #141414;
+	background: rgb(20,20,20);
 	color: #bbb;
 	margin-bottom: 20px;
 }
@@ -26,24 +22,33 @@ a:hover {
 strong {
 	font-weight: 600;
 }
-h1 {
-	background: #141414;
-	font-size: 20px;
-	line-height: 25px;
-  font-weight: 400;
-	padding: 20px;
-	min-height: 120px;
+header {
+  display: block;
+  position: fixed;
+  z-index: 9999;
+	background: rgba(33,33,33,0.9);
+	border-top: #c60 solid 10px;
+	padding: 20px 0;
+	width: 100%;
+	height: 101px;
 }
-h1 img {
+header h1 {
+  font-size: 22px;
+	line-height: 30px;
+  font-weight: 400;
+  padding-right: 20px;
+}
+header img {
 	display: block;
 	float: left;
-	margin-right: 22px;
+	margin: 0 20px;
 }
 
 /*** STREAM ***/
 
 #stream {
   clear: both;
+  padding-top: 170px;
 }
 #stream h4 {
 	position: absolute;
@@ -153,10 +158,14 @@ h1 img {
 
 #nav {
 	display: block;
-	float: left;
 	font-size: 15px;
 	line-height: 15px;
-	margin: 0 0 10px 160px;
+	position: fixed;
+	z-index: 10000;
+	top: 136px;
+	left: 160px;
+	width: 100%;
+	height: 20px;
 }
 #nav li {
 	display: block;
@@ -164,6 +173,7 @@ h1 img {
 }
 #nav a, #nav span {
 	display: block;
+	float: left;
 	width: 60px;
 	border-left-style: solid;
 	border-left-width: 10px;
@@ -244,13 +254,28 @@ body.content {
   background: #141414;
 }
 
-
 /*** SMALL SCREENS ***/
 
 @media handheld and (max-width: 480px), screen and (max-device-width: 480px), screen and (max-width: 700px)  {
   
+  header {
+    position: relative;
+    background: none;
+  }
+  header h1 {
+    font-size: 18px;
+    line-height: 22px;
+  }
+  
   #nav { 
-    margin-left: 20px;
+    position: relative;
+    top: 0;
+    left: 0;
+    padding: 0 20px;
+  }
+  
+  #stream {
+    padding: 10px 0 0 0;
   }
 
   #stream h4 {

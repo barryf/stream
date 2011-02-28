@@ -4,6 +4,9 @@
 		<title><%= @title ||= '' %></title>
 		<link rel="stylesheet" href="/css/screen.css" type="text/css" />
 		<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;" />
+		<!--[if IE]>
+			<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
 		<script type="text/javascript">
 		  var _gaq = _gaq || [];
 		  _gaq.push(['_setAccount', 'UA-158467-6']);
@@ -18,9 +21,12 @@
 		<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 	</head>
 	<body class="<%= @body_class ||= '' %>">
-		<h1>
-			<a href="http://barryfrost.com/"><img src="/images/barryf-small.jpg" alt="Barry Frost" /></a> Hello, I'm <a href="http://barryfrost.com/">Barry Frost</a> and this is my work-in-progress life stream aggregator project.
-		</h1> 
+		<header>
+			<a href="http://barryfrost.com/"><img src="/images/barryf-small.jpg" alt="Barry Frost" /></a>
+			<h1>
+				Hello, I'm <a href="http://barryfrost.com/">Barry Frost</a> and this is my work-in-progress life stream aggregator project.
+			</h1> 
+		</header>
 
 <%= yield %>
 
