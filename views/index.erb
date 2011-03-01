@@ -52,16 +52,25 @@
 					&middot;
 					<a href="http://www.delicious.com/url/<%= Digest::MD5.hexdigest(item.url) %>">Delicious</a>
 					<% 
-						#if item.tags != ''
-						#	%> &middot; <%
-						#	item.tags.split(' ').each do |tag|
-						#		%><a href="http://delicious.com/<%= ACCOUNTS['delicious']['user'] %>/<%= tag %>"><%= tag %></a> <%
-						#	end
-						#end
+						if item.tags != ''
+							%> &middot; <%
+							item.tags.split(' ').each do |tag|
+								%><a href="http://delicious.com/<%= ACCOUNTS['delicious']['user'] %>/<%= tag %>"><%= tag %></a> <%
+							end
+						end
 					%>
 				</dd>
 			<% when 'twitter' %>
-				<dd class="what"><%= parse_tweet item.body %></dd>
+				<dd class="what">
+					<%= item.body %>
+					<% if item.oembed
+						item.oembed.each do |json|
+							oembed = JSON.parse(json) %>
+							<p><a href="#"><img src="<%= oembed['thumbnail_url'] %>" style="height: 60px;" /></a></p>
+							<p><%= oembed['html'] %></p>
+						<% end 
+					end %>
+				</dd>
 				<dd class="when">
 					<abbr title="<%= item.created_at %>"><%= item.created_at.strftime('%H:%M')%></abbr>
 					&middot;

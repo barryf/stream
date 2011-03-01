@@ -23,19 +23,7 @@ helpers do
   # html escaping
   include Rack::Utils
   alias_method :h, :escape_html
-  # tweet/date parsing
-  def parse_tweet(tweet)
-    # urls
-    re = Regexp.new('(^|[\n ])([\w]+?://[\w]+[^ \"\n\r\t<]*)')
-    tweet.gsub!(re, '\1<a href="\2">\2</a>')
-    # usernames
-    re = Regexp.new('(\@)([\w]+)')
-    tweet.gsub!(re, '<a href="http://twitter.com/\2">@\2</a>')
-    # hashtags
-    re = Regexp.new('(\#)([\w]+)')
-    tweet.gsub!(re, '<a href="http://twitter.com/search/%23\2">#\2</a>')
-    tweet
-  end
+  # date parsing
   def relative_date(time)
     today_date = Time.local(Time.now.year, Time.now.month, Time.now.day)
     date = Time.local(time.year, time.month, time.day)

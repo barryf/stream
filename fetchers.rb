@@ -1,9 +1,58 @@
 require 'rubygems'
 require 'json'
 require 'net/http'
+require 'cgi'
 require 'active_record'
 
 class Item < ActiveRecord::Base; end
+
+# parse tweets
+
+# follow redirects and return final url
+def fetch(uri_str, limit = 10)
+  raise ArgumentError, 'HTTP redirect too deep' if limit == 0
+  response = Net::HTTP.get_response(URI.parse(uri_str))
+  case response
+  when Net::HTTPSuccess     then uri_str
+  when Net::HTTPRedirection then fetch(response['location'], limit - 1)
+  else
+    response.error!
+  end
+end
+
+# interrogate tweet. find any embedded media and return oembed json via oohembed
+def parse_tweet(tweet)
+  oembeds = []
+  # link urls:
+  re = Regexp.new('(^|[\n ])([\w]+?://[\w]+[^ \"\n\r\t<]*)')
+  # find urls through redirects
+  urls = []
+  tweet.scan(re) do |s|
+    # find final url
+    url = fetch(s[1])
+    # replace url with found url
+    urls << [s[1], url]
+  end
+  # do url link replacements
+  urls.each do |url|
+    # test each url for oembed data
+    oohembed_url = "http://oohembed.com/oohembed/?url=#{url[1]}"
+    resp = Net::HTTP.get_response(URI.parse(oohembed_url))
+    if resp.code != '404' && resp.body.length > 0
+      oembeds << resp.body
+    end
+    # replace urls with links
+    tweet.gsub!(url[0], "<a href=\"#{url[1]}\" title=\"#{CGI.escapeHTML(url[1])}\">#{url[0]}</a>")
+  end
+  # link usernames
+  re = Regexp.new('(\@)([\w]+)')
+  tweet.gsub!(re, '<a href="http://twitter.com/\2">@\2</a>')
+  # link hashtags
+  re = Regexp.new('(\#)([\w]+)')
+  tweet.gsub!(re, '<a href="http://twitter.com/search/%23\2">#\2</a>')
+  # return tweet and any oembed data
+  [tweet, oembeds]
+end
 
 # import tweets
 
@@ -16,9 +65,13 @@ def fetch_twitter(count=5, screen_name=ACCOUNTS['twitter']['screen_name'])
   twitter.each do |remote|
     # don't import replies/mentions
     if Item.where('uid = ? and source = ?', remote['id'].to_s, source).count.zero? && remote['text'][0..0] != '@'
+      # parse tweet and get any oembed data
+      tweet, oembed = parse_tweet(remote['text'])
+      # strip newlines from oembed json
+      oembed = oembed.to_s.gsub(/\n/,'')
       Item.create(:uid => remote['id'].to_s,
-                  :title => remote['text'],
-                  :body => remote['text'],
+                  :body => tweet,
+                  :oembed => oembed,
                   :source => source,
                   :imported_at => Time.now,
                   :created_at => remote['created_at'])
