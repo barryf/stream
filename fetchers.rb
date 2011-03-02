@@ -57,7 +57,7 @@ end
 # import tweets
 
 def fetch_twitter(count=5, screen_name=ACCOUNTS['twitter']['screen_name'])
-  url = "http://api.twitter.com/1/statuses/user_timeline.json?screen_name=#{screen_name}&count=#{count}"
+  url = "http://api.twitter.com/1/statuses/user_timeline.json?screen_name=#{screen_name}&include_rts=1&count=#{count}"
   resp = Net::HTTP.get_response(URI.parse(url))
   twitter = JSON.parse(resp.body)
   source = 'twitter'
