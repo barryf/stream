@@ -65,10 +65,20 @@
 					<%= item.body %>
 					<% if item.oembed
 						item.oembed.each do |json|
-							oembed = JSON.parse(json) %>
-							<p><a href="#"><img src="<%= oembed['thumbnail_url'] %>" style="height: 60px;" /></a></p>
-							<p><%= oembed['html'] %></p>
-						<% end 
+							oembed = JSON.parse(json)
+							case oembed['provider_name']
+							when 'YouTube' 
+								# find the video id in embed html and link to it rather than embed
+								re = Regexp.new('\/e\/([A-Za-z0-9]*)')
+								v = oembed['html'].match(re)[1] %>
+								<a href="http://www.youtube.com/watch?v=<%= v %>"><img src="<%= oembed['thumbnail_url'] %>" style="height: 60px;" /></a>
+							<% when 'TwitPic' %>
+								<a href="<%= oembed['url'] %>"><img src="<%= oembed['thumbnail_url'] %>" style="height: 60px;" /></a>
+							<% else %>
+								<a href="<%= oembed['url'] %>"><img src="<%= oembed['thumbnail_url'] %>" style="height: 60px;" /></a>
+								<%= oembed['html'] %>
+							<% end
+						end 
 					end %>
 				</dd>
 				<dd class="when">
