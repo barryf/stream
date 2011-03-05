@@ -41,7 +41,7 @@ header h1 {
 header img {
 	display: block;
 	float: left;
-	margin: 0 20px;
+	margin: 0 20px 20px 20px;
 }
 
 /*** STREAM ***/
@@ -267,10 +267,12 @@ body.content {
     line-height: 22px;
   }
   
-  #nav { 
+  #nav {
     position: relative;
     top: 0;
     left: 0;
+    width: auto;
+    height: auto;
     padding: 0 20px;
   }
   
