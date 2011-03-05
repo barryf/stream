@@ -85,13 +85,9 @@ header img {
 #stream .what img {
   background-color: #bbb;
 }
-#stream .what a:hover img {
-  background-color: #c60;
-}
 #stream .what img {
-  display: block;
   padding: 1px;
-  margin: 5px 0;
+  margin: 5px 0 0 0;
 }
 #stream dl {
 	padding: 0 20px 0 10px;
@@ -115,16 +111,14 @@ header img {
 	border-color: #34CCFF;
 	margin-left: 80px;	
 }
-#stream .twitter a:hover { 
-  color: #34CCFF;
-}
+#stream .twitter a:hover { color: #34CCFF; }
+#stream .twitter a:hover img { background-color: #34CCFF; }
 #stream .delicious dl {
 	border-color: #3274D1;
 	margin-left: 160px;
 }
-#stream .delicious a:hover { 
-  color: #3274D1;
-}
+#stream .delicious a:hover { color: #3274D1; }
+#stream .delicious a:hover img { background-color: #3274D1; }
 #stream .delicious dt {
 	font-weight: 400;	
 	display: block;
@@ -136,23 +130,20 @@ header img {
 	border-color: #FF0084;
 	margin-left: 240px;
 }
-#stream .flickr a:hover { 
-  color: #FF0084;
-}
+#stream .flickr a:hover { color: #FF0084; }
+#stream .flickr a:hover img { background-color: #FF0084; }
 #stream .youtube dl {
 	border-color: #FF3333;
 	margin-left: 320px
 }
-#stream .youtube a:hover { 
-  color: #FF3333;
-}
+#stream .youtube a:hover { color: #FF3333; }
+#stream .youtube a:hover img { background-color: #FF3333; }
 #stream .lastfm dl {
 	border-color: #D10E05;
 	margin-left: 400px;	
 }
-#stream .lastfm a:hover { 
-  color: #D10E05;
-}
+#stream .lastfm a:hover { color: #D10E05; }
+#stream .lastfm a:hover img { background-color: #D10E05; }
 
 /*** NAV ***/
 
