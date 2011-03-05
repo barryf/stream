@@ -11,7 +11,12 @@ class Item < ActiveRecord::Base; end
 # follow redirects and return final url
 def fetch(uri_str, limit = 10)
   raise ArgumentError, 'HTTP redirect too deep' if limit == 0
-  response = Net::HTTP.get_response(URI.parse(uri_str))
+  uri = URI.parse(uri_str)
+  http = Net::HTTP.new(uri.host, uri.port)
+  request = Net::HTTP::Get.new(uri.request_uri)
+  # spoof the user agent string, specifically for facebook which gets huffy
+  request.initialize_http_header({"User-Agent" => "Mozilla/5.0 (Windows; U; MSIE 9.0; Windows NT 9.0; en-US))"})
+  response = http.request(request)
   case response
   when Net::HTTPSuccess     then uri_str
   when Net::HTTPRedirection then fetch(response['location'], limit - 1)
@@ -38,7 +43,7 @@ def parse_tweet(tweet)
     # test each url for oembed data
     oohembed_url = "http://oohembed.com/oohembed/?url=#{url[1]}"
     resp = Net::HTTP.get_response(URI.parse(oohembed_url))
-    if resp.code != '404' && resp.body.length > 0
+    if resp.code == '200' && resp.body.length > 0
       oembeds << resp.body
     end
     # replace urls with links
