@@ -43,9 +43,13 @@ end
 
 get '/build/?' do
   @imports = {}
+  flush = false
   ["flickr", "youtube", "twitter", "delicious", "lastfm"].each do |s|
     @imports[s] = send('fetch_' + s)
+    flush = true if @imports[s] > 0
   end
+  # do we need to flush the cache?
+  CACHE.flush if flush
   erb :build, :layout => false
 end
 
