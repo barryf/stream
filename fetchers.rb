@@ -8,6 +8,16 @@ class Item < ActiveRecord::Base; end
 
 # parse tweets
 
+# url shortening - max 40 characters, remove http:// and www.
+def shorten_url(url)
+  short = url[0,39]
+  if short.length < url.length
+    short << '&hellip;'
+  end
+  short.sub!(/^http\:\/\//,'').sub!(/^www\./,'')
+  short
+end
+
 # follow redirects and return final url
 def fetch(uri_str, limit = 10)
   raise ArgumentError, 'HTTP redirect too deep' if limit == 0
@@ -47,7 +57,7 @@ def parse_tweet(tweet)
       oembeds << resp.body
     end
     # replace urls with links
-    tweet.gsub!(url[0], "<a href=\"#{url[1]}\" title=\"#{CGI.escapeHTML(url[1])}\">#{url[0]}</a>")
+    tweet.gsub!(url[0], "<a href=\"#{url[0]}\" title=\"#{CGI.escapeHTML(url[1])}\">#{shorten_url(url[1])}</a>")
   end
   # link usernames
   re = Regexp.new('(\@)([\w]+)')
