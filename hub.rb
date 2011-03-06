@@ -73,14 +73,15 @@ get '/' do
   page = params[:page].to_i
   page = page > 0 ? page : 1
   begin
-    @items = CACHE.get("page_#{page}")
+    content = CACHE.get("page_#{page}")
   rescue Memcached::NotFound
     @items = Item.offset((page-1)*50).limit(50).order('created_at DESC')
-    CACHE.set("page_#{page}",@items)
+    @title = "Barry Frost&rsquo;s Aggregator"
+    @page = page
+    content = erb(:index, :layout => !request.xhr?)
+    CACHE.set("page_#{page}", content)
   end
-  @title = "Barry Frost&rsquo;s Aggregator"
-  @page = page
-  erb :index, :layout => !request.xhr?
+  content
 end
 
 get %r{/(entries|tweets|links|photos|videos|music)/?} do |type|
@@ -101,14 +102,15 @@ get %r{/(entries|tweets|links|photos|videos|music)/?} do |type|
   page = params[:page].to_i
   page = page > 0 ? page : 1
   begin
-    @items = CACHE.get("#{source}_page_#{page}")
+    content = CACHE.get("#{source}_page_#{page}")
   rescue Memcached::NotFound
     @items = Item.where(:source => source).offset((page-1)*50).limit(50).order('created_at DESC')
-    CACHE.set("#{source}_page_#{page}",@items)
+    @title = "Barry Frost&rsquo;s Aggregator"
+    @page = page
+    content = erb(:index, :layout => !request.xhr?)
+    CACHE.set("#{source}_page_#{page}", content)
   end
-  @title = "Barry Frost&rsquo;s Aggregator"
-  @page = page
-  erb :index, :layout => !request.xhr?
+  content
 end
 
 get '/:year/:month/:day/?' do
