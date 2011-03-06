@@ -22,7 +22,7 @@
 	</head>
 	<body class="<%= @body_class ||= '' %>">
 		<header>
-			<a href="http://barryfrost.com/"><img src="/images/barryf-small.jpg" alt="Barry Frost" /></a>
+			<a href="/"><img src="/images/barryf-small.jpg" alt="Barry Frost" /></a>
 			<h1>
 				Hello, I'm <a href="http://barryfrost.com/">Barry Frost</a> and this is my work-in-progress life stream aggregator project.
 			</h1> 
@@ -31,14 +31,16 @@
 <%= yield %>
 
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
-		<script src="/js/jquery.infinitescroll.js"></script>
-		<script>
-			$(window).infinitescroll({
-			    url: window.location.href,
-			    page: <%= @page %>,
-			    triggerAt: 500,
-			    appendTo: '#stream'
-			 });
-		</script>
+		<% if !@page.nil? %>
+			<script src="/js/jquery.infinitescroll.js"></script>
+			<script>
+				$(window).infinitescroll({
+				    url: window.location.href,
+				    page: <%= @page + 1 %>,
+				    triggerAt: 500,
+				    appendTo: '#stream'
+				 });
+			</script>
+		<% end %>
 	</body>
 </html>

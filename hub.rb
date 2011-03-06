@@ -83,6 +83,34 @@ get '/' do
   erb :index, :layout => !request.xhr?
 end
 
+get %r{/(entries|tweets|links|photos|videos|music)/?} do |type|
+  case type
+  when 'entries'
+    source = 'entries'
+  when 'tweets'
+    source = 'twitter'
+  when 'links'
+    source = 'delicious'
+  when 'photos'
+    source = 'flickr'
+  when 'videos'
+    source = 'youtube'
+  when 'music'
+    source = 'lastfm'
+  end
+  page = params[:page].to_i
+  page = page > 0 ? page : 1
+  begin
+    @items = CACHE.get("#{source}_page_#{page}")
+  rescue Memcached::NotFound
+    @items = Item.where(:source => source).offset((page-1)*50).limit(50).order('created_at DESC')
+    CACHE.set("#{source}_page_#{page}",@items)
+  end
+  @title = "Barry Frost&rsquo;s Aggregator"
+  @page = page
+  erb :index, :layout => !request.xhr?
+end
+
 get '/:year/:month/:day/?' do
   date = Time.local(params[:year], params[:month], params[:day])
   @items = Item.where(:created_at => date..(date+86400)).order('created_at DESC')
