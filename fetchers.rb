@@ -62,9 +62,9 @@ def parse_tweet(tweet)
   # link usernames
   re = Regexp.new('(\@)([\w]+)')
   tweet.gsub!(re, '<a href="http://twitter.com/\2">@\2</a>')
-  # link hashtags
-  re = Regexp.new('(\#)([\w]+)')
-  tweet.gsub!(re, '<a href="http://twitter.com/search/%23\2">#\2</a>')
+  # link hashtags (needs to start the string or have a space before so we don't link #s in urls)
+  re = Regexp.new('(\s|^)(\#)([\w]+)')
+  tweet.gsub!(re, '\1<a href="http://twitter.com/search/%23\3">#\3</a>')
   # return tweet and any oembed data
   [tweet, oembeds]
 end
