@@ -56,6 +56,8 @@ end
 
 before do
   headers "Content-Type" => "text/html; charset=utf-8"
+  # flush cache if we're in development mode
+  CACHE.flush if settings.environment == :development
 end
 
 get '/build/?' do
