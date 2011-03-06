@@ -15,14 +15,18 @@ configure do
   # setup memcached
   require 'memcached'
   CACHE = Memcached.new
+  # authentication password
+  ADMIN_PASSWORD = ENV['ADMIN_PASSWORD'] ||= 'admin'
 end
 
 class Item < ActiveRecord::Base; end
 
 helpers do
+  
   # html escaping
   include Rack::Utils
   alias_method :h, :escape_html
+  
   # date parsing
   def relative_date(time)
     today_date = Time.local(Time.now.year, Time.now.month, Time.now.day)
@@ -35,6 +39,19 @@ helpers do
     if time.year != Time.now.year then return time.strftime('%d %b %Y') end
     time.strftime('%d %B')
   end
+  
+  # authentication for fetchers/builders
+  def protected!
+    unless authorized?
+      response['WWW-Authenticate'] = %(Basic realm="Restricted Area")
+      throw(:halt, [401, "Not authorized\n"])
+    end
+  end
+  def authorized?
+    @auth ||=  Rack::Auth::Basic::Request.new(request.env)
+    @auth.provided? && @auth.basic? && @auth.credentials && @auth.credentials == ['admin', ADMIN_PASSWORD]
+  end
+  
 end
 
 before do
@@ -42,6 +59,7 @@ before do
 end
 
 get '/build/?' do
+  protected!
   @imports = {}
   flush = false
   ["flickr", "youtube", "twitter", "delicious", "lastfm"].each do |s|
@@ -54,6 +72,7 @@ get '/build/?' do
 end
 
 get '/build/:source/:count?' do
+  protected!
   @imports = {}
   # make sure a blank count is maxed at 10
   count = params[:count].to_i
