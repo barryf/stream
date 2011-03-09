@@ -201,29 +201,35 @@ body.content {
   background: #eee;
 }
 #content {
-  margin: 20px;
+  padding: 150px 20px 20px 20px;
 }
 #content p {
-	margin-bottom: 25px;
+	margin: 0 0 25px 25px;
 }
 #content h2 {
-  margin: 25px 0 25px 160px;
-  max-width: 500px;
+  padding: 25px 0 25px 160px;
+  max-width: 450px;
   font-size: 28px;
   font-weight: 200;
   line-height: 35px;
-	color: #c60;
+	color: #141414;
+}
+#content h3 {
+  font-size: 22px;
+  font-weight: 200;
+  line-height: 25px;
+  margin-bottom: 25px;
 }
 #content h4 {
 	position: absolute;
 	left: 20px;
 	padding-top: 0;
-	font-weight: 200;
 	font-size: 16px;
 	line-height: 25px;
 	color: #666;
 }
 #content .article {
+  font-weight: 400;
   margin-left: 160px;
   max-width: 450px;
   color: #141414;
@@ -232,17 +238,17 @@ body.content {
 }
 #content blockquote {
   border-left: #c60 solid 10px;
-  margin-left: 0px;
-  padding-left: 20px;
+  margin-left: 25px;
+  color: #666;
 }
 #content a {
-  color: #eee;
-  background: #c60;
-  margin: -1px 0;
-  padding: 1px 2px;
+  color: #c60;
+  font-weight: 400;
+  border-bottom: #c60 dotted 1px;
 }
 #content a:hover {
-  background: #141414;
+  color: #141414;
+  border-color: #141414;
 }
 
 /*** SMALL SCREENS ***/
