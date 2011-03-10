@@ -22,37 +22,41 @@ a:hover {
 strong {
 	font-weight: 600;
 }
+
 header {
-  display: block;
   position: fixed;
-  z-index: 9999;
-	background: rgba(33,33,33,0.9);
-	border-top: #c60 solid 10px;
-	padding: 20px 0;
-	width: 100%;
-	height: 101px;
+  top: 30px;
+  left: 20px;
+  height: 500px;
+  width: 140px;
+  z-index: 10000;
+  font-size: 15px;
+  line-height: 18px;
 }
 header h1 {
   font-size: 22px;
-	line-height: 30px;
+	line-height: 22px;
   font-weight: 400;
-  padding-right: 20px;
+  margin: 20px 0;
+  color: #fff;
 }
-header img {
-	display: block;
-	float: left;
-	margin: 0 20px 20px 20px;
+header h2 {
+  margin: 20px 0;
+}
+header nav {
+  margin: 20px 0;
 }
 
 /*** STREAM ***/
 
 #stream {
   clear: both;
-  padding-top: 170px;
+  padding-top: 65px;
+  margin-left: 200px;
 }
 #stream h4 {
 	position: absolute;
-	left: 20px;
+	left: 220px;
 	padding-top: 0;
 	font-size: 15px;
 	line-height: 18px;
@@ -149,14 +153,17 @@ header img {
 
 #nav {
 	display: block;
+	background: rgba(33,33,33,0.9);
+	border-top: #c60 solid 10px;
 	font-size: 15px;
 	line-height: 15px;
 	position: fixed;
-	z-index: 10000;
-	top: 136px;
-	left: 160px;
+	z-index: 9999;
+	top: 0; /* 136px */
+	padding: 20px 0 0 360px;
+	left: 0;
 	width: 100%;
-	height: 20px;
+	height: 15px;
 }
 #nav li {
 	display: block;
@@ -200,46 +207,59 @@ header img {
 body.content {
   background: #eee;
 }
+body.content header {
+  display: none;
+}
 #content {
-  padding: 150px 20px 20px 20px;
+  padding: 20px;
 }
 #content p {
-	margin: 0 0 25px 25px;
+	margin: 0 0 25px 0;
 }
 #content h2 {
-  padding: 25px 0 25px 160px;
-  max-width: 450px;
+  text-align: center;
+  margin: 50px auto;
+  max-width: 800px;
   font-size: 28px;
   font-weight: 200;
   line-height: 35px;
 	color: #141414;
 }
 #content h3 {
-  font-size: 22px;
+  text-align: center;
+  margin: 0 auto;
+  max-width: 500px;
+  font-size: 23px;
   font-weight: 200;
   line-height: 25px;
-  margin-bottom: 25px;
+  margin: 50px 0;
 }
 #content h4 {
-	position: absolute;
-	left: 20px;
-	padding-top: 0;
+  text-align: center;
+  margin-bottom: 25px;
 	font-size: 16px;
 	line-height: 25px;
-	color: #666;
+	color: #666; 
+	display: none;
 }
 #content .article {
   font-weight: 400;
-  margin-left: 160px;
-  max-width: 450px;
+  margin: 0 auto;
+  max-width: 500px;
   color: #141414;
   font-size: 16px;
   line-height: 25px;
 }
 #content blockquote {
-  border-left: #c60 solid 10px;
-  margin-left: 25px;
+  border-top: #c60 solid 5px;
+  margin: 0 auto 25px auto;
+  width: 400px;
   color: #666;
+  padding: 0;
+  display: none;
+}
+#content blockquote p {
+  margin: 10px 0;
 }
 #content a {
   color: #c60;
@@ -255,15 +275,17 @@ body.content {
 
 @media handheld and (max-width: 480px), screen and (max-device-width: 480px), screen and (max-width: 700px)  {
   
-  header {
-    position: relative;
-    background: none;
-  }
-  header h1 {
-    font-size: 18px;
-    line-height: 22px;
+  body {
+    border-top: #c60 solid 10px;
   }
   
+  header {
+    top: auto;
+    left: auto;
+    margin: 20px;
+    position: relative;
+    display: block;
+  }
   #nav {
     position: relative;
     top: 0;
@@ -271,23 +293,22 @@ body.content {
     width: auto;
     height: auto;
     padding: 0 20px;
+    border: none;
   }
   
   #stream {
+    margin: 0;
     padding: 10px 0 0 0;
   }
-
   #stream h4 {
     position: relative;
     left: 0;
     margin: 0 0 20px 0;
-  }
-  
+  }  
   #stream>ol>li {
     margin-left: 20px;
     background: none;
-  }
-  
+  }  
   #stream dl {
     margin-left: 0 !important;
     max-width: 100%;
