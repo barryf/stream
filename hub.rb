@@ -91,6 +91,8 @@ get '/build/:source/:count?' do
 end  
 
 get '/' do
+  # cache for 10 mins
+  response['Cache-Control'] = "public, max-age=#{60}"
   page = params[:page].to_i
   page = page > 0 ? page : 1
   begin
@@ -106,6 +108,8 @@ get '/' do
 end
 
 get %r{/(entries|tweets|links|photos|videos|music)/?} do |type|
+  # cache for 10 mins
+  response['Cache-Control'] = "public, max-age=#{60}"
   case type
   when 'entries'
     source = 'entries'
@@ -140,7 +144,7 @@ get '/:year/:month/:day/?' do
   erb :index
 end
 
-get '/post' do
+get '/entry' do
   @body_class = 'content'
-  erb :post
+  erb :entry
 end
