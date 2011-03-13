@@ -16,7 +16,7 @@ configure do
   require 'memcached'
   CACHE = Memcached.new
   # authentication password
-  ADMIN_PASSWORD = ENV['ADMIN_PASSWORD'] ||= 'admin'
+  ADMIN_PASSWORD = ENV['ADMIN_PASSWORD'] || 'admin'
 end
 
 class Item < ActiveRecord::Base; end
@@ -29,8 +29,8 @@ helpers do
   
   # date parsing
   def relative_date(time)
-    today_date = Time.local(Time.now.year, Time.now.month, Time.now.day)
-    date = Time.local(time.year, time.month, time.day)
+    today_date = Time.utc(Time.now.year, Time.now.month, Time.now.day)
+    date = Time.utc(time.year, time.month, time.day)
     day_diff = ((today_date-date)/86400).ceil
     if day_diff == 0 then return 'Today' end
     if day_diff == 1 then return 'Yesterday' end
@@ -52,6 +52,10 @@ helpers do
     @auth.provided? && @auth.basic? && @auth.credentials && @auth.credentials == ['admin', ADMIN_PASSWORD]
   end
   
+  # http caching if not development
+  def cache_for(mins = 1)
+    response['Cache-Control'] = "public, max-age=#{60*mins}" unless settings.environment == :development
+  end
 end
 
 before do
@@ -91,8 +95,8 @@ get '/build/:source/:count?' do
 end  
 
 get '/' do
-  # cache for 10 mins
-  response['Cache-Control'] = "public, max-age=#{60}"
+  # cache for x mins
+  cache_for 10
   page = params[:page].to_i
   page = page > 0 ? page : 1
   begin
@@ -101,18 +105,18 @@ get '/' do
     @items = Item.offset((page-1)*50).limit(50).order('created_at DESC')
     @title = "Barry Frost&rsquo;s Aggregator"
     @page = page
-    content = erb(:index, :layout => !request.xhr?)
+    content = @items.length > 0 ? erb(:index, :layout => !request.xhr?) : ''
     CACHE.set("page_#{page}", content)
   end
   content
 end
 
 get %r{/(entries|tweets|links|photos|videos|music)/?} do |type|
-  # cache for 10 mins
-  response['Cache-Control'] = "public, max-age=#{60}"
+  # cache for x mins
+  cache_for 10
   case type
   when 'entries'
-    source = 'entries'
+    source = 'blog'
   when 'tweets'
     source = 'twitter'
   when 'links'
@@ -132,14 +136,14 @@ get %r{/(entries|tweets|links|photos|videos|music)/?} do |type|
     @items = Item.where(:source => source).offset((page-1)*50).limit(50).order('created_at DESC')
     @title = "Barry Frost&rsquo;s Aggregator"
     @page = page
-    content = erb(:index, :layout => !request.xhr?)
+    content = @items.length > 0 ? erb(:index, :layout => !request.xhr?) : ''
     CACHE.set("#{source}_page_#{page}", content)
   end
   content
 end
 
 get '/:year/:month/:day/?' do
-  date = Time.local(params[:year], params[:month], params[:day])
+  date = Time.utc(params[:year], params[:month], params[:day])
   @items = Item.where(:created_at => date..(date+86400)).order('created_at DESC')
   erb :index
 end
