@@ -94,6 +94,11 @@ get '/build/:source/:count?' do
   end
 end  
 
+get '/flush/?' do
+  protected!
+  CACHE.flush
+end
+
 get '/' do
   # cache for x mins
   cache_for 10
