@@ -45,23 +45,20 @@
 	<dl>
 		<% case item.source
 			when 'delicious' %>
-				<dt class="what"><a href="<%= item.url %>"><%= h item.title %></a></dt>
-				<% if item.body != '' %><dd class="body"><%= h item.body %></dd><% end %>
-				<dd class="when">
-					<abbr title="<%= item.created_at %>"><%= item.created_at.strftime('%H:%M')%></abbr>
-					&middot;
-					<a href="http://www.delicious.com/url/<%= Digest::MD5.hexdigest(item.url) %>">Delicious</a>
-					<% 
-						if item.tags != ''
-							%> &middot; <%
-							item.tags.split(' ').each do |tag|
-								%><a href="http://delicious.com/<%= ACCOUNTS['delicious']['user'] %>/<%= tag %>"><%= tag %></a> <%
-							end
-						end
-					%>
+				<dd class="permalink">
+					<a href="http://www.delicious.com/url/<%= Digest::MD5.hexdigest(item.url) %>">
+						<%= item.created_at.strftime('%H:%M')%>
+					</a>
 				</dd>
+				<dt><a href="<%= item.url %>"><%= h item.title %></a></dt>
+				<% if item.body != '' %><dd class="body"><%= h item.body %></dd><% end %>
 			<% when 'twitter' %>
-				<dd class="what">
+				<dd class="permalink">
+					<a href="http://twitter.com/<%= ACCOUNTS['twitter']['screen_name'] %>/status/<%= item.uid %>">
+						<%= item.created_at.strftime('%H:%M')%>
+					</a>
+				</dd>
+				<dt>
 					<%= item.body %>
 					<% if item.oembed
 						item.oembed.each do |json|
@@ -80,52 +77,47 @@
 							<% end
 						end 
 					end %>
-				</dd>
-				<dd class="when">
-					<abbr title="<%= item.created_at %>"><%= item.created_at.strftime('%H:%M')%></abbr>
-					&middot;
-					<a href="http://twitter.com/<%= ACCOUNTS['twitter']['screen_name'] %>/status/<%= item.uid %>">Tweet</a>
-				</dd>
+				</dt>
 			<% when 'lastfm' %>
-				<dd class="what">
+				<dd class="permalink">
+					<a href="<%= item.url %>">
+						<%= item.created_at.strftime('%H:%M')%>
+					</a>
+				</dd>
+				<dt>
 					<a href="<%= item.url %>">
 						<%= item.title %>
 						<% if item.thumbnail_url != '' %><br /><img src="<%= item.thumbnail_url %>" style="height: 60px;" /><% end %>
 					</a>
-				</dd>
-				<dd class="when">
-					<abbr title="<%= item.created_at %>"><%= item.created_at.strftime('%H:%M')%></abbr>
-					&middot;
-					<a href="<%= item.url %>">Last.fm Loved</a>
-				</dd>
+				</dt>
 			<% when 'youtube' %>
-				<dd class="what">
+				<dd class="permalink">
+					<a href="<%= item.url %>">
+						<%= item.created_at.strftime('%H:%M')%>
+					</a>
+				</dd>
+				<dt>
 					<a href="<%= item.url %>">
 						<%= item.title %>
 						<% if item.thumbnail_url != '' %>
 							<br /><img src="<%= item.thumbnail_url %>" style="height: 60px;" />
 						<% end %>
 					</a>
-				</dd>
-				<dd class="when">
-					<abbr title="<%= item.created_at %>"><%= item.created_at.strftime('%H:%M')%></abbr>
-					&middot;
-					<a href="<%= item.url %>">YouTube Favourite</a>
-				</dd>
+				</dt>
 			<% when 'flickr' %>
-				<dd class="what">
+				<dd class="permalink">
+					<a href="<%= item.url %>">
+						<%= item.created_at.strftime('%H:%M')%>
+					</a>
+				</dd>
+				<dt>
 					<a href="<%= item.url %>">
 						<%= h item.title %>
 						<% if item.thumbnail_url != '' %>
 							<br /><img src="<%= item.thumbnail_url %>" />
 						<% end %>
 					</a>
-				</dd>
-				<dd class="when">
-					<abbr title="<%= item.created_at %>"><%= item.created_at.strftime('%H:%M')%></abbr>
-					&middot;
-					<a href="<%= item.url %>">Flickr Photo</a>
-				</dd>
+				</dt>
 		<% end %>
 	</dl>
 	</li>
