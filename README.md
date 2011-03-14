@@ -1,16 +1,16 @@
 # Hub
 
-Imports my feeds and assembles items into an aggregated chronological feed.
+Imports my feeds and assembles items into an aggregated chronological page.
 
 It's a simple experiment that I'm using to help me learn and experiment with Ruby, Sinatra, Heroku and others.
 
 ## TODO
 
-- Use memcached to store pages
+- Sort out timezones
 - Event feeds?
 - Add blog posts
-- Expand URLs in Tweets
-- Show media in Tweets (eg YouTube videos)
+- Finish sidebar "about"
+- Tidy up mobile view
 
 ## COPYRIGHT
 
