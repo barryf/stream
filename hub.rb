@@ -26,20 +26,7 @@ helpers do
   # html escaping
   include Rack::Utils
   alias_method :h, :escape_html
-  
-  # date parsing
-  def relative_date(time)
-    today_date = Time.utc(Time.now.year, Time.now.month, Time.now.day)
-    date = Time.utc(time.year, time.month, time.day)
-    day_diff = ((today_date-date)/86400).ceil
-    if day_diff == 0 then return 'Today' end
-    if day_diff == 1 then return 'Yesterday' end
-    if day_diff == 7 then return '1 week ago' end
-    if day_diff >= 2 && day_diff < 7 then return "#{day_diff} days ago" end
-    if time.year != Time.now.year then return time.strftime('%d %b %Y') end
-    time.strftime('%d %B')
-  end
-  
+
   # authentication for fetchers/builders
   def protected!
     unless authorized?

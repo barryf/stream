@@ -23,7 +23,8 @@
 <% @items.each do |item| %>
 
 	<% 
-	item_day = relative_date(item.created_at)
+	# show the date although hide year if it's the same as this one
+	item_day = item.created_at.year == Time.now.year ? item.created_at.strftime('%d %B') : item.created_at.strftime('%d %b %Y')
 
 	# only show the first flickr photo uploaded in a batch
 	if item.source == 'flickr' && last_source == 'flickr' && last_day == item_day
@@ -36,7 +37,7 @@
 		end
 	%>
 		<li>
-		<h4><a href="<%= item.created_at.strftime('/%Y/%m/%d') %>" title="<%= item.created_at.strftime('%F') %>"><%= item_day %></a></h4>
+		<h4><a href="<%= item.created_at.strftime('/%Y/%m/%d') %>" title="<%= item.created_at.strftime('%F') %>" class="date"><%= item_day %></a></h4>
 		<ol>
 		<% last_day = item_day 
 	end %>
@@ -47,7 +48,7 @@
 			when 'delicious' %>
 				<dd class="permalink">
 					<a href="http://www.delicious.com/url/<%= Digest::MD5.hexdigest(item.url) %>">
-						<%= item.created_at.strftime('%H:%M')%>
+						<%= item.created_at.strftime('%H:%M') %>
 					</a>
 				</dd>
 				<dt><a href="<%= item.url %>"><%= h item.title %></a></dt>
