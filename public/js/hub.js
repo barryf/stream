@@ -34,4 +34,4 @@ if ( typeof jQuery != "undefined" )
 	};
 
 // prettify dates now
-$('.date').prettyDate();
+$('time').prettyDate();

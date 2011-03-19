@@ -1,28 +1,10 @@
 <% 
 	last_day = ''
 	last_source = ''
-
-	# don't show nav if this is an ajax request
-	if !request.xhr?
-		%>
-		<ul id="nav">
-			<li class="entry"><a href="/entries/">Entries</a></li>
-			<li class="twitter"><a href="/tweets/" title="Tweets from Twitter (@barryf)">Tweets</a></li> 
-			<li class="delicious"><a href="/links/" title="Bookmarked links on Delicious (barryf)">Links</a></li> 
-			<li class="flickr"><a href="/photos/" title="My Flickr photos (barryf)">Photos</a></li> 
-			<li class="youtube"><a href="/videos/" title="Favourite YouTube videos (barryfrost)">Videos</a></li> 
-			<li class="lastfm"><a href="/music/" title="Tracks I've loved and scrobbled to Last.fm (barryf)">Music</a></li>
-		</ul>
-		<div id="stream">
-		<%
-	end
 %>
-
 <ol>
+<% @items.each do |item| 
 
-<% @items.each do |item| %>
-
-	<% 
 	# show the date although hide year if it's the same as this one
 	item_day = item.created_at.year == Time.now.year ? item.created_at.strftime('%d %B') : item.created_at.strftime('%d %b %Y')
 
@@ -36,23 +18,31 @@
 			%></ol></li><%
 		end
 	%>
-		<li>
-		<h4><a href="<%= item.created_at.strftime('/%Y/%m/%d') %>" title="<%= item.created_at.strftime('%F') %>" class="date"><%= item_day %></a></h4>
+	<li>
+		<h4><a href="<%= item.created_at.strftime('/%Y/%m/%d') %>"><time title="<%= item.created_at.strftime('%F') %>"><%= item_day %></time></a></h4>
 		<ol>
 		<% last_day = item_day 
 	end %>
 	
 	<li class="<%= item.source %>">
-	<dl>
+	<dl id="_<%= item.uid %>">
 		<% case item.source
-			when 'delicious' %>
+			when 'entry' %>
+				<dd class="permalink">
+					<a href="<%= item.url %>">
+						<%= item.created_at.strftime('%H:%M') %>
+					</a>
+				</dd>
+				<dt><a href="<%= item.url %>"><%= h item.title %></a></dt>
+				<% if item.summary != '' %><dd><%= h item.summary %></dd><% end %>
+		<% when 'delicious' %>
 				<dd class="permalink">
 					<a href="http://www.delicious.com/url/<%= Digest::MD5.hexdigest(item.url) %>">
 						<%= item.created_at.strftime('%H:%M') %>
 					</a>
 				</dd>
 				<dt><a href="<%= item.url %>"><%= h item.title %></a></dt>
-				<% if item.body != '' %><dd class="body"><%= h item.body %></dd><% end %>
+				<% if item.body != '' %><dd><%= h item.body %></dd><% end %>
 			<% when 'twitter' %>
 				<dd class="permalink">
 					<a href="http://twitter.com/<%= ACCOUNTS['twitter']['screen_name'] %>/status/<%= item.uid %>">
@@ -126,8 +116,21 @@
 	<% last_source = item.source %>
 <% end %>
 
+	</ol>
+	</li>
 </ol>
 
-<% if !request.xhr? %></div><% end %>
+<% # if this is the index page and not an ajax call, close the div and include the javascript needed
+	if !request.xhr? && @page %>
+		<script src="/js/jquery.infinitescroll.js"></script>
+		<script>
+			$(window).infinitescroll({
+			    url: window.location.href,
+			    page: <%= @page + 1 %>,
+			    triggerAt: 500,
+			    appendTo: '#content'
+			 });
+		</script>
+<% end %>
 	
 <!-- Fragment generated <%= Time.now %> -->
