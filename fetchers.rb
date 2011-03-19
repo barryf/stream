@@ -72,7 +72,7 @@ end
 # import tweets
 
 def fetch_twitter(count=5, screen_name=ACCOUNTS['twitter']['screen_name'])
-  url = "http://api.twitter.com/1/statuses/user_timeline.json?screen_name=#{screen_name}&include_rts=1&count=#{count}"
+  url = "http://api.twitter.com/1/statuses/user_timeline.json?screen_name=#{screen_name}&include_rts=1&trim_user=1&count=#{count}"
   resp = Net::HTTP.get_response(URI.parse(url))
   twitter = JSON.parse(resp.body)
   source = 'twitter'
@@ -192,4 +192,14 @@ def fetch_flickr(count=5, user_id=ACCOUNTS['flickr']['user_id'], api_key=ACCOUNT
     end
   end
   imported
+end
+
+# destroy an item
+
+def destroy_item(source, uid)
+  # does the item exist?
+  return false if Item.where({:uid => uid, :source => source}).count.zero?
+  # destroy the item
+  Item.destroy_all(:uid => uid, :source => source)
+  true
 end

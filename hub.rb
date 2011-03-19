@@ -5,24 +5,28 @@ require 'active_record'
 require 'fetchers'
 
 configure do
+  # activerecord setup
+  dbconfig = YAML.load(File.read('config/database.yml'))
+  ActiveRecord::Base.establish_connection dbconfig['production']
+
+  # account api keys
   ACCOUNTS = YAML.load(File.read('config/accounts.yml'))
   # if private api keys weren't included in accounts.yml, try to get from env vars
   ACCOUNTS['lastfm']['api_key'] ||= ENV['LASTFM_API_KEY']
   ACCOUNTS['flickr']['api_key'] ||= ENV['FLICKR_API_KEY']
-  # activerecord setup
-  dbconfig = YAML.load(File.read('config/database.yml'))
-  ActiveRecord::Base.establish_connection dbconfig['production']
-  # setup memcached
+
+  # set up memcached
   require 'memcached'
   CACHE = Memcached.new
+
   # authentication password
   ADMIN_PASSWORD = ENV['ADMIN_PASSWORD'] || 'admin'
 end
 
+# we're using activerecord to talk to the database
 class Item < ActiveRecord::Base; end
 
-helpers do
-  
+helpers do  
   # html escaping
   include Rack::Utils
   alias_method :h, :escape_html
@@ -46,7 +50,9 @@ helpers do
 end
 
 before do
+  # always use utf-8
   headers "Content-Type" => "text/html; charset=utf-8"
+
   # flush cache if we're in development mode
   CACHE.flush if settings.environment == :development
 end
@@ -81,13 +87,19 @@ get '/build/:source/:count?' do
   end
 end  
 
+get '/destroy/:source/:uid/?' do
+  protected!
+  @success = destroy_item(params[:source], params[:uid])
+  CACHE.flush if @success
+  erb :destroy, :layout => false
+end
+
 get '/flush/?' do
   protected!
   CACHE.flush
 end
 
 get '/' do
-  # cache for x mins
   cache_for 10
   page = params[:page].to_i
   page = page > 0 ? page : 1
@@ -104,11 +116,10 @@ get '/' do
 end
 
 get %r{/(entries|tweets|links|photos|videos|music)/?} do |type|
-  # cache for x mins
   cache_for 10
   case type
   when 'entries'
-    source = 'blog'
+    source = 'entry'
   when 'tweets'
     source = 'twitter'
   when 'links'
@@ -135,12 +146,18 @@ get %r{/(entries|tweets|links|photos|videos|music)/?} do |type|
 end
 
 get '/:year/:month/:day/?' do
+  cache_for 10
   date = Time.utc(params[:year], params[:month], params[:day])
   @items = Item.where(:created_at => date..(date+86400)).order('created_at DESC')
   erb :index
 end
 
 get '/entry' do
-  @body_class = 'content'
+  cache_for 10
   erb :entry
+end
+
+get '/colophon/?' do 
+  cache_for 60
+  erb :colophon 
 end
