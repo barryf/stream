@@ -1,9 +1,10 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 	<head>
 		<meta charset="utf-8">
-		<title><%= @title ||= '' %></title>
-		<link rel="stylesheet" href="/css/screen.css" type="text/css" />
+		<title><%= @title || '' %></title>
+		<meta name="description" content="Barry Frost's personal website."> 
+	    <link rel="stylesheet" href="/css/screen.css" type="text/css" />
 		<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;" />
 		<!--[if IE]>
 			<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -24,13 +25,34 @@
 	</head>
 	<body class="<%= @body_class || '' %>">
 		<header id="global">
-			<a href="/">
-				<img src="/images/barryf-small.jpg" alt="Barry Frost" />
-				<h1>Barry Frost</h1>
-			</a>
-			<h2>Hello, this is my work-in-progress life stream aggregator project. More soon.</h2>
-			<p><a href="http://barryfrost.com">barryfrost.com</a></p>
-			<p><a href="http://twitter.com/barryf">@barryf</a></p>
+			<h1>
+				<a href="/" id="home">
+					<img src="/images/barryf.jpg" alt="Barry Frost" />
+					<span>Barry Frost</span>
+				</a>
+			</h1>
+			<h2>Hello, I&rsquo;m <a href="/about">Barry</a>. I&rsquo;m currently leading a <a href="http://globaldev.co.uk/">dev team</a> as <a href="http://www.linkedin.com/in/barryfrost">Technical Director</a> at <a href="http://www.globalpersonals.co.uk/">Global Personals</a>. I live in <a href="http://en.wikipedia.org/wiki/Windsor,_Berkshire">Windsor</a> in the UK. <a href="/about">Read&nbsp;more&hellip;</a></h2>
+			<p>This site aggregates some of my decentralised content and favourites, combining them into one chronological list.</p>
+			<ul>
+				<li><a href="/about">About</a></li>
+				<li><a href="/colophon">Colophon</a></li>
+			</ul>
+			<ul>
+				<li><a href="http://twitter.com/barryf" rel="me" title="Twitter tweets. They may make no sense out of context.">Twitter <span class="account">&ndash; barryf</span></a></li>
+				<li><a href="http://www.linkedin.com/in/barryfrost" rel="me" title="My LinkedIn professional public profile.">LinkedIn <span class="account">&ndash; barryfrost</span></a></li>
+				<li><a href="http://delicious.com/barryf" rel="me" title="My Delicious links. Rather geeky.">Delicious <span class="account">&ndash; barryf</span></a></li>
+				<li><a href="http://github.com/barryf" rel="me">GitHub <span class="account">&ndash; barryf</span></a></li>
+				<li><a href="http://flickr.com/photos/barryf" rel="me" title="My Flickr photos. Amateur at best, I&rsquo;m afraid.">Flickr <span class="account">&ndash; barryf</span></a></li>
+				<li><a href="http://last.fm/user/barryf" rel="me" title="Last.fm tracks.">Last.fm <span class="account">&ndash; barryf</span></a></li>
+				<!--
+				<li><a href="http://dopplr.com/traveller/barryf" rel="me" title="Trips I'm planning from Dopplr">Dopplr</a></li>
+				<li><a href="http://lanyrd.com/people/barryf" rel="me">Lanyrd</a></li>
+				<li>http://www.google.com/profiles/barryfrost</li>
+				<li>http://youtube.com/user/barryfrost</li>
+				<li>http://socialgraph-resources.googlecode.com/svn/trunk/samples/findyours.html?q=barryfrost.com</li>
+				-->
+			</ul>
+			<!--The opinions expressed herein are all my own personal opinions and do not represent my employer's view in any way.-->
 		</header>
 		<nav id="types">
 			<li class="entry"><a href="/entries/" title="Entries from my blog">Entries</a></li>
@@ -45,6 +67,7 @@
 <%= yield %>
 
 		</div>
+		<footer>&copy; 2011 Barry Frost. Powered by Heroku, Sinatra and Ruby.</footer>
 		<script src="/js/hub.js"></script>
 		<!-- Page generated <%= Time.now %> -->
 	</body>

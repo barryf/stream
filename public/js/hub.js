@@ -19,8 +19,8 @@ function prettyDate(time){
 			
 	return day_diff == 0 && "Today" ||
 		day_diff == 1 && "Yesterday" ||
-		day_diff < 7 && day_diff + " days ago" ||
-		day_diff == 7 && "1 week ago";
+		day_diff == 7 && "1 week ago" ||
+		day_diff < 14 && day_diff + " days ago";
 }
 
 // If jQuery is included in the page, adds a jQuery plugin to handle it as well

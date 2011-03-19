@@ -107,7 +107,7 @@ get '/' do
     content = CACHE.get("page_#{page}")
   rescue Memcached::NotFound
     @items = Item.offset((page-1)*50).limit(50).order('created_at DESC')
-    @title = "Barry Frost&rsquo;s Aggregator"
+    @title = "Barry Frost"
     @page = page
     content = @items.length > 0 ? erb(:index, :layout => !request.xhr?) : ''
     CACHE.set("page_#{page}", content)
@@ -137,7 +137,7 @@ get %r{/(entries|tweets|links|photos|videos|music)/?} do |type|
     content = CACHE.get("#{source}_page_#{page}")
   rescue Memcached::NotFound
     @items = Item.where(:source => source).offset((page-1)*50).limit(50).order('created_at DESC')
-    @title = "Barry Frost&rsquo;s Aggregator"
+    @title = "Barry Frost: #{type}"
     @page = page
     content = @items.length > 0 ? erb(:index, :layout => !request.xhr?) : ''
     CACHE.set("#{source}_page_#{page}", content)

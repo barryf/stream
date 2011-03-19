@@ -10,7 +10,7 @@ It's a simple experiment that I'm using to help me learn and experiment with Rub
 - Event feeds?
 - Add blog posts
 - Finish sidebar "about"
-- Tidy up mobile view
+- Microformats and rel="me"s
 
 ## COPYRIGHT
 

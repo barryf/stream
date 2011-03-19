@@ -32,27 +32,24 @@ header#global {
   top: 30px;
   left: 20px;
   height: 500px;
-  width: 140px;
+  width: 150px;
   z-index: 10000;
-  font-size: 15px;
-  line-height: 18px;
+  font-size: 13px;
+  line-height: 16px;
 }
-header#global img {
-  float: left;
-  margin: 0 10px 10px 0;
-}
-header#global h1 {
+header#global h1 span {
+  clear: left;
+  display: block;
+  padding: 5px 0 0 0;
   font-size: 20px;
 	line-height: 20px;
   font-weight: 800;
-  margin: 25px 0 0 0;
   color: #fff;
-  text-transform: uppercase;
 }
-header#global a:hover h1 {
+header#global h1 a:hover span {
   color: #c60;
 }
-header#global a:active h1, header#global a:active img {
+header#global h1 a:active span {
 	position: relative;
 	top: 1px;
 }
@@ -60,8 +57,25 @@ header#global h2 {
   clear: left;
   margin: 20px 0;
 }
+header#global ul {
+  font-size: 14px;
+  line-height: 18px;
+}
+header#global li a {
+  display: block;
+}
+header#global p, header#global ul {
+  margin-bottom: 20px;
+}
 header#global nav {
   margin: 20px 0;
+}
+.account {
+  visibility: hidden;
+  font-size: 11px;
+}
+a:hover .account {
+  visibility: visible;
 }
 
 /*** CONTENT ***/
@@ -248,17 +262,21 @@ article p a:hover {
   border-color: #c60;
   color: #c60;
 }
+article aside {
+  font-size: 15px;
+	line-height: 18px;
+	color: #bbb;
+}
 article aside#metadata {
 	position: absolute;
 	left: 220px;
 	top: 65px;
-  padding: 0;
-	font-size: 15px;
-	line-height: 18px;
-	color: #bbb;
 }
 article aside#metadata li {
   margin-bottom: 5px;
+}
+article aside#footer {
+  padding: 20px 0;
 }
 article figure {
   display: block;
@@ -277,6 +295,17 @@ article figcaption {
   color: #888;
 }
 
+footer {
+  position: fixed;
+  left: 20px;
+  bottom: 20px;
+  width: 150px;
+  height: 48px;
+  font-size: 13px;
+  line-height: 16px;
+  color: #555;
+}
+
 /*** SMALL SCREENS ***/
 
 @media handheld and (max-width: 480px), screen and (max-device-width: 480px), screen and (max-width: 700px)  {
@@ -288,10 +317,18 @@ article figcaption {
   header#global {
     top: auto;
     left: auto;
-    margin: 20px 20px 40px 20px;
+    margin: 20px;
+    width: auto;
     height: auto;
     position: relative;
     display: block;
+  }
+  header#global li, header#global li a {
+    display: inline;
+    padding-right: 0.5em;
+  }
+  header#global .account {
+    display: none;
   }
   nav#types {
     position: relative;
@@ -345,11 +382,23 @@ article figcaption {
     width: auto;
     left: auto;
     top: auto;
-    text-align: right;
+    margin-bottom: 20px;
   }
   article aside#metadata li {
     display: inline;
     margin: 0 1em 0 0;
+  }
+
+  footer {
+    position: relative;
+    left: auto;
+    bottom: auto;
+    width: auto;
+    height: auto;
+    padding: 20px 0 0 20px;
+    font-size: 13px;
+    line-height: 16px;
+    color: #555;   
   }
 
 }
