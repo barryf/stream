@@ -97,6 +97,7 @@ end
 get '/flush/?' do
   protected!
   CACHE.flush
+  erb "Flushed cache at #{Time.now}", :layout => false
 end
 
 get '/' do
@@ -160,4 +161,10 @@ end
 get '/colophon/?' do 
   cache_for 60
   erb :colophon 
+end
+
+get '/favicon.ico' do
+  # cache for 1 week
+  cache_for 7*24*60
+  status 404
 end
