@@ -28,10 +28,11 @@ def fetch(uri_str, limit = 10)
   request.initialize_http_header({"User-Agent" => "Mozilla/5.0 (Windows; U; MSIE 9.0; Windows NT 9.0; en-US))"})
   response = http.request(request)
   case response
-  when Net::HTTPSuccess     then uri_str
-  when Net::HTTPRedirection then fetch(response['location'], limit - 1)
+  when Net::HTTPSuccess         then uri_str
+  when Net::HTTPRedirection     then fetch(response['location'], limit - 1)
   else
-    response.error!
+    # response.error!
+    uri_str
   end
 end
 
