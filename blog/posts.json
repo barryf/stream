@@ -1,0 +1,16 @@
+---
+layout: nil
+---
+[
+ {% for post in site.posts %}
+   {
+     "id": "{{ post.url | remove:'.html' }}",
+     "title": "{{ post.title }}",
+     "url": "http://localhost:9393/articles{{ post.url | remove:'.html' }}",
+     "posted": "{{ post.date | date_to_xmlschema }}",
+     "summary": "{{ post.content | strip_html | xml_escape | strip_newlines | truncatewords:20 }}",
+     "content": "{{ post.content | xml_escape | strip_newlines }}"
+   }
+   {% if forloop.last == false %},{% endif %}
+ {% endfor %}
+]

@@ -1,72 +1,39 @@
 <!doctype html>
 <html lang="en">
 	<head>
-		<meta charset="utf-8">
+		<meta charset="utf-8" />
 		<title><%= @title || '' %></title>
-		<meta name="description" content="Barry Frost's personal website."> 
-	    <link rel="stylesheet" href="/css/screen.css" type="text/css" />
+		<link rel="stylesheet" href="/css/screen.css" type="text/css" />
+		<link rel="alternate" href="/atom.xml" type="application/atom+xml" title="Articles feed (atom)" />
+		<meta name="description" content="Barry Frost's personal website. Articles, tweets, links and other content by Barry." /> 
+		<meta name="microid" content="4b73b02e68add2d8044feec5c56484c7286190b7" />
 		<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;" />
 		<!--[if IE]>
 			<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
 		<script>
-		  var _gaq = _gaq || [];
-		  _gaq.push(['_setAccount', 'UA-158467-6']);
-		  _gaq.push(['_trackPageview']);
-		  (function() {
-		    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-		    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-		    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-		  })();
+			var _gaq = _gaq || [];
+			_gaq.push(['_setAccount', 'UA-158467-6']);
+			_gaq.push(['_trackPageview']);
+			(function() {
+				var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			})();
 		</script>
 		<script src="http://use.typekit.com/jxy6qmc.js"></script>
 		<script>try{Typekit.load();}catch(e){}</script>
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
 	</head>
 	<body class="<%= @body_class || '' %>">
-		<header id="global">
-			<h1>
-				<a href="/" id="home">
-					<img src="/images/barryf.jpg" alt="Barry Frost" />
-					<span>Barry<br />Frost</span>
-				</a>
-			</h1>
-			<div id="intro">
-				<h2>Hello, I&rsquo;m <a href="/about">Barry</a>. I live in <a href="http://en.wikipedia.org/wiki/Windsor,_Berkshire">Windsor</a> in the UK where I&rsquo;m <a href="http://www.linkedin.com/in/barryfrost">Technical Director</a> of <a href="http://www.globalpersonals.co.uk/">Global Personals</a> and lead the <a href="http://globaldev.co.uk/">globaldev</a> team. Read more <a href="/about">about me</a>.</h2>
-				<p>This site aggregates some of my decentralised content and favourites. Find out why and how in the <a href="/colophon">colophon</a>.</p>
-			</div>
-			<ul>
-				<li><a href="http://www.linkedin.com/in/barryfrost" rel="me" title="My LinkedIn professional public profile.">LinkedIn <span class="account">&ndash; barryfrost</span></a></li>
-				<li><a href="http://twitter.com/barryf" rel="me" title="Twitter tweets. They may make no sense out of context.">Twitter <span class="account">&ndash; barryf</span></a></li>
-				<li><a href="http://delicious.com/barryf" rel="me" title="My Delicious links. Rather geeky.">Delicious <span class="account">&ndash; barryf</span></a></li>
-				<li><a href="http://github.com/barryf" rel="me">GitHub <span class="account">&ndash; barryf</span></a></li>
-				<li><a href="http://flickr.com/photos/barryf" rel="me" title="My Flickr photos. Amateur at best, I&rsquo;m afraid.">Flickr <span class="account">&ndash; barryf</span></a></li>
-				<li><a href="http://last.fm/user/barryf" rel="me" title="Last.fm tracks.">Last.fm <span class="account">&ndash; barryf</span></a></li>
-				<!--
-				<li><a href="http://dopplr.com/traveller/barryf" rel="me" title="Trips I'm planning from Dopplr">Dopplr</a></li>
-				<li><a href="http://lanyrd.com/people/barryf" rel="me">Lanyrd</a></li>
-				<li>http://www.google.com/profiles/barryfrost</li>
-				<li>http://youtube.com/user/barryfrost</li>
-				<li>http://socialgraph-resources.googlecode.com/svn/trunk/samples/findyours.html?q=barryfrost.com</li>
-				-->
-			</ul>
-			<!--The opinions expressed herein are all my own personal opinions and do not represent my employer's view in any way.-->
-		</header>
-		<nav id="types">
-			<li class="entry"><a href="/entries/" title="Entries from my blog">Entries</a></li>
-			<li class="twitter"><a href="/tweets/" title="Tweets from Twitter (@barryf)">Tweets</a></li> 
-			<li class="delicious"><a href="/links/" title="Bookmarked links on Delicious (barryf)">Links</a></li> 
-			<li class="flickr"><a href="/photos/" title="My Flickr photos (barryf)">Photos</a></li> 
-			<li class="youtube"><a href="/videos/" title="Favourite YouTube videos (barryfrost)">Videos</a></li> 
-			<li class="lastfm"><a href="/music/" title="Tracks I've loved and scrobbled to Last.fm (barryf)">Music</a></li>
-		</nav>
-		<div id="content">
-		
+
 <%= yield %>
 
-		</div>
-		<footer>&copy; 2011 Barry Frost. Powered by Heroku, Sinatra and Ruby.</footer>
-		<script src="/js/hub.js"></script>
+		<% # only show sidebar on article/static pages
+		if @body_class == 'article' || @body_class == 'static' %>
+			<%= erb(:sidebar) %>
+		<% end %>
+		<script src="/js/dates.js"></script>
 		<!-- Page generated <%= Time.now %> -->
 	</body>
 </html>

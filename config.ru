@@ -3,5 +3,5 @@ require 'bundler'
 
 Bundler.require
 
-require 'hub'
+require 'barryfrost.rb'
 run Sinatra::Application

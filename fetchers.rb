@@ -195,6 +195,32 @@ def fetch_flickr(count=5, user_id=ACCOUNTS['flickr']['user_id'], api_key=ACCOUNT
   imported
 end
 
+# import entries from the blog
+
+def fetch_blog(count=5)
+  url = "http://localhost:4000/posts.json"
+  resp = Net::HTTP.get_response(URI.parse(url))
+  blog = JSON.parse(resp.body)
+  # import to database
+  source = 'blog'
+  imported = 0
+  blog.each do |remote|
+    # sanitise uids, stripping non-alphanumerics and leading slash
+    uid = remote['id'].to_s.gsub(/[^A-Za-z0-9-]/,'-')[1..(remote['id'].to_s.length)]
+    if Item.where('uid = ? and source = ?', uid, source).count.zero?
+      Item.create(:uid => uid,
+                  :title => remote['title'],
+                  :body => remote['summary'],
+                  :url => remote['url'],
+                  :source => source,
+                  :imported_at => Time.now,
+                  :created_at => remote['posted'])
+      imported += 1
+    end
+  end
+  imported
+end
+
 # destroy an item
 
 def destroy_item(source, uid)

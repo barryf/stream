@@ -1,0 +1,19 @@
+<article>
+	
+<header>
+	<h1>{{ page.title }}</h1>
+	<div class="time"><a href="{{ page.date | date:"/%Y/%m/%d/" }}"><time title="{{ page.date | date:'%Y-%m-%d' }}">{{ page.date | date:'%Y-%m-%d' }}</time></a></div>
+	{% if page.photo %}
+		<div class="photo"><img src="{{ page.photo }}" /></div>
+	{% endif %}
+</header>
+
+<section id="body">
+{{ content }}
+</section>
+
+<footer>
+	<p>&mdash;<a href="/"><strong>Barry Frost</strong></a>. <a href="https://twitter.com/?status=@barryf%20(http://barryfrost.com/)">Comment</a> or <a href="http://twitter.com/barryf">follow me</a> on Twitter</a></p>
+</footer>
+
+</article>

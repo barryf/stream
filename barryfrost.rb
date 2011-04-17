@@ -39,7 +39,7 @@ helpers do
     end
   end
   def authorized?
-    @auth ||=  Rack::Auth::Basic::Request.new(request.env)
+    @auth ||= Rack::Auth::Basic::Request.new(request.env)
     @auth.provided? && @auth.basic? && @auth.credentials && @auth.credentials == ['admin', ADMIN_PASSWORD]
   end
   
@@ -47,10 +47,16 @@ helpers do
   def cache_for(mins = 1)
     response['Cache-Control'] = "public, max-age=#{60*mins}" unless settings.environment == :development
   end
+  
+  # find h1 title within article
+  def parse_article_title(article)
+    re = Regexp.new('<h1>(.*)</h1>')
+    article.scan(re)[0][0]
+  end    
 end
 
 before do
-  # always use utf-8
+  # always use utf-8 (unless overridden)
   headers "Content-Type" => "text/html; charset=utf-8"
 
   # flush cache if we're in development mode
@@ -77,7 +83,7 @@ get '/build/:source/:count?' do
   count = params[:count].to_i
   count = count < 10 ? count : 10
   # is the param a valid source?
-  if ["flickr", "youtube", "twitter", "delicious", "lastfm"].include?(params[:source])
+  if ["flickr", "youtube", "twitter", "delicious", "lastfm", "blog"].include?(params[:source])
     @imports[params[:source]] = send('fetch_' + params[:source], params[:count])
     # do we need to flush the cache?
     CACHE.flush if @imports[params[:source]] > 0
@@ -110,17 +116,44 @@ get '/' do
     @items = Item.offset((page-1)*50).limit(50).order('created_at DESC')
     @title = "Barry Frost"
     @page = page
+    @body_class = 'home'
+    @latest_article = Item.where(:source => 'blog').order('created_at DESC').first
     content = @items.length > 0 ? erb(:index, :layout => !request.xhr?) : ''
     CACHE.set("page_#{page}", content)
   end
   content
 end
 
-get %r{/(entries|tweets|links|photos|videos|music)/?} do |type|
+get '/articles/:title' do
+  cache_for 60
+  # fetch from memcached
+  begin
+    content = CACHE.get("article_#{params[:title]}")
+  rescue Memcached::NotFound
+    begin
+      article = File.read("blog/_site/#{params[:title]}.html")
+      @body_class = 'article'
+      @title = parse_article_title(article)
+      content = erb(article)
+      CACHE.set("article_#{params[:title]}", content)
+    rescue Errno::ENOENT
+      not_found
+    end
+  end
+  content
+end
+
+get %r{/rss/?|feed/?|atom\.xml} do
+  cache_for 10
+  headers "Content-Type" => "application/atom+xml; charset=utf-8"
+  File.read("blog/_site/atom.xml")
+end
+
+get %r{/(articles|tweets|links|photos|videos|music)/?} do |type|
   cache_for 10
   case type
-  when 'entries'
-    source = 'entry'
+  when 'articles'
+    source = 'blog'
   when 'tweets'
     source = 'twitter'
   when 'links'
@@ -139,6 +172,8 @@ get %r{/(entries|tweets|links|photos|videos|music)/?} do |type|
   rescue Memcached::NotFound
     @items = Item.where(:source => source).offset((page-1)*50).limit(50).order('created_at DESC')
     @title = "Barry Frost: #{type}"
+    @source = source
+    @body_class = 'archive'
     @page = page
     content = @items.length > 0 ? erb(:index, :layout => !request.xhr?) : ''
     CACHE.set("#{source}_page_#{page}", content)
@@ -149,22 +184,24 @@ end
 get '/:year/:month/:day/?' do
   cache_for 10
   date = Time.utc(params[:year], params[:month], params[:day])
+  @body_class = 'archive'
   @items = Item.where(:created_at => date..(date+86400)).order('created_at DESC')
   erb :index
 end
 
-get '/entry' do
-  cache_for 10
-  erb :entry
-end
-
-get '/colophon/?' do 
+get '/about/?' do 
   cache_for 60
-  erb :colophon 
+  @body_class = 'static'
+  erb :about
 end
 
 get '/favicon.ico' do
   # cache for 1 week
   cache_for 7*24*60
   status 404
+end
+
+not_found do
+  @body_class = 'static'
+  erb :'404'
 end

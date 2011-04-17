@@ -1,0 +1,34 @@
+<% # if this is the homepage include the top home header block
+    if @home %>
+	<div id="home">
+		<%= erb :home %>
+	</div>
+<% end %>
+
+<div id="types">
+	<nav>
+		<li class="home">
+			<% if !@home %>
+				<a href="/" title="Home">Home</a>
+			<% else %>
+				&nbsp;
+			<% end %>
+		</li>
+		<li class="blog"><a href="/entries/" title="Entries from my blog">Entries</a></li>
+		<li class="twitter"><a href="/tweets/" title="Tweets from Twitter (@barryf)">Tweets</a></li> 
+		<li class="delicious"><a href="/links/" title="Bookmarked links on Delicious (barryf)">Links</a></li> 
+		<li class="flickr"><a href="/photos/" title="My Flickr photos (barryf)">Photos</a></li> 
+		<li class="youtube"><a href="/videos/" title="Favourite YouTube videos (barryfrost)">Videos</a></li> 
+		<li class="lastfm"><a href="/music/" title="Tracks I've loved and scrobbled to Last.fm (barryf)">Music</a></li>
+		<!--
+		<li><a href="http://dopplr.com/traveller/barryf" rel="me" title="Trips I'm planning from Dopplr">Dopplr</a></li>
+		<li><a href="http://lanyrd.com/people/barryf" rel="me">Lanyrd</a></li>
+		<li>http://www.google.com/profiles/barryfrost</li>
+		<li>http://youtube.com/user/barryfrost</li>
+		<li>http://socialgraph-resources.googlecode.com/svn/trunk/samples/findyours.html?q=barryfrost.com</li>
+		-->
+	</nav>
+</div>
+
+<div id="content">
+</div>
