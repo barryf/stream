@@ -1,0 +1,85 @@
+<article>
+	
+<header>
+	<h1>A new start</h1>
+	
+</header>
+
+<section id="body">
+<p>Earlier this year, back in January in fact, I had a few nagging aims/resolutions on my to-do list. I wanted to:</p>
+
+<ul>
+<li>Improve my rusty and weak Ruby</li>
+
+<li>Migrate from Subversion to git and put some code up on <a href='http://github.com/barryf'>GitHub</a></li>
+
+<li>Try out <a href='http://sinatrarb.com/'>Sinatra</a>, a lightweight Ruby web framework built on <a href='http://rack.rubyforge.org/'>Rack</a></li>
+
+<li>Investigate <a href='http://www.heroku.com/'>Heroku</a> for hosting something in Ruby</li>
+
+<li>Get blogging! For the occasions when I have something to share</li>
+</ul>
+
+<p>Meanwhile my personal website had become rather clunky, outdated and in dire need of a refresh.</p>
+
+<blockquote>
+<p>What made it click for me was programming in anger. &#8230; When you’re learning on a mission, the order of things come really naturally.</p>
+</blockquote>
+
+<p>&#8211;<a href='http://37signals.com/svn/posts/2582-how-do-i-learn-to-program'>David Heinemeier Hansson, 37signals</a></p>
+
+<p>As DHH wrote, the best way to learn a programming language or technology is to build something real. So I set about killing multiple birds with one stone by learning and experimenting while dragging my website into the two-thousand-and-tens.</p>
+
+<p>This website is the end result. Here&#8217;s a screenshot from the new homepage, captured as I write this:</p>
+
+<p><img src='http://dl.dropbox.com/u/207451/Screenshots/barryfrost.com_redesign_apr_2011.png' alt='April 2011 screenshot of barryfrost.com' /></p>
+
+<h2 id='design_and_concept'>Design and concept</h2>
+
+<p>Back before <a href='http://techcrunch.com/2009/08/10/facebook-acquires-friendfeed/'>FriendFeed was gobbled up by Facebook</a>, lifestream services were <a href='http://techcrunch.com/2008/03/10/watch-out-friendfeed-socialthing-is-even-easier-to-use/'>hot</a>. I&#8217;ve used Twitter, Delicious, Last.fm, Flickr and others for several years and there&#8217;s a lot of content and attention data I&#8217;ve accumulated with third parties. I wanted to aggregate my decentralised data into a chronological stream on my own site, as much for my own interest as a potentially useful collection for visitors inexplicably interested in what I do.</p>
+
+<p>A couple of years ago I knocked up a design for a stream with indenting and colour-coding for each service. Tweaking this prototype a bit, it formed the central theme for the redesign. Articles would also be pulled in and listed via this &#8220;hub&#8221;.</p>
+
+<p>I used this redesign as a good opportunity to play with web fonts &#8211; <a href='http://typekit.com/fonts/lft-etica-web'>LFT Etica Web</a> through <a href='http://typekit.com/'>Typekit</a> &#8211; and HTML5 markup (e.g. <code>&lt;header&gt;</code>, <code>&lt;footer&gt;</code> and <code>&lt;article&gt;</code> tags) and some new-to-me CSS in terms of text shadows and <code>position: fixed</code> elements.</p>
+
+<p>I&#8217;ve also experimented with <a href='http://mediaqueri.es/'>media queries</a> so that when the page is resized or displayed on small screens the layout and content adjusts via CSS.</p>
+
+<h2 id='hosting_with_heroku'>Hosting with Heroku</h2>
+
+<p>I&#8217;m hosting everything with <a href='http://www.heroku.com/'>Heroku</a>, a ridiculously simple Ruby hosting platform that&#8217;s built on top of Amazon&#8217;s infrastructure. Deploying is simply a matter of a <code>git push heroku master</code> and you&#8217;re given a wealth of <a href='http://addons.heroku.com/'>add-on services</a> to choose from that require zero-setup.</p>
+
+<p>I&#8217;m using PostgreSQL to store my stream data and sort by date/source, although you can also use Redis, CouchDB and other popular nosql engines with Heroku if you only need key/value pairs. MySQL isn&#8217;t available, but that&#8217;s not a big problem for a greenfield project like this and it&#8217;s fun to be using the very able PostgreSQL RDBMS again.</p>
+
+<p>Whole page content variables are cached with the built-in Memcached store for performance and I&#8217;m also making thorough use of cache-control headers which are picked up by Heroku&#8217;s Varnish layer and also client browsers. If I&#8217;m ever lucky enough to be Fireballed, Slashdotted, Reditted or HackerNews&#8217;d I&#8217;ve got multiple layers of caching protection for almost no effort.</p>
+
+<h2 id='blogging_with_jekyll'>Blogging with Jekyll</h2>
+
+<p>I wanted to start a blog. I knew that I wouldn&#8217;t go from never blogging to become prolific, but for the rare occasions when I do have something to share, I wanted an outlet.</p>
+
+<p>Initially I flirted with the idea of using a hosted blog system like Wordpress, Tumblr or Posterous but this seemed overkill. As a sometime hacker I wanted something I could tinker with and that I could host with the main site on Heroku. Using a separate domain (or subdomain) with an external service felt unnecessarily messy.</p>
+
+<p>Searching around I (re)read <a href='http://tom.preston-werner.com/'>Tom Preston-Werner</a>&#8217;s <a href='http://tom.preston-werner.com/2008/11/17/blogging-like-a-hacker.html'>Blogging Like a Hacker</a> post which describes his desire for a lo-fi solution that resulted in <a href='http://github.com/mojombo/jekyll'>Jekyll</a>. Bingo. Jekyll means I can write articles in <a href='http://simplenoteapp.com/'>Simplenote</a> or Textmate in <a href='http://daringfireball.net/projects/markdown/'>Markdown</a>, run them through the Jekyll server which generates simple static HTML files and an Atom feed. I then deploy all these via Git to my site and Sinatra serves them up.</p>
+
+<h2 id='stream_in_ruby'>Stream in Ruby</h2>
+
+<p>The Sinatra app is <a href='http://github.com/barryf/barryfrost.com'>fairly simple</a>: a collection of fetchers pull down JSON feeds from each of the services and insert new items into a table. The results are pulled out and aggregated into the stream.</p>
+
+<p>For tweets in the stream, I&#8217;ve linked up usernames, links and hashtags. Any links with redirects that have been shortened are followed to get the canonical URL. Plus all links are sent to <a href='http://oohembed.com/'>oohEmbed</a> to see if they support oEmbed and there&#8217;s a thumbnail to display, for example with <a href='http://twitpic.com/'>Twitpic</a> images.</p>
+
+<h2 id='whats_left'>What&#8217;s left</h2>
+
+<p>I&#8217;ve brushed up on Ruby, but I neglected to spend any time on tests. Naughty Barry. Rather than go back and retrospectively add them, I&#8217;ll set myself a new project to apply good TDD principles.</p>
+
+<p>You can find all the code in my <a href='http://github.com/barryf/barryfrost.com'>repo on GitHub</a>. Feel free to poke around and fork but please don&#8217;t steal my design or stylesheets.</p>
+</section>
+
+<footer>
+	<p>
+		&mdash;<a href="/about"><strong>Barry Frost</strong></a>, 
+		<a href="/2011/04/18/"><time title="2011-04-18">2011-04-18</time></a>
+	</p>
+	<p style="text-align: right;"><a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="barryf">Tweet</a></p>
+	<script src="http://platform.twitter.com/widgets.js"></script>
+</footer>
+
+</article>

@@ -192,6 +192,7 @@ end
 get '/about/?' do 
   cache_for 60
   @body_class = 'static'
+  @title = 'About Barry Frost'
   erb :about
 end
 
@@ -203,5 +204,6 @@ end
 
 not_found do
   @body_class = 'static'
+  @title = '404 - not found'
   erb :'404'
 end
