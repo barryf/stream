@@ -149,10 +149,6 @@ get %r{/rss/?|feed/?|atom\.xml} do
   File.read("blog/_site/atom.xml")
 end
 
-get '/posts.json' do
-  File.read("blog/_site/posts.json")
-end
-
 get %r{/(articles|tweets|links|photos|videos|music)/?} do |type|
   cache_for 10
   case type

@@ -198,9 +198,8 @@ end
 # import entries from the blog
 
 def fetch_blog(count=5)
-  url = "http://barryfrost.heroku.com/posts.json"
-  resp = Net::HTTP.get_response(URI.parse(url))
-  blog = JSON.parse(resp.body)
+  json = File.read("blog/_site/posts.json")
+  blog = JSON.parse(json)
   # import to database
   source = 'blog'
   imported = 0
