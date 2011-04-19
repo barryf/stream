@@ -10,6 +10,7 @@ Building this has been a simple exercise that I'm using to help me learn and exp
 - Sort out timezones
 - Finish sidebar "about"
 - Microformats and rel="me"s
+- sitemap.xml
 
 ## SETUP
 

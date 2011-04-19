@@ -3,12 +3,133 @@
   <title>Barry Frost</title>
   <link href="http://barryfrost.com/atom.xml" rel="self" />
   <link href="http://barryfrost.com/" />
-  <updated>2011-04-19T08:10:15+01:00</updated>
+  <updated>2011-04-19T21:22:47+01:00</updated>
   <id>http://barryfrost.com/</id>
   <author>
     <name>Barry Frost</name>
     <email>barry@barryfrost.com</email>
   </author>
+  
+  <entry>
+    <title>Sinatra and Heroku tips</title>
+    <link href="http://barryfrost.com/articles/sinatra-and-heroku-tips"/>
+    <updated>2011-04-19T21:04:00+01:00</updated>
+    <id>http://barryfrost.com/sinatra-and-heroku-tips</id>
+    <content type="html">&lt;p&gt;While &lt;a href='/articles/a-new-start'&gt;building this site&lt;/a&gt; I read several useful articles that promoted best practices for &lt;a href='http://sinatrarb.com/'&gt;Sinatra&lt;/a&gt; and &lt;a href='http://www.heroku.com/'&gt;Heroku&lt;/a&gt;. What follows are fairly raw tips and code snippets that I found useful and might be handy for you.&lt;/p&gt;
+
+&lt;h2 id='use_bundler_for_your_gems'&gt;Use Bundler for your gems&lt;/h2&gt;
+
+&lt;p&gt;Some of the older Heroku documentation suggests using a &lt;code&gt;.gems&lt;/code&gt; file. At the time of writing, best practice is to &lt;a href='http://devcenter.heroku.com/articles/bundler'&gt;use Bundler&lt;/a&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ sudo gem install bundler&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Create a file called &lt;code&gt;Gemfile&lt;/code&gt; in your application root:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;source :gemcutter
+gem &amp;#39;sinatra&amp;#39;
+# add any other gems you need here&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Then run:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ bundle install&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Don&amp;#8217;t forget to add the &lt;code&gt;Gemfile&lt;/code&gt; and &lt;code&gt;Gemfile.lock&lt;/code&gt; to your repo:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;$ git add Gemfile Gemfile.lock
+$ git commit -m &amp;quot;Adding Gemfile and Gemfile.lock for Bundler.&amp;quot;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;When you come to deploy your application Heroku will pick these files up and install any dependencies your application needs. Magic.&lt;/p&gt;
+
+&lt;p&gt;Further information is in the &lt;a href='http://devcenter.heroku.com/articles/bundler'&gt;Heroku Bundler article&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id='use_memcached_to_store_page_content'&gt;Use memcached to store page content&lt;/h2&gt;
+
+&lt;p&gt;In your &lt;code&gt;configure&lt;/code&gt; block add the following:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;configure do
+  ...
+  require &amp;#39;memcached&amp;#39;
+  CACHE = Memcached.new
+  ...
+end&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Then in actions where you want to save the content:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;get &amp;#39;/&amp;#39; do
+  begin
+    content = CACHE.get(&amp;quot;home&amp;quot;)
+  rescue Memcached::NotFound
+    content = erb(:home)
+    CACHE.set(&amp;quot;home&amp;quot;, content)
+  end
+  content
+end&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You&amp;#8217;ll need to make sure you have a local Memcached instance running while developing. I leave this running in a Terminal window via &lt;code&gt;memcached -vv&lt;/code&gt; to get verbose debugging output.&lt;/p&gt;
+
+&lt;h2 id='use_herokus_varnish_caching'&gt;Use Heroku&amp;#8217;s Varnish caching&lt;/h2&gt;
+
+&lt;p&gt;Heroku includes a built-in server-side page cache. If you set HTTP headers in your response then Varnish will do the rest. I&amp;#8217;ve set up a simple helper for this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;helpers do
+  ...
+  def cache_for(mins = 1)
+    if settings.environment != :development
+      response[&amp;#39;Cache-Control&amp;#39;] = &amp;quot;public, max-age=#{60*mins}&amp;quot;
+    end
+  end
+  ...
+end&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Because browsers also pick up on these cache directives you get the double benefit of your visitors&amp;#8217; browsers caching pages, plus the server.&lt;/p&gt;
+
+&lt;p&gt;I don&amp;#8217;t want the caching to kick in when developing, however, so only do this when not in development mode.&lt;/p&gt;
+
+&lt;h2 id='escape_variables_output_in_html'&gt;Escape variables output in HTML&lt;/h2&gt;
+
+&lt;p&gt;When outputting content, especially anything entered by a user, it&amp;#8217;s best to escape it to prevent malicious users stealing cookies or other bad behaviour. In your controller, include the following in your &lt;code&gt;helpers&lt;/code&gt; block:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;helpers do
+  ...
+  include Rack::Utils
+  alias_method :h, :escape_html
+  ...
+end&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Then, in your view, you can escape any variable as follows:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;&amp;lt;p&amp;gt;&amp;lt;%= h @my_potentially_naughty_variable %&amp;gt;&amp;lt;/p&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id='use_utf8'&gt;Use UTF-8&lt;/h2&gt;
+
+&lt;p&gt;You want to use UTF-8 right?&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Save your pages as UTF-8, whenever you can.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&amp;#8211;&lt;a href='http://www.w3.org/International/tutorials/tutorial-char-enc/'&gt;W3C Internationalization tutorial&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Add this &lt;code&gt;before&lt;/code&gt; block and forget about it:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;before do
+  ...
+  headers &amp;quot;Content-Type&amp;quot; =&amp;gt; &amp;quot;text/html; charset=utf-8&amp;quot;
+  ...
+end&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id='miscellany'&gt;Miscellany&lt;/h2&gt;
+
+&lt;p&gt;Other useful things I found:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;In Ruby, if you want to use a substring, you can simply treat a string as an array (almost everything&amp;#8217;s an object). So, for example, &lt;code&gt;&amp;quot;Barry Frost&amp;quot;[0..4]&lt;/code&gt; == &lt;code&gt;&amp;quot;Barry&amp;quot;&lt;/code&gt;&lt;/li&gt;
+
+&lt;li&gt;Learn to use the ternary operator. Code becomes much more readable as a result, e.g. &lt;code&gt;content = @items.length &amp;gt; 0 ? erb(:index, :layout =&amp;gt; !request.xhr?) : &amp;#39;&amp;#39;&lt;/code&gt;&lt;/li&gt;
+
+&lt;li&gt;Having &lt;code&gt;irb&lt;/code&gt; to hand to try out code without a compile/page reload cycle is so refreshing. Try out and debug regular expressions before writing any code.&lt;/li&gt;
+&lt;/ul&gt;</content>
+  </entry>
   
   <entry>
     <title>A new start</title>
