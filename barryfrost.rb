@@ -196,12 +196,6 @@ get '/about/?' do
   erb :about
 end
 
-get '/favicon.ico' do
-  # cache for 1 week
-  cache_for 7*24*60
-  status 404
-end
-
 not_found do
   @body_class = 'static'
   @title = '404 - not found'
