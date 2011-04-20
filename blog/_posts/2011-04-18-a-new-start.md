@@ -27,9 +27,9 @@ This website is the end result. Here's a screenshot from the new homepage, captu
 
 Back before [FriendFeed was gobbled up by Facebook](http://techcrunch.com/2009/08/10/facebook-acquires-friendfeed/), lifestream services were [hot](http://techcrunch.com/2008/03/10/watch-out-friendfeed-socialthing-is-even-easier-to-use/). I've used Twitter, Delicious, Last.fm, Flickr and others for several years and there's a lot of content and attention data I've accumulated with third parties. I wanted to aggregate my decentralised data into a chronological stream on my own site, as much for my own interest as a potentially useful collection for visitors inexplicably interested in what I do.
 
-A couple of years ago I knocked up a design for a stream with indenting and colour-coding for each service. Tweaking this prototype a bit, it formed the central theme for the redesign. Articles would also be pulled in and listed via this "hub".
+A while ago I knocked up a few designs for a stream with indenting and colour-coding for each service. I quite like this as a concept. Tweaking my prototypes a bit, I formed the central theme for the redesign. Articles would also be pulled in and listed via this "hub".
 
-I used this redesign as a good opportunity to play with web fonts -- [LFT Etica Web](http://typekit.com/fonts/lft-etica-web) through [Typekit](http://typekit.com/) -- and HTML5 markup (e.g. `<header>`, `<footer>` and `<article>` tags) and some new-to-me CSS in terms of text shadows and `position: fixed` elements.
+I used the redesign as a good opportunity to play with web fonts -- [LFT Etica Web](http://typekit.com/fonts/lft-etica-web) through [Typekit](http://typekit.com/) -- and HTML5 markup (e.g. `<header>`, `<footer>` and `<article>` tags) and some new-to-me CSS in terms of text shadows and `position: fixed` elements.
 
 I've also experimented with [media queries](http://mediaqueri.es/) so that when the page is resized or displayed on small screens the layout and content adjusts via CSS.
 

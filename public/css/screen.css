@@ -216,7 +216,7 @@ strong {
 }
 #content .delicious a:hover { color: #3274D1; }
 #content .delicious a:hover img { background-color: #3274D1; }
-#content .delicious dt, #content .blog dt {
+#content .delicious dd.title, #content .blog dt {
 	font-weight: 400; 
 	display: block;
 }

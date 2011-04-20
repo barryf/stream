@@ -10,13 +10,15 @@ if !request.xhr?
 
 	<div id="types">
 		<nav>
-			<li class="home"><a href="/" title="Home">↩ Home</a></li>
-			<li class="blog <% if @source == 'blog' %>active<% end %>"><a href="/articles/" title="Articles and notes from my blog">Articles</a></li>
-			<li class="twitter <% if @source == 'twitter' %>active<% end %>"><a href="/tweets/" title="Tweets from Twitter (@barryf)">Tweets</a></li> 
-			<li class="delicious <% if @source == 'delicious' %>active<% end %>"><a href="/links/" title="Bookmarked links on Delicious (barryf)">Links</a></li> 
-			<li class="flickr <% if @source == 'flickr' %>active<% end %>"><a href="/photos/" title="My Flickr photos (barryf)">Photos</a></li> 
-			<li class="youtube <% if @source == 'youtube' %>active<% end %>"><a href="/videos/" title="Favourite YouTube videos (barryfrost)">Videos</a></li> 
-			<li class="lastfm <% if @source == 'lastfm' %>active<% end %>"><a href="/music/" title="Tracks I've loved and scrobbled to Last.fm (barryf)">Music</a></li>
+			<ul>
+				<li class="home"><a href="/" title="Home">↩ Home</a></li>
+				<li class="blog <% if @source == 'blog' %>active<% end %>"><a href="/articles/" title="Articles and notes from my blog">Articles</a></li>
+				<li class="twitter <% if @source == 'twitter' %>active<% end %>"><a href="/tweets/" title="Tweets from Twitter (@barryf)">Tweets</a></li> 
+				<li class="delicious <% if @source == 'delicious' %>active<% end %>"><a href="/links/" title="Bookmarked links on Delicious (barryf)">Links</a></li> 
+				<li class="flickr <% if @source == 'flickr' %>active<% end %>"><a href="/photos/" title="My Flickr photos (barryf)">Photos</a></li> 
+				<li class="youtube <% if @source == 'youtube' %>active<% end %>"><a href="/videos/" title="Favourite YouTube videos (barryfrost)">Videos</a></li> 
+				<li class="lastfm <% if @source == 'lastfm' %>active<% end %>"><a href="/music/" title="Tracks I've loved and scrobbled to Last.fm (barryf)">Music</a></li>
+			</ul>
 		</nav>
 	</div>
 
@@ -45,7 +47,7 @@ last_source = ''
 		end
 	%>
 	<li>
-		<h4><a href="<%= item.created_at.strftime('/%Y/%m/%d') %>"><time title="<%= item.created_at.strftime('%F') %>"><%= item_day %></time></a></h4>
+		<h4><a href="<%= item.created_at.strftime('/%Y/%m/%d') %>"><span class="date" title="<%= item.created_at.strftime('%F') %>"><%= item_day %></span></a></h4>
 		<ol>
 		<% last_day = item_day 
 	end %>
@@ -54,28 +56,28 @@ last_source = ''
 	<dl id="_<%= item.uid %>">
 		<% case item.source
 			when 'blog' %>
-				<dd class="permalink">
+				<dt class="permalink">
 					<a href="<%= item.url %>">
 						<%= item.created_at.strftime('%H:%M') %>
 					</a>
-				</dd>
+				</dt>
 				<dt><a href="<%= item.url %>"><%= h item.title %></a></dt>
-				<% if item.body != '' %><dd><%= h item.body %></dd><% end %>
+				<dd><%= h item.body %></dd>
 			<% when 'delicious' %>
-				<dd class="permalink">
+				<dt class="permalink">
 					<a href="http://www.delicious.com/url/<%= Digest::MD5.hexdigest(item.url) %>">
 						<%= item.created_at.strftime('%H:%M') %>
 					</a>
-				</dd>
-				<dt><a href="<%= item.url %>"><%= h item.title %></a></dt>
+				</dt>
+				<dd class="title"><a href="<%= item.url %>"><%= h item.title %></a></dd>
 				<% if item.body != '' %><dd><%= h item.body %></dd><% end %>
 			<% when 'twitter' %>
-				<dd class="permalink">
+				<dt class="permalink">
 					<a href="http://twitter.com/<%= ACCOUNTS['twitter']['screen_name'] %>/status/<%= item.uid %>">
 						<%= item.created_at.strftime('%H:%M')%>
 					</a>
-				</dd>
-				<dt>
+				</dt>
+				<dd>
 					<%= item.body %>
 					<% if item.oembed
 						item.oembed.each do |json|
@@ -94,47 +96,47 @@ last_source = ''
 							<% end
 						end 
 					end %>
-				</dt>
+				</dd>
 			<% when 'lastfm' %>
-				<dd class="permalink">
+				<dt class="permalink">
 					<a href="<%= item.url %>">
 						<%= item.created_at.strftime('%H:%M')%>
 					</a>
-				</dd>
-				<dt>
+				</dt>
+				<dd>
 					<a href="<%= item.url %>">
 						<%= item.title %>
 						<% if item.thumbnail_url != '' %><br /><img src="<%= item.thumbnail_url %>" style="height: 60px;" /><% end %>
 					</a>
-				</dt>
+				</dd>
 			<% when 'youtube' %>
-				<dd class="permalink">
-					<a href="<%= item.url %>">
+				<dt class="permalink">
+					<a href="<%= h item.url %>">
 						<%= item.created_at.strftime('%H:%M')%>
 					</a>
-				</dd>
-				<dt>
-					<a href="<%= item.url %>">
+				</dt>
+				<dd>
+					<a href="<%= h item.url %>">
 						<%= item.title %>
 						<% if item.thumbnail_url != '' %>
 							<br /><img src="<%= item.thumbnail_url %>" style="height: 60px;" />
 						<% end %>
 					</a>
-				</dt>
+				</dd>
 			<% when 'flickr' %>
-				<dd class="permalink">
-					<a href="<%= item.url %>">
+				<dt class="permalink">
+					<a href="<%= h item.url %>">
 						<%= item.created_at.strftime('%H:%M')%>
 					</a>
-				</dd>
-				<dt>
-					<a href="<%= item.url %>">
+				</dt>
+				<dd>
+					<a href="<%= h item.url %>">
 						<%= h item.title %>
 						<% if item.thumbnail_url != '' %>
 							<br /><img src="<%= item.thumbnail_url %>" />
 						<% end %>
 					</a>
-				</dt>
+				</dd>
 		<% end %>
 	</dl>
 	</li>

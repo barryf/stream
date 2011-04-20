@@ -35,3 +35,4 @@ if ( typeof jQuery != "undefined" )
 
 // prettify dates now
 $('time').prettyDate();
+$('.date').prettyDate()

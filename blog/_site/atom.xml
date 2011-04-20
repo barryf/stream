@@ -3,7 +3,7 @@
   <title>Barry Frost</title>
   <link href="http://barryfrost.com/atom.xml" rel="self" />
   <link href="http://barryfrost.com/" />
-  <updated>2011-04-19T21:28:54+01:00</updated>
+  <updated>2011-04-19T21:43:25+01:00</updated>
   <id>http://barryfrost.com/</id>
   <author>
     <name>Barry Frost</name>
@@ -168,9 +168,9 @@ end&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Back before &lt;a href='http://techcrunch.com/2009/08/10/facebook-acquires-friendfeed/'&gt;FriendFeed was gobbled up by Facebook&lt;/a&gt;, lifestream services were &lt;a href='http://techcrunch.com/2008/03/10/watch-out-friendfeed-socialthing-is-even-easier-to-use/'&gt;hot&lt;/a&gt;. I&amp;#8217;ve used Twitter, Delicious, Last.fm, Flickr and others for several years and there&amp;#8217;s a lot of content and attention data I&amp;#8217;ve accumulated with third parties. I wanted to aggregate my decentralised data into a chronological stream on my own site, as much for my own interest as a potentially useful collection for visitors inexplicably interested in what I do.&lt;/p&gt;
 
-&lt;p&gt;A couple of years ago I knocked up a design for a stream with indenting and colour-coding for each service. Tweaking this prototype a bit, it formed the central theme for the redesign. Articles would also be pulled in and listed via this &amp;#8220;hub&amp;#8221;.&lt;/p&gt;
+&lt;p&gt;A while ago I knocked up a few designs for a stream with indenting and colour-coding for each service. I quite like this as a concept. Tweaking my prototypes a bit, I formed the central theme for the redesign. Articles would also be pulled in and listed via this &amp;#8220;hub&amp;#8221;.&lt;/p&gt;
 
-&lt;p&gt;I used this redesign as a good opportunity to play with web fonts &amp;#8211; &lt;a href='http://typekit.com/fonts/lft-etica-web'&gt;LFT Etica Web&lt;/a&gt; through &lt;a href='http://typekit.com/'&gt;Typekit&lt;/a&gt; &amp;#8211; and HTML5 markup (e.g. &lt;code&gt;&amp;lt;header&amp;gt;&lt;/code&gt;, &lt;code&gt;&amp;lt;footer&amp;gt;&lt;/code&gt; and &lt;code&gt;&amp;lt;article&amp;gt;&lt;/code&gt; tags) and some new-to-me CSS in terms of text shadows and &lt;code&gt;position: fixed&lt;/code&gt; elements.&lt;/p&gt;
+&lt;p&gt;I used the redesign as a good opportunity to play with web fonts &amp;#8211; &lt;a href='http://typekit.com/fonts/lft-etica-web'&gt;LFT Etica Web&lt;/a&gt; through &lt;a href='http://typekit.com/'&gt;Typekit&lt;/a&gt; &amp;#8211; and HTML5 markup (e.g. &lt;code&gt;&amp;lt;header&amp;gt;&lt;/code&gt;, &lt;code&gt;&amp;lt;footer&amp;gt;&lt;/code&gt; and &lt;code&gt;&amp;lt;article&amp;gt;&lt;/code&gt; tags) and some new-to-me CSS in terms of text shadows and &lt;code&gt;position: fixed&lt;/code&gt; elements.&lt;/p&gt;
 
 &lt;p&gt;I&amp;#8217;ve also experimented with &lt;a href='http://mediaqueri.es/'&gt;media queries&lt;/a&gt; so that when the page is resized or displayed on small screens the layout and content adjusts via CSS.&lt;/p&gt;
 
