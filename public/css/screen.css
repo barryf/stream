@@ -190,6 +190,14 @@ strong {
 	line-height: 18px;
 	padding-top: 1px;
 }
+#content .geo {
+	display: block;
+}
+#content .geo a {
+	font-size: 13px;
+	color: #555;
+	font-weight: 400;
+}
 #content .permalink a {
 	color: #555;
 }

@@ -83,11 +83,18 @@ def fetch_twitter(count=5, screen_name=ACCOUNTS['twitter']['screen_name'])
     if Item.where('uid = ? and source = ?', remote['id'].to_s, source).count.zero? && remote['text'][0..0] != '@'
       # parse tweet and get any oembed data
       tweet, oembed = parse_tweet(remote['text'])
+      # get co-ordinates and place name if available
+      geo_name = remote['place'] ? remote['place']['full_name'] : ""
+      geo_lat = remote['coordinates'] ? remote['coordinates']['coordinates'][1] : nil
+      geo_lng = remote['coordinates'] ? remote['coordinates']['coordinates'][0] : nil
       # strip newlines from oembed json
       oembed = oembed.to_s.gsub(/\n/,'')
       Item.create(:uid => remote['id'].to_s,
                   :body => tweet,
                   :oembed => oembed,
+                  :geo_name => geo_name,
+                  :geo_lat => geo_lat,
+                  :geo_lng => geo_lng,
                   :source => source,
                   :imported_at => Time.now,
                   :created_at => remote['created_at'])

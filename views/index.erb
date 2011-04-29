@@ -97,6 +97,16 @@ last_source = ''
 						end 
 					end %>
 				</dd>
+				<% # any geo data?
+				if item.geo_lat != nil %>
+					<dd class="geo">
+						<a href="http://maps.google.com/maps?q=<%= item.geo_lat %>,<%= item.geo_lng %>" style="display: inline">
+							<img src="http://maps.google.com/maps/api/staticmap?center=<%= item.geo_lat %>,<%= item.geo_lng %>&amp;markers=color:red%7C<%= item.geo_lat %>,<%= item.geo_lng %>&amp;zoom=13&amp;size=200x80&amp;sensor=false" alt="<%= item.geo_name %>" />
+							<br />
+							<%= item.geo_name %>
+						</a>
+					</dd>
+				<% end %>
 			<% when 'lastfm' %>
 				<dt class="permalink">
 					<a href="<%= item.url %>">
