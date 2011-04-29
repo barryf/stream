@@ -11,7 +11,6 @@ Building this has been a simple exercise that I'm using to help me learn and exp
 - Finish sidebar "about"
 - Microformats and rel="me"s
 - Foursquare check-ins
-- geolocation maps from Tweets/check-ins
 
 ## SETUP
 
