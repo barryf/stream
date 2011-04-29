@@ -6,6 +6,15 @@ require 'active_record'
 
 class Item < ActiveRecord::Base; end
 
+# fetch all, return counts of each type imported (if any)
+def fetch_all
+  imports = {}
+  ["flickr", "youtube", "twitter", "delicious", "lastfm"].each do |s|
+    imports[s] = send('fetch_' + s)
+  end
+  imports
+end
+
 # parse tweets
 
 # url shortening - max 40 characters, remove http:// and www.
