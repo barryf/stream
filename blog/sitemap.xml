@@ -11,13 +11,13 @@ layout: nil
    </url>
    <url>
      <loc>http://barryfrost.com/about</loc>
-     <lastmod>{{ site.time }}</lastmod>
+     <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
      <changefreq>monthly</changefreq>
    </url>
    {% for post in site.posts %}
    <url>
      <loc>http://barryfrost.com/articles{{ post.url }}</loc>
-     <lastmod>{{ site.time }}</lastmod>
+     <lastmod>{{ post.date | date_to_xmlschema }}</lastmod>
      <changefreq>monthly</changefreq>
      <priority>0.2</priority>
    </url>
