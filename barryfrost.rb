@@ -183,7 +183,7 @@ end
 
 get '/:year/:month/:day/?' do
   cache_for 10
-  date = Time.utc(params[:year], params[:month], params[:day])
+  date = Time.local(params[:year], params[:month], params[:day])
   @body_class = 'archive'
   @items = Item.where(:created_at => date..(date+86400)).order('created_at DESC')
   erb :index
