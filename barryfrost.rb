@@ -196,6 +196,13 @@ get '/about/?' do
   erb :about
 end
 
+get '/sitemap.xml' do
+  cache_for 60
+  headers "Content-Type" => "text/xml; charset=utf-8"
+  # TODO: include archive pages - don't rely on Jekyll
+  File.read("blog/_site/sitemap.xml")
+end
+  
 not_found do
   @body_class = 'static'
   @title = '404 - not found'
