@@ -57,7 +57,7 @@ last_source = ''
 		<% case item.source
 			when 'blog' %>
 				<dt class="permalink">
-					<a href="<%= item.url %>" title="<%= item.created_at %>">
+					<a href="<%= item.url %>">
 						<%= item.created_at.strftime('%H:%M') %>
 					</a>
 				</dt>
@@ -65,7 +65,7 @@ last_source = ''
 				<dd><%= h item.body %></dd>
 			<% when 'delicious' %>
 				<dt class="permalink">
-					<a href="http://www.delicious.com/url/<%= Digest::MD5.hexdigest(item.url) %>" title="<%= item.created_at %>">
+					<a href="http://www.delicious.com/url/<%= Digest::MD5.hexdigest(item.url) %>">
 						<%= item.created_at.strftime('%H:%M') %>
 					</a>
 				</dt>
@@ -73,8 +73,8 @@ last_source = ''
 				<% if item.body != '' %><dd><%= h item.body %></dd><% end %>
 			<% when 'twitter' %>
 				<dt class="permalink">
-					<a href="http://twitter.com/<%= ACCOUNTS['twitter']['screen_name'] %>/status/<%= item.uid %>" title="<%= item.created_at %>">
-						<%= item.created_at.strftime('%H:%M') %>
+					<a href="http://twitter.com/<%= ACCOUNTS['twitter']['screen_name'] %>/status/<%= item.uid %>">
+						<%= item.created_at.strftime('%H:%M')%>
 					</a>
 				</dt>
 				<dd>
@@ -109,7 +109,7 @@ last_source = ''
 				<% end %>
 			<% when 'lastfm' %>
 				<dt class="permalink">
-					<a href="<%= item.url %>" title="<%= item.created_at %>">
+					<a href="<%= item.url %>">
 						<%= item.created_at.strftime('%H:%M')%>
 					</a>
 				</dt>
@@ -121,7 +121,7 @@ last_source = ''
 				</dd>
 			<% when 'youtube' %>
 				<dt class="permalink">
-					<a href="<%= h item.url %>" title="<%= item.created_at %>">
+					<a href="<%= h item.url %>">
 						<%= item.created_at.strftime('%H:%M')%>
 					</a>
 				</dt>
@@ -135,7 +135,7 @@ last_source = ''
 				</dd>
 			<% when 'flickr' %>
 				<dt class="permalink">
-					<a href="<%= h item.url %>" title="<%= item.created_at %>">
+					<a href="<%= h item.url %>">
 						<%= item.created_at.strftime('%H:%M')%>
 					</a>
 				</dt>
