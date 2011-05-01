@@ -52,7 +52,25 @@ helpers do
   def parse_article_title(article)
     re = Regexp.new('<h1>(.*)</h1>')
     article.scan(re)[0][0]
-  end    
+  end
+  
+  # find the source from item type
+  def type_to_source(type)
+    case type
+    when 'articles'
+      'blog'
+    when 'tweets'
+      'twitter'
+    when 'links'
+      'delicious'
+    when 'photos'
+      'flickr'
+    when 'videos'
+      'youtube'
+    when 'music'
+      'lastfm'
+    end
+  end
 end
 
 before do
@@ -118,7 +136,7 @@ get '/' do
   content
 end
 
-get '/articles/:title' do
+get '/articles/:title/?' do
   cache_for 60
   # fetch from memcached
   begin
@@ -143,22 +161,9 @@ get %r{/rss/?|feed/?|atom\.xml} do
   File.read("blog/_site/atom.xml")
 end
 
-get %r{/(articles|tweets|links|photos|videos|music)/?} do |type|
+get %r{^/(articles|tweets|links|photos|videos|music)/?$} do |type|
   cache_for 10
-  case type
-  when 'articles'
-    source = 'blog'
-  when 'tweets'
-    source = 'twitter'
-  when 'links'
-    source = 'delicious'
-  when 'photos'
-    source = 'flickr'
-  when 'videos'
-    source = 'youtube'
-  when 'music'
-    source = 'lastfm'
-  end
+  source = type_to_source(type)
   page = params[:page].to_i
   page = page > 0 ? page : 1
   begin
@@ -175,11 +180,15 @@ get %r{/(articles|tweets|links|photos|videos|music)/?} do |type|
   content
 end
 
-get '/:year/:month/:day/?' do
+get '/:year/:month/:day/?:type?/?' do
   cache_for 10
+  source = type_to_source(params[:type])
   date = Time.local(params[:year], params[:month], params[:day])
   @body_class = 'archive'
-  @items = Item.where(:created_at => date..(date+86400)).order('created_at DESC')
+  @title = "Barry Frost: archive"
+  where = { :created_at => date..(date+86400) }
+  where['source'] = source unless source == nil
+  @items = Item.where(where).order('created_at DESC')
   erb :index
 end
 
