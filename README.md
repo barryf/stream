@@ -8,8 +8,6 @@ Building this has been a simple exercise that I'm using to help me learn and exp
 
 - Short URLs - bfr.st?
 - Sort out timezones
-- Finish sidebar "about"
-- Microformats and rel="me"s
 - Foursquare check-ins
 
 ## SETUP
