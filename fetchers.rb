@@ -3,6 +3,7 @@ require 'json'
 require 'net/http'
 require 'cgi'
 require 'active_record'
+require 'base58'
 
 class Item < ActiveRecord::Base; end
 
@@ -101,10 +102,12 @@ def fetch_twitter(count=5, screen_name=ACCOUNTS['twitter']['screen_name'])
         oembed = oembed.to_s.gsub(/\n/,'')
         Item.create(:uid => remote['id'].to_s,
                     :body => tweet,
+                    :url => "http://twitter.com/#{screen_name}/status/#{remote['id'].to_s}",
                     :oembed => oembed,
                     :geo_name => geo_name,
                     :geo_lat => geo_lat,
                     :geo_lng => geo_lng,
+                    :shortcode => unique_shortcode,
                     :source => source,
                     :imported_at => Time.now,
                     :created_at => remote['created_at'])
@@ -131,6 +134,7 @@ def fetch_delicious(count=5, user=ACCOUNTS['delicious']['user'])
                     :body => remote['n'],
                     :url => remote['u'],
                     :tags => remote['t'].join(' '),
+                    :shortcode => unique_shortcode,
                     :source => source,
                     :imported_at => Time.now,
                     :created_at => remote['dt'])
@@ -158,6 +162,7 @@ def fetch_lastfm(count=5, user=ACCOUNTS['lastfm']['user'], api_key=ACCOUNTS['las
                     :url => remote['url'],
                     :thumbnail_url => thumbnail_url,
                     :source => source,
+                    :shortcode => unique_shortcode,
                     :imported_at => Time.now,
                     :created_at => Time.at(remote['date']['uts'].to_i))
         imported += 1
@@ -183,6 +188,7 @@ def fetch_youtube(count=5, user=ACCOUNTS['youtube']['user'])
                     :url => remote['link'][0]['href'],
                     :thumbnail_url => remote['media$group']['media$thumbnail'][1]['url'],
                     :source => source,
+                    :shortcode => unique_shortcode,
                     :imported_at => Time.now,
                     :created_at => remote['published']['$t'])
         imported += 1
@@ -210,6 +216,7 @@ def fetch_flickr(count=5, user_id=ACCOUNTS['flickr']['user_id'], api_key=ACCOUNT
                     :url => "http://www.flickr.com/photos/#{ACCOUNTS['flickr']['user']}/#{remote['id']}",
                     :thumbnail_url => remote['url_sq'],
                     :source => source,
+                    :shortcode => unique_shortcode,
                     :imported_at => Time.now,
                     :created_at => remote['datetaken'])
         imported += 1
@@ -236,6 +243,7 @@ def fetch_blog(count=5)
                   :body => remote['summary'],
                   :url => remote['url'],
                   :source => source,
+                  :shortcode => unique_shortcode,
                   :imported_at => Time.now,
                   :created_at => remote['posted'])
       imported += 1
@@ -246,10 +254,29 @@ end
 
 # destroy an item
 
-def destroy_item(source, uid)
+def destroy_item(sc)
   # does the item exist?
-  return false if Item.where({:uid => uid, :source => source}).count.zero?
+  return false if Item.where(:shortcode => sc).count.zero?
   # destroy the item
-  Item.destroy_all(:uid => uid, :source => source)
+  Item.destroy_all(:shortcode => sc)
   true
+end
+
+# random four-char string
+
+def shortcode
+  # we want a number between 200,000 and 1,200,000
+  num = rand(1000000) + 200000
+  # use base58 (https://github.com/dougal/base58) to turn this into chars
+  Base58.encode(num)
+end
+
+def unique_shortcode
+  found = true
+  while found == true
+    sc = shortcode
+    item = Item.where(:shortcode => sc)
+    found = !item.length.zero?
+  end
+  sc
 end

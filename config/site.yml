@@ -1,0 +1,7 @@
+development:
+  shorturl: /
+  canonicalurl: /
+
+production:
+  shorturl: http://barryfrost.com/
+  canonicalurl: http://barryfrost.com/

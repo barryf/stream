@@ -1,13 +1,13 @@
 <!doctype html>
 <html>
 	<head>
-		<title>Destroy <%= params[:source] %> <%= params[:uid] %></title>
+		<title>Destroy <%= params[:shortcode] %></title>
 	</head>
 	<body> 
 		<% if @success %>
-			<p>Destroyed <%= params[:source] %> <%= params[:uid] %></p>
+			<p>Destroyed <%= params[:shortcode] %></p>
 		<% else %>
-			<p>Failed to destroy <%= params[:source] %> <%= params[:uid] %></p>
+			<p>Failed to destroy <%= params[:shortcode] %></p>
 		<% end %>
 	</body>
 </html>

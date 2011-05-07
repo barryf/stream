@@ -15,6 +15,9 @@ configure do
   ACCOUNTS['lastfm']['api_key'] ||= ENV['LASTFM_API_KEY']
   ACCOUNTS['flickr']['api_key'] ||= ENV['FLICKR_API_KEY']
 
+  # site config (dev/prd split)
+  SITE = YAML.load(File.read('config/site.yml'))
+
   # set up memcached
   require 'memcached'
   CACHE = Memcached.new
@@ -71,6 +74,14 @@ helpers do
       'lastfm'
     end
   end
+  
+  # urls
+  def shorturl
+    SITE[settings.environment.to_s]['shorturl']
+  end
+  def canonicalurl
+    SITE[settings.environment.to_s]['canonicalurl']
+  end
 end
 
 before do
@@ -105,9 +116,9 @@ get '/build/:source/:count?' do
   end
 end  
 
-get '/destroy/:source/:uid/?' do
+get '/destroy/:shortcode/?' do
   protected!
-  @success = destroy_item(params[:source], params[:uid])
+  @success = destroy_item(params[:shortcode])
   CACHE.flush if @success
   erb :destroy, :layout => false
 end
@@ -204,6 +215,21 @@ get '/sitemap.xml' do
   headers "Content-Type" => "text/xml; charset=utf-8"
   # TODO: include archive pages - don't rely on Jekyll
   File.read("blog/_site/sitemap.xml")
+end
+
+# short url redirector, e.g. /77xH => http://twitter.com/barryf/status/66118106933772290
+get %r{^/([A-Za-z0-9]{4})/?$} do |sc|
+  cache_for 60
+  begin
+    url = CACHE.get("shortcode_#{sc}")
+  rescue Memcached::NotFound
+    item = Item.where(:shortcode => sc)
+    not_found if item.length.zero?
+    url = item[0].url
+    CACHE.set("shortcode_#{sc}", url)
+  end
+  # 302 redirect
+  redirect url
 end
   
 not_found do
