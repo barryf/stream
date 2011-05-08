@@ -150,12 +150,12 @@ get '/articles/:title/?' do
     begin
       items = Item.where({:source => 'blog', :uid => params[:title]})
       not_found if items.length.zero?
-      item = items[0]
+      @item = items[0]
       @body_class = 'article'
-      @title = item.title
-      @shortcode = item.shortcode
-      article = File.read("blog/_site/#{params[:title]}.html")
-      content = erb(article)
+      @title = @item.title
+      @shortcode = @item.shortcode
+      @article = File.read("blog/_site/#{params[:title]}.html")
+      content = erb(:article)
       CACHE.set("article_#{params[:title]}", content)
     rescue Errno::ENOENT
       not_found

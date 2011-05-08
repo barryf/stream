@@ -1,0 +1,14 @@
+<article>
+	
+<%= @article %>
+
+<footer>
+	<p>
+		&mdash;<a href="/about"><strong>Barry Frost</strong></a>, 
+		<a href="<%= @item.created_at.strftime('/%Y/%m/%d/') %>"><time style="text-transform: lowercase;" title="<%= @item.created_at.strftime('%Y-%m-%d') %>"><%= @item.created_at.strftime('%Y-%m-%d') %></time></a>.
+	</p>
+	<p style="text-align: right;"><a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="barryf" data-url="<%= shorturl + @shortcode %>" data-counturl="<%= canonicalurl + 'articles/' + @item.uid %>">Tweet</a></p>
+	<script src="http://platform.twitter.com/widgets.js"></script>
+</footer>
+
+</article>
