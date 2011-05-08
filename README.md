@@ -6,7 +6,6 @@ Building this has been a simple exercise that I'm using to help me learn and exp
 
 ## TODO
 
-- Short URLs - bfr.st?
 - Sort out timezones
 - Foursquare check-ins
 
