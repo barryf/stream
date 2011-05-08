@@ -6,7 +6,7 @@
 		<link rel="stylesheet" href="/css/screen.css" type="text/css" />
 		<link rel="alternate" href="/atom.xml" type="application/atom+xml" title="Articles feed (atom)" />
 		<meta name="description" content="Barry Frost's personal website. Articles, tweets, links and other content by Barry." /> 
-		<meta name="microid" content="4b73b02e68add2d8044feec5c56484c7286190b7" />
+		<% if defined?(@shortcode) %><link rel="shorturl" href="<%= shorturl + @shortcode %>" /><% end %>
 		<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;" />
 		<!--[if IE]>
 			<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>

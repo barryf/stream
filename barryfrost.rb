@@ -51,12 +51,6 @@ helpers do
     response['Cache-Control'] = "public, max-age=#{60*mins}" unless settings.environment == :development
   end
   
-  # find h1 title within article
-  def parse_article_title(article)
-    re = Regexp.new('<h1>(.*)</h1>')
-    article.scan(re)[0][0]
-  end
-  
   # find the source from item type
   def type_to_source(type)
     case type
@@ -154,9 +148,13 @@ get '/articles/:title/?' do
     content = CACHE.get("article_#{params[:title]}")
   rescue Memcached::NotFound
     begin
-      article = File.read("blog/_site/#{params[:title]}.html")
+      items = Item.where({:source => 'blog', :uid => params[:title]})
+      not_found if items.length.zero?
+      item = items[0]
       @body_class = 'article'
-      @title = parse_article_title(article)
+      @title = item.title
+      @shortcode = item.shortcode
+      article = File.read("blog/_site/#{params[:title]}.html")
       content = erb(article)
       CACHE.set("article_#{params[:title]}", content)
     rescue Errno::ENOENT
