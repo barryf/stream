@@ -1,15 +1,11 @@
 <div id="sidebar" class="vcard">
 	<p class="photo">
-		<% if @body_class != 'home' %>
-			<a href="/">
-				<img src="/images/barryf.jpg" alt="Photo of Barry Frost" width="60" height="60" />
-				<span>↩ Home</span>
-			</a>
-		<% else %>
-			<img src="/images/barryf.jpg" alt="Photo of Barry Frost" />
-		<% end %>
+		<a href="<%= canonicalurl %>">
+			<img src="<%= canonicalurl %>images/barryf.jpg" alt="Photo of Barry Frost" width="60" height="60" />
+			<span>↩ Home</span>
+		</a>
 	</p>
-	<p class="intro">Hello, I&rsquo;m <a class="url" href="/about"><strong class="fn">Barry Frost</strong></a>. I live in <span class="adr"><a href="http://en.wikipedia.org/wiki/Windsor,_Berkshire" class="locality">Windsor</a> in the <abbr class="country-name" title="United Kingdom">UK</abbr></span> where I&rsquo;m <a href="http://www.linkedin.com/in/barryfrost" class="title">Technical Director</a> of <a href="http://www.globalpersonals.co.uk/">Global Personals</a> and lead the <a href="http://globaldev.co.uk/">globaldev</a> team. Read more <a href="/about">about me</a> or <a href="/articles/a-new-start">this site</a>.</p>
+	<p class="intro">Hello, I&rsquo;m <a class="url" href="<%= canonicalurl %>about"><strong class="fn">Barry Frost</strong></a>. I live in <span class="adr"><a href="http://en.wikipedia.org/wiki/Windsor,_Berkshire" class="locality">Windsor</a> in the <abbr class="country-name" title="United Kingdom">UK</abbr></span> where I&rsquo;m <a href="http://www.linkedin.com/in/barryfrost" class="title">Technical Director</a> of <a href="http://www.globalpersonals.co.uk/">Global Personals</a> and lead the <a href="http://globaldev.co.uk/">globaldev</a> team. Read more <a href="<%= canonicalurl %>about">about me</a> or <a href="<%= canonicalurl %>articles/a-new-start">this site</a>.</p>
 	<h2>Elsewhere</h2>
 	<ul>
 		<li><a href="http://twitter.com/barryf" rel="me" title="Twitter tweets. They may make no sense out of context.">Twitter <span class="account">&ndash; barryf</span></a></li>
@@ -23,9 +19,9 @@
 	</ul>
 	<h2>Also</h2>
 	<ul>
-		<li><a href="/feed" title="A feed of just the blog articles for your feed reader (e.g. Google Reader).">Subscribe to articles</a></li>
+		<li><a href="<%= canonicalurl %>feed" title="A feed of just the blog articles for your feed reader (e.g. Google Reader).">Subscribe to articles</a></li>
 		<li><a href="http://suda.co.uk/projects/X2V/get-vcard.php?uri=http://barryfrost.com/about" title="My microformats-powered vCard.">vCard</a> (via <a href="http://suda.co.uk/projects/X2V/">X2V</a>)</li>
-		<li><a href="mailto:barry@barryfrost.com" class="email">Email me</a></li>
+		<li><a href="mailto:barry@barryfrost.com" class="email" title="Send an email to me using your email client.">Email me</a></li>
 	</ul>
 	<p>Built and powered by <a href="https://github.com/mojombo/jekyll">Jekyll</a>, <a href="http://www.sinatrarb.com/">Sinatra</a>, <a href="http://www.heroku.com/">Heroku</a> and me.</p>
 	<p>&copy; Barry Frost 2011&mdash;</p>
