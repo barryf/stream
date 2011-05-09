@@ -84,6 +84,15 @@ before do
 
   # flush cache if we're in development mode
   CACHE.flush if settings.environment == :development
+  
+  # if we're coming via the shorturl host, redirect to / unless it's a four-char path (ignoring slash)
+  if request.env['HTTP_HOST'] == 'bfr.st' && request.path.length != 5
+    redirect canonicalurl
+  end
+  # check we're not coming via a www. and redirect to canonical url (omitting first slash)
+  if request.env['HTTP_HOST'][0..3] == 'www.'
+    redirect canonicalurl + request.path[1..request.path.length]
+  end
 end
 
 get '/build/?' do
