@@ -24,7 +24,7 @@ def shorten_url(url)
   if short.length < url.length
     short << '&hellip;'
   end
-  short.sub!(/^http\:\/\//,'').sub!(/^www\./,'')
+  short = short.sub(/^http\:\/\//,'').sub(/^www\./,'')
   short
 end
 
