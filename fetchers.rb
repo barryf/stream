@@ -31,17 +31,21 @@ end
 # follow redirects and return final url
 def fetch(uri_str, limit = 10)
   raise ArgumentError, 'HTTP redirect too deep' if limit == 0
-  uri = URI.parse(uri_str)
-  http = Net::HTTP.new(uri.host, uri.port)
-  request = Net::HTTP::Get.new(uri.request_uri)
-  # spoof the user agent string, specifically for facebook which gets huffy
-  request.initialize_http_header({"User-Agent" => "Mozilla/5.0 (Windows; U; MSIE 9.0; Windows NT 9.0; en-US))"})
-  response = http.request(request)
-  case response
-  when Net::HTTPSuccess         then uri_str
-  when Net::HTTPRedirection     then fetch(response['location'], limit - 1)
-  else
-    # response.error!
+  begin
+    uri = URI.parse(uri_str)
+    http = Net::HTTP.new(uri.host, uri.port)
+    request = Net::HTTP::Get.new(uri.request_uri)
+    # spoof the user agent string, specifically for facebook which gets huffy
+    request.initialize_http_header({"User-Agent" => "Mozilla/5.0 (Windows; U; MSIE 9.0; Windows NT 9.0; en-US))"})
+    response = http.request(request)
+    case response
+    when Net::HTTPSuccess     then uri_str
+    when Net::HTTPRedirection then fetch(response['location'], limit - 1)
+    else
+      # response.error!
+      uri_str
+    end
+  rescue SocketError
     uri_str
   end
 end
