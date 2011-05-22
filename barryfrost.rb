@@ -2,7 +2,7 @@ require 'rubygems'
 require 'sinatra'
 require 'active_record'
 
-require 'fetchers'
+require './fetchers'
 
 configure do
   # activerecord setup
