@@ -79,7 +79,7 @@ last_source = ''
 				</dt>
 				<dd>
 					<%= item.body %>
-					<% if item.oembed
+					<% if item.oembed != nil && item.oembed.length > 2
 						oembed = JSON.parse(item.oembed)
 						case oembed['provider_name']
 						when 'YouTube' 
