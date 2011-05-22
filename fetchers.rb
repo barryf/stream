@@ -4,6 +4,7 @@ require 'net/http'
 require 'cgi'
 require 'active_record'
 require 'base58'
+require 'digest/md5'
 
 class Item < ActiveRecord::Base; end
 
@@ -132,8 +133,9 @@ def fetch_delicious(count=5, user=ACCOUNTS['delicious']['user'])
     delicious = JSON.parse(resp.body)
     source = 'delicious'
     delicious.each do |remote|
-      if Item.where('uid = ? and source = ?', remote['u'].hash.to_s, source).count.zero?
-        Item.create(:uid => remote['u'].hash.to_s,
+      uid = Digest::MD5.hexdigest(remote['u'])
+      if Item.where('uid = ? and source = ?', uid, source).count.zero?
+        Item.create(:uid => uid,
                     :title => remote['d'],
                     :body => remote['n'],
                     :url => remote['u'],
@@ -159,9 +161,10 @@ def fetch_lastfm(count=5, user=ACCOUNTS['lastfm']['user'], api_key=ACCOUNTS['las
     lastfm = JSON.parse(resp.body)
     source = 'lastfm'
     lastfm['lovedtracks']['track'].each do |remote|
-      if Item.where('uid = ? and source = ?', remote['url'].hash.to_s, source).count.zero?
+      uid = Digest::MD5.hexdigest(remote['url'])
+      if Item.where('uid = ? and source = ?', uid, source).count.zero?
         thumbnail_url = remote.has_key?('image') ? remote['image'][1]['#text'] : ''
-        Item.create(:uid => remote['url'].hash.to_s,
+        Item.create(:uid => uid,
                     :title => '&lsquo;' + remote['name'] + '&rsquo; by ' + remote['artist']['name'],
                     :url => remote['url'],
                     :thumbnail_url => thumbnail_url,
@@ -186,8 +189,9 @@ def fetch_youtube(count=5, user=ACCOUNTS['youtube']['user'])
     youtube = JSON.parse(resp.body)
     source = 'youtube'
     youtube['feed']['entry'].each do |remote|
-      if Item.where('uid = ? and source = ?', remote['id']['$t'].hash.to_s, source).count.zero?
-        Item.create(:uid => remote['id']['$t'].hash.to_s,
+      uid = Digest::MD5.hexdigest(remote['id']['$t'])
+      if Item.where('uid = ? and source = ?', uid, source).count.zero?
+        Item.create(:uid => uid,
                     :title => "&lsquo;#{remote['title']['$t']}&rsquo;",
                     :url => remote['link'][0]['href'],
                     :thumbnail_url => remote['media$group']['media$thumbnail'][1]['url'],
