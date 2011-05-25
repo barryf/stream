@@ -3,12 +3,142 @@
   <title>Barry Frost</title>
   <link href="http://barryfrost.com/atom.xml" rel="self" />
   <link href="http://barryfrost.com/" />
-  <updated>2011-05-02T20:43:35+01:00</updated>
+  <updated>2011-05-25T22:42:04+01:00</updated>
   <id>http://barryfrost.com/</id>
   <author>
     <name>Barry Frost</name>
     <email>barry@barryfrost.com</email>
   </author>
+  
+  <entry>
+    <title>The recruitment threesome</title>
+    <link href="http://barryfrost.com/articles/the-recruitment-threesome"/>
+    <updated>2011-05-25T22:32:00+01:00</updated>
+    <id>http://barryfrost.com/the-recruitment-threesome</id>
+    <content type="html">&lt;p&gt;An employer, a candidate and a recruiter. Sometimes recruitment is direct, but often it involves each of the three parties jumping into bed together. Despite eager first impressions the end result can frequently be disappointing and unsatisfying. It doesn&amp;#8217;t have to be this way.&lt;/p&gt;
+
+&lt;p&gt;OK, weak, smutty analogy over&amp;#8230; This post aims at giving a few pointers from an employer&amp;#8217;s perspective to recruiters and candidates on how to make the process a little easier.&lt;/p&gt;
+
+&lt;p&gt;I&amp;#8217;ve hired dozens of developers, engineers, designers, project managers and testers and although my experience is in the web industry, the advice here should clearly apply elsewhere.&lt;/p&gt;
+
+&lt;p&gt;What are we doing wrong?&lt;/p&gt;
+
+&lt;h2 id='recruiters'&gt;Recruiters&lt;/h2&gt;
+
+&lt;p&gt;I&amp;#8217;ve had the misfortune of dealing with some terrible recruiters over the last few years. One sent candidates to the wrong address for interviews on two separate occasions. Another invited me to apply for a job I was advertising with her. Another threatened to poach my developers for his other clients in retaliation for not agreeing to work with him. Classy.&lt;/p&gt;
+
+&lt;p&gt;Here&amp;#8217;s what would bring a smile to my face.&lt;/p&gt;
+
+&lt;h3 id='match_dont_splattergun'&gt;Match, don&amp;#8217;t splattergun&lt;/h3&gt;
+
+&lt;p&gt;We&amp;#8217;re paying for your skill and expertise in search and selection, not your ability to keyword mine on LinkedIn. Please don&amp;#8217;t just trawl Monster.com, forward a bunch of CVs and hope one sticks. Listen, understand and head-hunt the hidden gems.&lt;/p&gt;
+
+&lt;p&gt;Read the job specifications that I&amp;#8217;ve taken the time to write. Read our website and understand what we do. Find out what our team culture is like. Ask questions and I&amp;#8217;ll answer them.&lt;/p&gt;
+
+&lt;p&gt;If you can demonstrate you can carefully match a candidate with our company/team culture &lt;strong&gt;and&lt;/strong&gt; the skills/requirements of the role then I will cherish you and use you again and again and again. Splattergun me with a succession of duff CVs and I&amp;#8217;ll go elsewhere.&lt;/p&gt;
+
+&lt;h3 id='before_sending_me_a_cv'&gt;Before sending me a CV&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Speak to your candidate in person&lt;/strong&gt; or at least on the phone. Are they blagging? Can they speak clear, fluent, confident English?&lt;/li&gt;
+
+&lt;li&gt;&lt;strong&gt;Confirm that the candidate will relocate&lt;/strong&gt; (if remote working isn&amp;#8217;t an option) or that their commute is manageable.&lt;/li&gt;
+
+&lt;li&gt;&lt;strong&gt;Why should we be excited about the candidate?&lt;/strong&gt; Why are they right for us?&lt;/li&gt;
+
+&lt;li&gt;&lt;strong&gt;Check the desired salary/rate&lt;/strong&gt; and make sure the candidate is worth it!&lt;/li&gt;
+
+&lt;li&gt;&lt;strong&gt;Ensure the candidate meets all the requirements&lt;/strong&gt; of the job spec, not just &amp;#8220;Ruby&amp;#8221;.&lt;/li&gt;
+
+&lt;li&gt;&lt;strong&gt;Is the candidate a good fit&lt;/strong&gt; for our culture and work environment?&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id='before_the_interview'&gt;Before the interview&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Confirm the location&lt;/strong&gt; for your candidate&amp;#8217;s interview. We&amp;#8217;re not in central London so don&amp;#8217;t assume!&lt;/li&gt;
+
+&lt;li&gt;&lt;strong&gt;What are the interviewers&amp;#8217; names and positions?&lt;/strong&gt; Who will the successful candidate report to?&lt;/li&gt;
+
+&lt;li&gt;&lt;strong&gt;Inform the candidate about the interview process&lt;/strong&gt; and if a test is required.&lt;/li&gt;
+
+&lt;li&gt;&lt;strong&gt;Get the candidate excited about us!&lt;/strong&gt; Sell us to them and make sure they&amp;#8217;ve done their research.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id='dont_hassle_our_staff'&gt;Don&amp;#8217;t hassle our staff&lt;/h3&gt;
+
+&lt;p&gt;This shouldn&amp;#8217;t need saying. Rudeness and (in one case) being threatening and abusive on the phone to one of our staff earns you an instant blacklist.&lt;/p&gt;
+
+&lt;h2 id='candidates'&gt;Candidates&lt;/h2&gt;
+
+&lt;p&gt;If the recruiter has matched the perfect candidate to one of our roles, or if we&amp;#8217;ve received an application directly, then it&amp;#8217;s the candidate&amp;#8217;s turn to impress.&lt;/p&gt;
+
+&lt;p&gt;How can you stand out from a pile of CVs? Here are my essentials.&lt;/p&gt;
+
+&lt;h3 id='applying_for_a_job'&gt;Applying for a job&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Save your CV in PDF format and limit it to three pages&lt;/strong&gt;. I will skip past any other pages. Keep work experience to relevant jobs in the same industry, not working in your local pub.&lt;/li&gt;
+
+&lt;li&gt;&lt;strong&gt;Present your CV clearly&lt;/strong&gt;. Use a CV template if your software has one. Please don&amp;#8217;t use tiny font sizes to cram more text in. Use whitespace and lines.&lt;/li&gt;
+
+&lt;li&gt;&lt;strong&gt;Spell and grammar check your CV&lt;/strong&gt; and also get someone else to proof-read it. I care about this even if you don&amp;#8217;t. Get the company name right!&lt;/li&gt;
+
+&lt;li&gt;&lt;strong&gt;Write a simple cover email&lt;/strong&gt; briefly detailing why you&amp;#8217;re interested and try to show the personality behind the CV.&lt;/li&gt;
+
+&lt;li&gt;&lt;strong&gt;Developers: put examples of your code on GitHub&lt;/strong&gt;. I want to see your coding style so anything you can show is better than nothing.&lt;/li&gt;
+
+&lt;li&gt;&lt;strong&gt;Desginers: I expect to see a portfolio&lt;/strong&gt; of your recent, relevant work. Indicate your level of involvement if you choose to include commercial work. Can I easily see what you&amp;#8217;ve done yourself?&lt;/li&gt;
+
+&lt;li&gt;&lt;strong&gt;Be Google-able!&lt;/strong&gt; I&amp;#8217;m baffled that anyone working in this industry can escape the Googlebot&amp;#8217;s spidering. Tweet, blog or take photos and use your real name (or quote your screen name in your email).&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id='before_your_interview'&gt;Before your interview&lt;/h3&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Research the company&lt;/strong&gt;. Do your homework on us. What do we do? Who are our key clients? Read through our website.&lt;/li&gt;
+
+&lt;li&gt;&lt;strong&gt;Find out who is interviewing you&lt;/strong&gt;. Ask and then Google them to find out a few useful facts. Gain the upper hand.&lt;/li&gt;
+
+&lt;li&gt;&lt;strong&gt;What makes you stand out?&lt;/strong&gt; Think of five (positive) things your colleagues would say about you.&lt;/li&gt;
+
+&lt;li&gt;&lt;strong&gt;Prepare some questions to ask us&lt;/strong&gt;. What&amp;#8217;s important that you want to find out?&lt;/li&gt;
+
+&lt;li&gt;&lt;strong&gt;Bring a few copies of your latest CV&lt;/strong&gt;. Hopefully your recruiter will have sent your latest version, but from experience this can&amp;#8217;t be guaranteed.&lt;/li&gt;
+
+&lt;li&gt;&lt;strong&gt;Arrive a little early&lt;/strong&gt;. Your interviewers are busy people and their time is short. This is why they&amp;#8217;re hiring. Don&amp;#8217;t be the late guy/girl.&lt;/li&gt;
+
+&lt;li&gt;&lt;strong&gt;Always wear a suit&lt;/strong&gt;, even if you know your interviewers will be in t-shirts and jeans, unless you&amp;#8217;re told otherwise. This is a job interview. Tie is optional.&lt;/li&gt;
+
+&lt;li&gt;&lt;strong&gt;Make eye contact, firm handshake, smile!&lt;/strong&gt; First impressions absolutely do count.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id='employers'&gt;Employers&lt;/h2&gt;
+
+&lt;p&gt;I have to slot in recruitment alongside my other work, but even though it can easily consume hours, I try not to cut corners. A bad hire can be disastrous to team harmony and motivation so I take it seriously.&lt;/p&gt;
+
+&lt;p&gt;Here&amp;#8217;s my side of the bargain:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;I will read your whole CV&lt;/strong&gt; &amp;#8211; providing it&amp;#8217;s no more than three pages. I want to see recent work history (dates, company names, URLs), technologies you&amp;#8217;ve worked with and education including dates. A well-designed CV always stands out.&lt;/li&gt;
+
+&lt;li&gt;&lt;strong&gt;I will spend time researching you&lt;/strong&gt;. See above &amp;#8211; make sure there&amp;#8217;s something for me to Google.&lt;/li&gt;
+
+&lt;li&gt;&lt;strong&gt;If you&amp;#8217;re not successful I will send you a rejection email&lt;/strong&gt;. Not all companies take the time to do this, but if you&amp;#8217;ve taken the time to apply you deserve a response.&lt;/li&gt;
+
+&lt;li&gt;&lt;strong&gt;Your interview will be relaxed and informal&lt;/strong&gt;. I want to see you shine and demonstrate your passion. It&amp;#8217;s not for me to grill you or catch you out.&lt;/li&gt;
+
+&lt;li&gt;&lt;strong&gt;You&amp;#8217;ll speak to members of the team who you&amp;#8217;ll be working with&lt;/strong&gt; and you&amp;#8217;ll be shown around the office where you would sit.&lt;/li&gt;
+
+&lt;li&gt;&lt;strong&gt;I will get back to you with feedback straight away&lt;/strong&gt;. I don&amp;#8217;t like making candidates sweat or worry.&lt;/li&gt;
+
+&lt;li&gt;&lt;strong&gt;If there&amp;#8217;s anything you&amp;#8217;ve forgotten afterwards, get in touch and ask&lt;/strong&gt;. The interview is not the end.&lt;/li&gt;
+
+&lt;li&gt;&lt;strong&gt;We&amp;#8217;ll get excited!&lt;/strong&gt; A new member of the team is a big deal so if you&amp;#8217;re successful we&amp;#8217;ll give you a warm welcome.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;And of course, ahem, I&amp;#8217;m hiring so have a look at &lt;a href='http://globaldev.co.uk/jobs'&gt;our jobs page&lt;/a&gt;!&lt;/p&gt;</content>
+  </entry>
   
   <entry>
     <title>Get your eyes lasered</title>
@@ -56,7 +186,7 @@
 &lt;p&gt;After the consultation you get gently chased to make your decision. I didn&amp;#8217;t have any further questions or reason to prevaricate any longer and so the following week, gulping, I paid my deposit.&lt;/p&gt;
 
 &lt;h2 id='presurgery'&gt;Pre-surgery&lt;/h2&gt;
-&lt;img title='FML: Fuck My Life' src='http://dl.dropbox.com/u/207451/blog/fml.jpg' alt='FML bottle' style='float: right; margin: 0 0 10px 10px;' /&gt;
+&lt;img alt='FML bottle' src='http://dl.dropbox.com/u/207451/blog/fml.jpg' style='float: right; margin: 0 0 10px 10px;' title='FML: Fuck My Life' /&gt;
 &lt;p&gt;I initially booked my surgery for 13 November 2010 and was told to stop wearing contact lenses on 24 October to give my eyes time to breathe. I was told my eyes were quite dry during the consultation. This wasn&amp;#8217;t a surprise to me, but the optometrist insisted that the dryness would need to clear up before surgery.&lt;/p&gt;
 
 &lt;p&gt;This meant using eye drops and returning to wearing glasses for the first time since secondary school. Few work colleagues or friends even knew I was short-sighted. I could handle putting in drops every few hours, but hated wearing glasses again. I overcame my childish vanity by reminding myself I would only have to endure glasses for a couple of weeks.&lt;/p&gt;
@@ -258,7 +388,7 @@ end&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;This website is the end result. Here&amp;#8217;s a screenshot from the new homepage, captured as I write this:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src='http://dl.dropbox.com/u/207451/Screenshots/barryfrost.com_redesign_apr_2011.png' alt='April 2011 screenshot of barryfrost.com' /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt='April 2011 screenshot of barryfrost.com' src='http://dl.dropbox.com/u/207451/Screenshots/barryfrost.com_redesign_apr_2011.png' /&gt;&lt;/p&gt;
 
 &lt;h2 id='design_and_concept'&gt;Design and concept&lt;/h2&gt;
 

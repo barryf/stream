@@ -31,6 +31,9 @@ a:active {
 strong {
 	font-weight: 600;
 }
+em {
+	font-style: italic;
+}
 
 /*** HOME HEADER ***/
 
@@ -324,15 +327,22 @@ article h1, article h2 {
 	color: #70b323;
 }
 article h1 {
-	font-size: 34px;
+	font-size: 36px;
 	max-width: 600px;
 	margin: 0 auto;
 	padding: 0 20px;
 	text-align: center;
 }
 article h2 {
-	font-size: 21px;
+	font-size: 24px;
 	padding: 20px 0 20px 0;
+}
+article h3 {
+	font-size: 19px;
+	padding: 0 0 20px 0;
+	color: #888;
+	font-weight: 600;
+	letter-spacing: -1px;
 }
 article ul, article ol, article p, article pre, article blockquote {
 	font-family: georgia, "Times New Roman", times, serif;
