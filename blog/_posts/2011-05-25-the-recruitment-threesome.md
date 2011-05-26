@@ -4,11 +4,11 @@ title: The recruitment threesome
 date: 2011-05-25 22:32:00
 ---
 
-An employer, a candidate and a recruiter. Sometimes recruitment is direct, but often it involves each of the three parties jumping into bed together. Despite eager first impressions the end result can frequently be disappointing and unsatisfying. It doesn't have to be this way.
+An employer, a candidate and a recruiter. Sometimes recruitment is direct, but often it involves each of the three parties jumping into bed together. Despite early enthusiasm the end result can frequently be disappointing and unsatisfying. It doesn't have to be this way.
 
-OK, weak, smutty analogy over... This post aims at giving a few pointers from an employer's perspective to recruiters and candidates on how to make the process a little easier.
+OK, weak, smutty analogy over... This post offers advice and a few pointers from an employer's perspective to recruiters and candidates on how to make the process a little easier.
 
-I've hired dozens of developers, engineers, designers, project managers and testers and although my experience is in the web industry, the advice here should clearly apply elsewhere.
+I've hired dozens of developers, engineers, designers, project managers and testers and although my experience is in the web industry in the UK, the advice should apply elsewhere.
 
 What are we doing wrong?
 
@@ -16,7 +16,7 @@ What are we doing wrong?
 
 I've had the misfortune of dealing with some terrible recruiters over the last few years. One sent candidates to the wrong address for interviews on two separate occasions. Another invited me to apply for a job I was advertising with her. Another threatened to poach my developers for his other clients in retaliation for not agreeing to work with him. Classy.
 
-Here's what would bring a smile to my face.
+There have been exceptions, but as a rule I'm usually more frustrated than happy with the service I've received. Here's what would bring a smile to my face.
 
 ### Match, don't splattergun
 
@@ -48,9 +48,9 @@ This shouldn't need saying. Rudeness and (in one case) being threatening and abu
 
 ## Candidates
 
-If the recruiter has matched the perfect candidate to one of our roles, or if we've received an application directly, then it's the candidate's turn to impress.
+I've had some frustrating candidates too. From sloppy, misspelt, incomprehensible CVs to a lack of preparation and passion at interviews. One candidate admitted they had no interest in the company and just wanted to be left alone to write Ruby! He didn't get the job.
 
-How can you stand out from a pile of CVs? Here are my essentials.
+How can you stand out from a pile of CVs and impress in an interview? Here are my essentials.
 
 ### Applying for a job
 
@@ -75,7 +75,7 @@ How can you stand out from a pile of CVs? Here are my essentials.
 
 ## Employers
 
-I have to slot in recruitment alongside my other work, but even though it can easily consume hours, I try not to cut corners. A bad hire can be disastrous to team harmony and motivation so I take it seriously.
+I slot in recruitment alongside my other work, but even though it can easily consume hours, I want to spend the time researching, testing and interviewing candidates thoroughly. A bad hire can be disastrous to team harmony and motivation. 
 
 Here's my side of the bargain:
 
@@ -85,7 +85,7 @@ Here's my side of the bargain:
 1. **Your interview will be relaxed and informal**. I want to see you shine and demonstrate your passion. It's not for me to grill you or catch you out.
 1. **You'll speak to members of the team who you'll be working with** and you'll be shown around the office where you would sit.
 1. **I will get back to you with feedback straight away**. I don't like making candidates sweat or worry.
-1. **If there's anything you've forgotten afterwards, get in touch and ask**. The interview is not the end.
+1. **If there's anything you've forgotten afterwards, phone/email and ask**. The interview is not the end.
 1. **We'll get excited!** A new member of the team is a big deal so if you're successful we'll give you a warm welcome.
 
-And of course, ahem, I'm hiring so have a look at [our jobs page](http://globaldev.co.uk/jobs)!
+And of course, ahem, I'm hiring for developers, engineers and testers at [globaldev](http://globaldev.co.uk/) so have a look at [our jobs page](http://globaldev.co.uk/jobs) and get in touch.
