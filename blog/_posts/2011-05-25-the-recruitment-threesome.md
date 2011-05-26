@@ -20,7 +20,7 @@ There have been exceptions, but as a rule I'm usually more frustrated than happy
 
 ### Match, don't splattergun
 
-We're paying for your skill and expertise in search and selection, not your ability to keyword mine on LinkedIn. Please don't just trawl Monster.com, forward a bunch of CVs and hope one sticks. Listen, understand and head-hunt the hidden gems.
+We're paying for your skill and expertise in search and selection, not your ability to keyword mine on LinkedIn. Please don't just trawl Monster.com, forward a bunch of CVs and hope one sticks. Listen, understand and headhunt the hidden gems.
 
 Read the job specifications that I've taken the time to write. Read our website and understand what we do. Find out what our team culture is like. Ask questions and I'll answer them.
 
@@ -29,7 +29,7 @@ If you can demonstrate you can carefully match a candidate with our company/team
 ### Before sending me a CV
 
 1. **Speak to your candidate in person** or at least on the phone. Are they blagging? Can they speak clear, fluent, confident English?
-1. **Confirm that the candidate will relocate** (if remote working isn't an option) or that their commute is manageable.
+1. **Confirm that the candidate's commute is manageable** (if remote working isn't an option) or that they will relocate.
 1. **Why should we be excited about the candidate?** Why are they right for us?
 1. **Check the desired salary/rate** and make sure the candidate is worth it!
 1. **Ensure the candidate meets all the requirements** of the job spec, not just "Ruby".
@@ -37,7 +37,7 @@ If you can demonstrate you can carefully match a candidate with our company/team
 
 ### Before the interview
 
-1. **Confirm the location** for your candidate's interview. We're not in central London so don't assume!
+1. **Confirm the location** for your candidate's interview. We're not in central London so don't assume.
 1. **What are the interviewers' names and positions?** Who will the successful candidate report to?
 1. **Inform the candidate about the interview process** and if a test is required.
 1. **Get the candidate excited about us!** Sell us to them and make sure they've done their research.
@@ -56,10 +56,10 @@ How can you stand out from a pile of CVs and impress in an interview? Here are m
 
 1. **Save your CV in PDF format and limit it to three pages**. I will skip past any other pages. Keep work experience to relevant jobs in the same industry, not working in your local pub.
 2. **Present your CV clearly**. Use a CV template if your software has one. Please don't use tiny font sizes to cram more text in. Use whitespace and lines.
-1. **Spell and grammar check your CV** and also get someone else to proof-read it. I care about this even if you don't. Get the company name right!
+1. **Spell and grammar check your CV** and also get someone else to proofread it. I care about this even if you don't. Get the company name right!
 1. **Write a simple cover email** briefly detailing why you're interested and try to show the personality behind the CV.
 1. **Developers: put examples of your code on GitHub**. I want to see your coding style so anything you can show is better than nothing.
-1. **Desginers: I expect to see a portfolio** of your recent, relevant work. Indicate your level of involvement if you choose to include commercial work. Can I easily see what you've done yourself?
+1. **Designers: I expect to see a portfolio** of your recent, relevant work. Indicate your level of involvement if you choose to include commercial work. Can I easily see what you've done yourself?
 1. **Be Google-able!** I'm baffled that anyone working in this industry can escape the Googlebot's spidering. Tweet, blog or take photos and use your real name (or quote your screen name in your email).
 
 ### Before your interview
