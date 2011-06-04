@@ -46,7 +46,7 @@ def fetch(uri_str, limit = 10)
       # response.error!
       uri_str
     end
-  rescue SocketError
+  rescue
     uri_str
   end
 end
