@@ -2,14 +2,21 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
    <url>
       <loc>http://barryfrost.com/</loc>
-      <lastmod>2011-05-25T22:42:04+01:00</lastmod>
+      <lastmod>2011-06-19T16:05:32+01:00</lastmod>
       <changefreq>daily</changefreq>
       <priority>1.0</priority>
    </url>
    <url>
      <loc>http://barryfrost.com/about</loc>
-     <lastmod>2011-05-25T22:42:04+01:00</lastmod>
+     <lastmod>2011-06-19T16:05:32+01:00</lastmod>
      <changefreq>monthly</changefreq>
+   </url>
+   
+   <url>
+     <loc>http://barryfrost.com/articles/witness-the-fitness.html</loc>
+     <lastmod>2011-06-19T15:39:00+01:00</lastmod>
+     <changefreq>monthly</changefreq>
+     <priority>0.2</priority>
    </url>
    
    <url>
