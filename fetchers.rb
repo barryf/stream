@@ -98,6 +98,7 @@ def fetch_twitter(count=5, screen_name=ACCOUNTS['twitter']['screen_name'])
       # don't import replies/mentions
       if Item.where('uid = ? and source = ?', remote['id'].to_s, source).count.zero? && remote['text'][0..0] != '@'
         # parse tweet and get any oembed data
+        original_text = remote['text'].dup
         tweet, oembed = parse_tweet(remote['text'])
         # get co-ordinates and place name if available
         geo_name = remote['place'] ? remote['place']['full_name'] : ""
@@ -105,6 +106,7 @@ def fetch_twitter(count=5, screen_name=ACCOUNTS['twitter']['screen_name'])
         geo_lng = remote['coordinates'] ? remote['coordinates']['coordinates'][0] : nil
         # strip newlines from oembed json
         oembed = oembed.to_s.gsub(/\n/,'')
+        sc = unique_shortcode
         Item.create(:uid => remote['id'].to_s,
                     :body => tweet,
                     :url => "http://twitter.com/#{screen_name}/status/#{remote['id'].to_s}",
@@ -112,10 +114,11 @@ def fetch_twitter(count=5, screen_name=ACCOUNTS['twitter']['screen_name'])
                     :geo_name => geo_name,
                     :geo_lat => geo_lat,
                     :geo_lng => geo_lng,
-                    :shortcode => unique_shortcode,
+                    :shortcode => sc,
                     :source => source,
                     :imported_at => Time.now,
                     :created_at => remote['created_at'])
+        tweet(original_text, sc, 'tweet')
         imported += 1
       end
     end
@@ -134,16 +137,18 @@ def fetch_delicious(count=5, user=ACCOUNTS['delicious']['user'])
     source = 'delicious'
     delicious.each do |remote|
       uid = Digest::MD5.hexdigest(remote['u'])
+      sc = unique_shortcode
       if Item.where('uid = ? and source = ?', uid, source).count.zero?
         Item.create(:uid => uid,
                     :title => remote['d'],
                     :body => remote['n'],
                     :url => remote['u'],
                     :tags => remote['t'].join(' '),
-                    :shortcode => unique_shortcode,
+                    :shortcode => sc,
                     :source => source,
                     :imported_at => Time.now,
                     :created_at => remote['dt'])
+        tweet(remote['d'], sc, 'link')
         imported += 1
       end
     end
@@ -164,14 +169,17 @@ def fetch_lastfm(count=5, user=ACCOUNTS['lastfm']['user'], api_key=ACCOUNTS['las
       uid = Digest::MD5.hexdigest(remote['url'])
       if Item.where('uid = ? and source = ?', uid, source).count.zero?
         thumbnail_url = remote.has_key?('image') ? remote['image'][1]['#text'] : ''
+        title = "'" + remote['name'] + "' by " + remote['artist']['name']
+        sc = unique_shortcode
         Item.create(:uid => uid,
-                    :title => '&lsquo;' + remote['name'] + '&rsquo; by ' + remote['artist']['name'],
+                    :title => title,
                     :url => remote['url'],
                     :thumbnail_url => thumbnail_url,
                     :source => source,
-                    :shortcode => unique_shortcode,
+                    :shortcode => sc,
                     :imported_at => Time.now,
                     :created_at => Time.at(remote['date']['uts'].to_i))
+        tweet(title, sc, 'song')
         imported += 1
       end
     end
@@ -191,14 +199,17 @@ def fetch_youtube(count=5, user=ACCOUNTS['youtube']['user'])
     youtube['feed']['entry'].each do |remote|
       uid = Digest::MD5.hexdigest(remote['id']['$t'])
       if Item.where('uid = ? and source = ?', uid, source).count.zero?
+        title = "#{remote['title']['$t']}"
+        sc = unique_shortcode
         Item.create(:uid => uid,
-                    :title => "&lsquo;#{remote['title']['$t']}&rsquo;",
+                    :title => title,
                     :url => remote['link'][0]['href'],
                     :thumbnail_url => remote['media$group']['media$thumbnail'][1]['url'],
                     :source => source,
-                    :shortcode => unique_shortcode,
+                    :shortcode => sc,
                     :imported_at => Time.now,
                     :created_at => remote['published']['$t'])
+        tweet(title, sc, 'video')
         imported += 1
       end
     end
@@ -219,14 +230,16 @@ def fetch_flickr(count=5, user_id=ACCOUNTS['flickr']['user_id'], api_key=ACCOUNT
     source = 'flickr'
     flickr['photos']['photo'].each do |remote|
       if Item.where('uid = ? and source = ?', remote['id'].to_s, source).count.zero?
+        sc = unique_shortcode
         Item.create(:uid => remote['id'].to_s,
                     :title => remote['title'],
                     :url => "http://www.flickr.com/photos/#{ACCOUNTS['flickr']['user']}/#{remote['id']}",
                     :thumbnail_url => remote['url_sq'],
                     :source => source,
-                    :shortcode => unique_shortcode,
+                    :shortcode => sc,
                     :imported_at => Time.now,
                     :created_at => remote['datetaken'])
+        tweet(remote['title'], sc, 'photo')
         imported += 1
       end
     end
@@ -246,14 +259,16 @@ def fetch_blog(count=5)
     # sanitise uids, stripping non-alphanumerics and leading slash
     uid = remote['id'].to_s.gsub(/[^A-Za-z0-9-]/,'-')[1..(remote['id'].to_s.length)]
     if Item.where('uid = ? and source = ?', uid, source).count.zero?
+      sc = unique_shortcode
       Item.create(:uid => uid,
                   :title => remote['title'],
                   :body => remote['summary'],
                   :url => remote['url'],
                   :source => source,
-                  :shortcode => unique_shortcode,
+                  :shortcode => sc,
                   :imported_at => Time.now,
                   :created_at => remote['posted'])
+      tweet(remote['title'], sc, 'article')
       imported += 1
     end
   end
@@ -287,4 +302,16 @@ def unique_shortcode
     found = !item.length.zero?
   end
   sc
+end
+
+# for auto-tweeting all new content to barryfdata
+
+def tweet(content, sc, type)
+  metadata = " #{shorturl}#{sc} ##{type}"
+  # max length of content is tweet max (140) - metadata length - 3 chars for ellipses
+  maxlength_content = 140 - metadata.length - 3
+  # add ellipses if truncated
+  content = content[0..maxlength_content-1] + "..." if content.length > maxlength_content
+  # tweet content if not development
+  Twitter.update(content + metadata) unless settings.environment == :development
 end
