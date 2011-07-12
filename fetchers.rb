@@ -118,7 +118,6 @@ def fetch_twitter(count=5, screen_name=ACCOUNTS['twitter']['screen_name'])
                     :source => source,
                     :imported_at => Time.now,
                     :created_at => remote['created_at'])
-        tweet(original_text, sc, 'tweet')
         imported += 1
       end
     end
