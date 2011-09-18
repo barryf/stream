@@ -1,0 +1,18 @@
+<header>
+	<h1>Deciding what film to watch with APIs and Ruby</h1>
+	
+</header>
+
+<section id="body">
+<p>As part of my Sky <s>tax</s>subscription, I get <a href='http://www.sky.com/shop/tv/anytime-plus/'>Anytime+</a>, a video-on-demand (VOD) service that gives you access to hundreds of films for download over the internet. Sky&#8217;s set-top box shows you a selection of what&#8217;s available grouped into genres and the website <a href='http://www.sky.com/shop/tv/anytime-plus/whats-on/full-movies-list/'>lists them alphabetically</a>.</p>
+
+<p>The problem is deciding what to watch. I can Google the name of each film from the big list and check the individual ratings on a movie website, but there&#8217;s just too many to choose from. I may waste an evening on the sofa with Vampires Suck and miss out on Raging Bull. What I need is a way of ranking these films so that I can cherrypick the best.</p>
+
+<p><a href='https://github.com/barryf/anytom'>Anytom</a> is my hacker&#8217;s solution. It&#8217;s a set of scripts that scrapes Sky&#8217;s public film list, queries the Rotten Tomatoes API for critics&#8217; ratings, running times, year and synopsis and displays each in ratings order. I can then find the hidden gems and ignore the dross.</p>
+
+<p>I&#8217;m using <a href='http://hpricot.com/'>hpricot</a> to parse Sky&#8217;s HTML and <a href='http://developer.rottentomatoes.com/'>Rotten Tomatoes&#8217; API</a> to get the ratings and other data for each of the films. <a href='http://www.sinatrarb.com/'>Sinatra</a> serves up the list in rankings order and Ruby glues it all together.</p>
+
+<p><a href='https://github.com/barryf/anytom'>Check out the source on GitHub</a>.</p>
+
+<p>The name? ANYtime rotten TOMatoes.</p>
+</section>

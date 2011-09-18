@@ -3,12 +3,30 @@
   <title>Barry Frost</title>
   <link href="http://barryfrost.com/atom.xml" rel="self" />
   <link href="http://barryfrost.com/" />
-  <updated>2011-06-19T16:05:32+01:00</updated>
+  <updated>2011-09-18T20:56:11+01:00</updated>
   <id>http://barryfrost.com/</id>
   <author>
     <name>Barry Frost</name>
     <email>barry@barryfrost.com</email>
   </author>
+  
+  <entry>
+    <title>Deciding what film to watch with APIs and Ruby</title>
+    <link href="http://barryfrost.com/articles/deciding-what-film-to-watch-with-apis-and-ruby"/>
+    <updated>2011-09-18T20:49:00+01:00</updated>
+    <id>http://barryfrost.com/deciding-what-film-to-watch-with-apis-and-ruby</id>
+    <content type="html">&lt;p&gt;As part of my Sky &lt;s&gt;tax&lt;/s&gt;subscription, I get &lt;a href='http://www.sky.com/shop/tv/anytime-plus/'&gt;Anytime+&lt;/a&gt;, a video-on-demand (VOD) service that gives you access to hundreds of films for download over the internet. Sky&amp;#8217;s set-top box shows you a selection of what&amp;#8217;s available grouped into genres and the website &lt;a href='http://www.sky.com/shop/tv/anytime-plus/whats-on/full-movies-list/'&gt;lists them alphabetically&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The problem is deciding what to watch. I can Google the name of each film from the big list and check the individual ratings on a movie website, but there&amp;#8217;s just too many to choose from. I may waste an evening on the sofa with Vampires Suck and miss out on Raging Bull. What I need is a way of ranking these films so that I can cherrypick the best.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href='https://github.com/barryf/anytom'&gt;Anytom&lt;/a&gt; is my hacker&amp;#8217;s solution. It&amp;#8217;s a set of scripts that scrapes Sky&amp;#8217;s public film list, queries the Rotten Tomatoes API for critics&amp;#8217; ratings, running times, year and synopsis and displays each in ratings order. I can then find the hidden gems and ignore the dross.&lt;/p&gt;
+
+&lt;p&gt;I&amp;#8217;m using &lt;a href='http://hpricot.com/'&gt;hpricot&lt;/a&gt; to parse Sky&amp;#8217;s HTML and &lt;a href='http://developer.rottentomatoes.com/'&gt;Rotten Tomatoes&amp;#8217; API&lt;/a&gt; to get the ratings and other data for each of the films. &lt;a href='http://www.sinatrarb.com/'&gt;Sinatra&lt;/a&gt; serves up the list in rankings order and Ruby glues it all together.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href='https://github.com/barryf/anytom'&gt;Check out the source on GitHub&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The name? ANYtime rotten TOMatoes.&lt;/p&gt;</content>
+  </entry>
   
   <entry>
     <title>Witness the Fitness</title>
@@ -22,7 +40,7 @@
 &lt;p&gt;I&amp;#8217;ve never had to give up smoking or needed to employ serious willpower, so there&amp;#8217;s a danger of falling off the wagon and gorging myself on &lt;a href='http://www.kettlefoods.co.uk/our-hand-cooked-chips/kettle-chips/'&gt;Kettle Chips&lt;/a&gt;. To help motivate myself and to keep track of progress I&amp;#8217;m going to be using gadgets, data and stats. Not only do I hopefully get fitter, but I get to play with new toys. Win win.&lt;/p&gt;
 
 &lt;h2 id='exercising'&gt;Exercising&lt;/h2&gt;
-&lt;img alt='York C202' src='http://dl.dropbox.com/u/207451/blog/bike2.png' style='float: right; padding: 0 0 10px 10px;' /&gt;&lt;!--&lt;img src=&quot;http://dl.dropbox.com/u/207451/blog/bike1.png&quot; alt=&quot;York C202 computer&quot; style=&quot;clear: right; float: right; padding: 0 0 10px 10px;&quot; /&gt;--&gt;
+&lt;img src='http://dl.dropbox.com/u/207451/blog/bike2.png' alt='York C202' style='float: right; padding: 0 0 10px 10px;' /&gt;&lt;!--&lt;img src=&quot;http://dl.dropbox.com/u/207451/blog/bike1.png&quot; alt=&quot;York C202 computer&quot; style=&quot;clear: right; float: right; padding: 0 0 10px 10px;&quot; /&gt;--&gt;
 &lt;p&gt;So, firstly, exercise. I hate going to the gym. I&amp;#8217;ve had spells of going a couple of times a week in the past but it never lasts. I end up spending more time driving, changing and showering then actually doing anything meaningful. The whole experience is a tedious time sink after a long day at work when I&amp;#8217;d much rather be relaxing or at least spending the time productively.&lt;/p&gt;
 
 &lt;p&gt;I wanted a cardio-vascular exercise I could do from home. I hate running (too much impact on my knees) but I&amp;#8217;ve always liked cycling. The exercise bikes at the gym were always my favourite of the machines so I reasoned I could buy one for my loft room. With a bike positioned in front of my computer, I&amp;#8217;d be able to watch catch-up TV or listen to podcasts while getting fitter.&lt;/p&gt;
@@ -59,8 +77,8 @@
 
 &lt;h2 id='weighing_myself'&gt;Weighing myself&lt;/h2&gt;
 &lt;div style='float: right; margin: 0 0 10px 20px; width: 200px;'&gt;
-&lt;img alt='Withings Wi-fi scales' src='http://dl.dropbox.com/u/207451/blog/withings.png' style='margin-bottom: 10px;' /&gt;
-&lt;img alt='Weightbot graph' src='http://dl.dropbox.com/u/207451/blog/weightbot.png' /&gt;
+&lt;img src='http://dl.dropbox.com/u/207451/blog/withings.png' alt='Withings Wi-fi scales' style='margin-bottom: 10px;' /&gt;
+&lt;img src='http://dl.dropbox.com/u/207451/blog/weightbot.png' alt='Weightbot graph' /&gt;
 &lt;/div&gt;
 &lt;p&gt;And here&amp;#8217;s the fun part. Inspired by &lt;a href='http://log.maniacalrage.net/post/5047120041/nerdy-adventures-in-weight-loss'&gt;Garrett Murray&amp;#8217;s Nerdy Adventures in Weight Loss&lt;/a&gt;, I&amp;#8217;ve bought myself a &lt;a href='http://www.withings.com/en/bodyscale'&gt;Withings WiFi Body Scale&lt;/a&gt;. When you weigh yourself your data is automatically sent to Withings&amp;#8217; servers. You can then review your progress online or via their iPhone app. It&amp;#8217;s also compatible with &lt;a href='http://tapbots.com/'&gt;Tapbots&lt;/a&gt;&amp;#8217; excellent &lt;a href='http://tapbots.com/software/weightbot/'&gt;Weightbot&lt;/a&gt; which provides glossy charts like the one here.&lt;/p&gt;
 
@@ -249,7 +267,7 @@
 &lt;p&gt;After the consultation you get gently chased to make your decision. I didn&amp;#8217;t have any further questions or reason to prevaricate any longer and so the following week, gulping, I paid my deposit.&lt;/p&gt;
 
 &lt;h2 id='presurgery'&gt;Pre-surgery&lt;/h2&gt;
-&lt;img alt='FML bottle' src='http://dl.dropbox.com/u/207451/blog/fml.jpg' style='float: right; margin: 0 0 10px 10px;' title='FML: Fuck My Life' /&gt;
+&lt;img title='FML: Fuck My Life' src='http://dl.dropbox.com/u/207451/blog/fml.jpg' alt='FML bottle' style='float: right; margin: 0 0 10px 10px;' /&gt;
 &lt;p&gt;I initially booked my surgery for 13 November 2010 and was told to stop wearing contact lenses on 24 October to give my eyes time to breathe. I was told my eyes were quite dry during the consultation. This wasn&amp;#8217;t a surprise to me, but the optometrist insisted that the dryness would need to clear up before surgery.&lt;/p&gt;
 
 &lt;p&gt;This meant using eye drops and returning to wearing glasses for the first time since secondary school. Few work colleagues or friends even knew I was short-sighted. I could handle putting in drops every few hours, but hated wearing glasses again. I overcame my childish vanity by reminding myself I would only have to endure glasses for a couple of weeks.&lt;/p&gt;
@@ -451,7 +469,7 @@ end&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;This website is the end result. Here&amp;#8217;s a screenshot from the new homepage, captured as I write this:&lt;/p&gt;
 
-&lt;p&gt;&lt;img alt='April 2011 screenshot of barryfrost.com' src='http://dl.dropbox.com/u/207451/Screenshots/barryfrost.com_redesign_apr_2011.png' /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src='http://dl.dropbox.com/u/207451/Screenshots/barryfrost.com_redesign_apr_2011.png' alt='April 2011 screenshot of barryfrost.com' /&gt;&lt;/p&gt;
 
 &lt;h2 id='design_and_concept'&gt;Design and concept&lt;/h2&gt;
 
