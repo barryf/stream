@@ -13,6 +13,6 @@ The problem is deciding what to watch. I can Google the name of each film from t
 
 I'm using [hpricot](http://hpricot.com/) to parse Sky's HTML and [Rotten Tomatoes' API](http://developer.rottentomatoes.com/) to get the ratings and other data for each of the films. [Sinatra](http://www.sinatrarb.com/) serves up the list in rankings order and Ruby glues it all together.
 
-[Check out the source on GitHub](https://github.com/barryf/anytom).
+**UPDATE:** [Try out the deployed version](http://anytom.herokuapp.com/) or [check out the source on GitHub](https://github.com/barryf/anytom).
 
 The name? ANYtime rotten TOMatoes.
