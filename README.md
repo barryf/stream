@@ -6,6 +6,7 @@ Building this has been a simple exercise that I'm using to help me learn and exp
 
 ## TODO
 
+- Allow for custom shortcodes in blog posts
 - Sort out timezones
 - Foursquare check-ins
 
