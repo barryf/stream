@@ -1,6 +1,6 @@
 source :gemcutter
 gem 'sinatra'
-gem 'json'
+gem 'json', '=1.5.1'
 gem 'activerecord'
 gem 'memcached'
 gem 'base58'
