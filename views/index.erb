@@ -80,19 +80,23 @@ last_source = ''
 				<dd>
 					<%= item.body %>
 					<% if item.oembed != nil && item.oembed.length > 2
-						oembed = JSON.parse(item.oembed)
-						case oembed['provider_name']
-						when 'YouTube'
-							# find the video id in embed html and link to it rather than embed
-							re = Regexp.new('\/[ev]{1}\/([A-Za-z0-9]*)')
-							v = oembed['html'].match(re)[1] %>
-							<br /><a href="http://www.youtube.com/watch?v=<%= v %>"><img src="<%= oembed['thumbnail_url'] %>" style="height: 60px;" /></a>
-						<% when 'TwitPic' %>
-							<br /><a href="<%= oembed['url'] %>"><img src="<%= oembed['thumbnail_url'] %>" style="height: 60px;" /></a>
-						<% else %>
-							<br /><a href="<%= oembed['url'] %>"><img src="<%= oembed['thumbnail_url'] %>" style="height: 60px;" /></a>
-							<%= oembed['html'] %>
-						<% end
+						begin
+							oembed = JSON.parse(item.oembed)
+							case oembed['provider_name']
+							when 'YouTube'
+								# find the video id in embed html and link to it rather than embed
+								re = Regexp.new('\/[ev]{1}\/([A-Za-z0-9]*)')
+								v = oembed['html'].match(re)[1] %>
+								<br /><a href="http://www.youtube.com/watch?v=<%= v %>"><img src="<%= oembed['thumbnail_url'] %>" style="height: 60px;" /></a>
+							<% when 'TwitPic' %>
+								<br /><a href="<%= oembed['url'] %>"><img src="<%= oembed['thumbnail_url'] %>" style="height: 60px;" /></a>
+							<% else %>
+								<br /><a href="<%= oembed['url'] %>"><img src="<%= oembed['thumbnail_url'] %>" style="height: 60px;" /></a>
+								<%= oembed['html'] %>
+							<% end
+						rescue TypeError => e
+							# ignore oembed errors
+						end
 					end %>
 				</dd>
 				<% # any geo data?
