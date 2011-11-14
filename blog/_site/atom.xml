@@ -3,12 +3,58 @@
   <title>Barry Frost</title>
   <link href="http://barryfrost.com/atom.xml" rel="self" />
   <link href="http://barryfrost.com/" />
-  <updated>2011-09-19T12:00:04+01:00</updated>
+  <updated>2011-11-14T21:13:45+00:00</updated>
   <id>http://barryfrost.com/</id>
   <author>
     <name>Barry Frost</name>
     <email>barry@barryfrost.com</email>
   </author>
+  
+  <entry>
+    <title>Switching from Chrome to Safari</title>
+    <link href="http://barryfrost.com/articles/switching-from-chrome-to-safari"/>
+    <updated>2011-11-14T21:13:00+00:00</updated>
+    <id>http://barryfrost.com/switching-from-chrome-to-safari</id>
+    <content type="html">&lt;p&gt;About a year ago I started using Google Chrome on all my Macs. Previously, since its &lt;a href='http://en.wikipedia.org/wiki/History_of_Firefox#Naming'&gt;Firebird days on Windows&lt;/a&gt;, I had been a Firefox stalwart, but Chrome promised to be faster and had a much more Mac-like user interface.&lt;/p&gt;
+
+&lt;p&gt;When I upgraded to OS X Lion I forced myself to try Safari 5, tempted by the promise of iCloud syncing of bookmarks to my iPad and iPhone. There were however three major features that I had grown to love in Chrome that Safari lacked and were stopping me from fully switching: the &lt;a href='http://dev.chromium.org/user-experience/omnibox'&gt;Omnibox&lt;/a&gt;, tab shortcuts and extensions.&lt;/p&gt;
+
+&lt;p&gt;The following free tools bridge the gap and mean I can happily switch my default browser to Safari.&lt;/p&gt;
+
+&lt;h2 id='the_omnibar'&gt;The Omnibar&lt;/h2&gt;
+
+&lt;p&gt;I started by installing the first of &lt;a href='https://github.com/rs'&gt;Olivier Poitrey&lt;/a&gt;&amp;#8217;s two Safari plug-ins. &lt;a href='https://github.com/rs/SafariOmnibar'&gt;SafariOmnibar&lt;/a&gt; mimics Chrome&amp;#8217;s Omnibox, combining the search field and address bar into a single field.&lt;/p&gt;
+
+&lt;p&gt;With an Omnibar/box I don&amp;#8217;t need to think about where I&amp;#8217;m trying to go &amp;#8211; I&amp;#8217;m either taken to a URL or Google searches for me.&lt;/p&gt;
+
+&lt;p&gt;Packaged with the installer is &lt;a href='http://www.culater.net/software/SIMBL/SIMBL.php'&gt;SIMBL&lt;/a&gt; which allows you to patch applications like Safari. SafariOmnibar requires this.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href='https://github.com/rs/SafariOmnibar'&gt;SafariOmnibar&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='keyboard_shortcuts_for_tabs'&gt;Keyboard shortcuts for tabs&lt;/h2&gt;
+
+&lt;p&gt;Olivier&amp;#8217;s second plug-in allows you to use the &lt;code&gt;cmd&lt;/code&gt; and number keys to switch between tabs in a window, e.g. &lt;code&gt;cmd&lt;/code&gt; + &lt;code&gt;1&lt;/code&gt; to switch to the first tab, &lt;code&gt;cmd&lt;/code&gt; + &lt;code&gt;2&lt;/code&gt; to switch to the second tab, etc.&lt;/p&gt;
+
+&lt;p&gt;When browsing, my thumb and fingers hover over these keys and my muscle memory is so tied to these combinations that I&amp;#8217;m much less efficient without them. By default Safari maps these keys to the bookmark bar links. I much prefer to switch tabs with them instead.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href='https://github.com/rs/SafariTabSwitching'&gt;SafariTabSwitching&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id='essential_extensions'&gt;Essential extensions&lt;/h2&gt;
+
+&lt;p&gt;Finally, although extensions have been available in Safari since version 4, I hadn&amp;#8217;t tried them before. A Flash-blocker is a must-have and the following one works well. Also, I prefer toolbar buttons for adding links to Instapaper or Delicious.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href='http://hoyois.github.com/safariextensions/clicktoplugin/'&gt;ClickToFlash&lt;/a&gt; by Marc Hoyois&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://extensions.apple.com/'&gt;InstapaperIt&lt;/a&gt; by ElasticThreads&lt;/li&gt;
+
+&lt;li&gt;&lt;a href='https://extensions.apple.com/'&gt;delicious&lt;/a&gt; by Jeveaux&lt;/li&gt;
+&lt;/ul&gt;</content>
+  </entry>
   
   <entry>
     <title>Deciding what film to watch with APIs and Ruby</title>
