@@ -137,12 +137,13 @@ def fetch_delicious(count=5, user=ACCOUNTS['delicious']['user'])
     delicious.each do |remote|
       uid = Digest::MD5.hexdigest(remote['u'])
       sc = unique_shortcode
+      tags = remote['t'].length > 0 ? remote['t'].join(' ') : ''
       if Item.where('uid = ? and source = ?', uid, source).count.zero?
         Item.create(:uid => uid,
                     :title => remote['d'],
                     :body => remote['n'],
                     :url => remote['u'],
-                    :tags => remote['t'].join(' '),
+                    :tags => tags,
                     :shortcode => sc,
                     :source => source,
                     :imported_at => Time.now,
