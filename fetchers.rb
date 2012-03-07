@@ -312,6 +312,6 @@ def tweet(content, sc, type)
   maxlength_content = 140 - metadata.length - 3
   # add ellipses if truncated
   content = content[0..maxlength_content-1] + "..." if content.length > maxlength_content
-  # tweet content if not development
-  Twitter.update(content + metadata) unless settings.environment == :development
+  # tweet content if not development (note: we won't have sinatra's settings if we're using rake)
+  Twitter.update(content + metadata) if !(defined?(settings.environment) && settings.environment == :development)
 end
