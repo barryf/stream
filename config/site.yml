@@ -3,5 +3,5 @@ development:
   canonicalurl: /
 
 production:
-  shorturl: http://bfr.st/
+  shorturl: http://barryfrost.com/
   canonicalurl: http://barryfrost.com/
