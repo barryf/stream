@@ -41,6 +41,9 @@ last_source = ''
 		next
 	end
 	
+	# force pinboard links to pretend to be delicious ones
+	item.source = 'delicious' if item.source == 'pinboard'
+	
 	if last_day != item_day
 		if last_day != ''
 			%></ol></li><%
@@ -63,7 +66,7 @@ last_source = ''
 				</dt>
 				<dt><a href="<%= item.url %>"><%= h item.title %></a></dt>
 				<dd><%= h item.body %></dd>
-			<% when 'delicious', 'pinboard' %>
+			<% when 'delicious' %>
 				<dt class="permalink">
 					<a href="<%= shorturl %><%= item.shortcode %>" rel="bookmark" title="<%= h item.url %>">
 						<%= item.created_at.strftime('%H:%M') %>
