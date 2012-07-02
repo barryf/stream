@@ -9,6 +9,9 @@ lastfm:
 
 delicious:
   user: barryf
+  
+pinboard:
+  user: barryf
 
 twitter:
   screen_name: barryf

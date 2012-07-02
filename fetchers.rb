@@ -5,13 +5,14 @@ require 'cgi'
 require 'active_record'
 require 'base58'
 require 'digest/md5'
+require 'pinboard'
 
 class Item < ActiveRecord::Base; end
 
 # fetch all, return counts of each type imported (if any)
 def fetch_all
   imports = {}
-  ["flickr", "youtube", "twitter", "delicious", "lastfm"].each do |s|
+  ["flickr", "youtube", "twitter", "pinboard", "lastfm"].each do |s|
     imports[s] = send('fetch_' + s)
   end
   imports
@@ -151,6 +152,33 @@ def fetch_delicious(count=5, user=ACCOUNTS['delicious']['user'])
         tweet(remote['d'], sc, 'link')
         imported += 1
       end
+    end
+  end
+  imported
+end
+
+# import links from pinboard
+
+def fetch_pinboard(count=5, user=ACCOUNTS['pinboard']['user'], password=ACCOUNTS['pinboard']['password'])
+  pinboard = Pinboard::Client.new(:username => user, :password => password)
+  posts = pinboard.posts(:results => count)
+  imported = 0
+  source = 'pinboard'
+  posts.each do |remote|
+    uid = Digest::MD5.hexdigest(remote['href'])
+    sc = unique_shortcode
+    tags = remote['tag'].length > 0 ? remote['tag'].join(' ') : ''
+    if Item.where('uid = ? and source = ?', uid, source).count.zero?
+      Item.create(:uid => uid,
+                  :title => remote['description'],
+                  :url => remote['href'],
+                  :tags => tags,
+                  :shortcode => sc,
+                  :source => source,
+                  :imported_at => Time.now,
+                  :created_at => remote['time'])
+      tweet(remote['description'], sc, 'link')
+      imported += 1
     end
   end
   imported

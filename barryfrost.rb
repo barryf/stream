@@ -15,6 +15,7 @@ configure do
   # if private api keys weren't included in accounts.yml, try to get from env vars
   ACCOUNTS['lastfm']['api_key'] ||= ENV['LASTFM_API_KEY']
   ACCOUNTS['flickr']['api_key'] ||= ENV['FLICKR_API_KEY']
+  ACCOUNTS['pinboard']['password'] ||= ENV['PINBOARD_PASSWORD']
 
   # site config (dev/prd split)
   SITE = YAML.load(File.read('config/site.yml'))
@@ -118,7 +119,7 @@ get '/build/:source/:count?' do
   count = params[:count].to_i
   count = count < 10 ? count : 10
   # is the param a valid source?
-  if ["flickr", "youtube", "twitter", "delicious", "lastfm", "blog"].include?(params[:source])
+  if ["flickr", "youtube", "twitter", "delicious", "pinboard", "lastfm", "blog"].include?(params[:source])
     @imports[params[:source]] = send('fetch_' + params[:source], params[:count])
     # do we need to flush the cache?
     CACHE.flush if @imports[params[:source]] > 0
