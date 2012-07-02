@@ -69,7 +69,7 @@ helpers do
     when 'tweets'
       'twitter'
     when 'links'
-      'delicious'
+      ['delicious', 'pinboard']
     when 'photos'
       'flickr'
     when 'videos'
