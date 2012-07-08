@@ -1,7 +1,6 @@
 require 'rubygems'
 require 'sinatra'
 require 'active_record'
-require 'twitter'
 
 require './fetchers'
 
