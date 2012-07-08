@@ -5,7 +5,6 @@ require 'cgi'
 require 'active_record'
 require 'base58'
 require 'digest/md5'
-require 'pinboard'
 
 class Item < ActiveRecord::Base; end
 
@@ -160,25 +159,29 @@ end
 # import links from pinboard
 
 def fetch_pinboard(count=5, user=ACCOUNTS['pinboard']['user'], password=ACCOUNTS['pinboard']['password'])
-  pinboard = Pinboard::Client.new(:username => user, :password => password)
-  posts = pinboard.posts(:results => count)
   imported = 0
-  source = 'pinboard'
-  posts.each do |remote|
-    uid = Digest::MD5.hexdigest(remote['href'])
-    sc = unique_shortcode
-    tags = remote['tag'].length > 0 ? remote['tag'].join(' ') : ''
-    if Item.where('uid = ? and source = ?', uid, source).count.zero?
-      Item.create(:uid => uid,
-                  :title => remote['description'],
-                  :url => remote['href'],
-                  :tags => tags,
-                  :shortcode => sc,
-                  :source => source,
-                  :imported_at => Time.now,
-                  :created_at => remote['time'])
-      tweet(remote['description'], sc, 'link')
-      imported += 1
+  url = "http://feeds.pinboard.in/json/v1/u:barryf?count=#{count}"
+  resp = Net::HTTP.get_response(URI.parse(url))
+  if resp.code == '200'
+    pinboard = JSON.parse(resp.body)
+    source = 'pinboard'
+    pinboard.each do |remote|
+      uid = Digest::MD5.hexdigest(remote['u'])
+      sc = unique_shortcode
+      tags = remote['t'].length > 0 ? remote['t'].join(' ') : ''
+      if Item.where('uid = ? and source = ?', uid, source).count.zero?
+        Item.create(:uid => uid,
+                    :title => remote['d'],
+                    :body => remote['n'],
+                    :url => remote['u'],
+                    :tags => tags,
+                    :shortcode => sc,
+                    :source => source,
+                    :imported_at => Time.now,
+                    :created_at => remote['dt'])
+        tweet(remote['d'], sc, 'link')
+        imported += 1
+      end
     end
   end
   imported
