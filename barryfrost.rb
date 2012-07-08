@@ -26,14 +26,6 @@ configure do
 
   # authentication password
   ADMIN_PASSWORD = ENV['ADMIN_PASSWORD'] || 'admin'
-
-  # configure barryfdata account for auto-tweeting new items
-  Twitter.configure do |config|
-    config.consumer_key = ACCOUNTS['twitter']['consumer_key'] || ENV['TWITTER_CONSUMER_KEY']
-    config.consumer_secret = ACCOUNTS['twitter']['consumer_secret'] || ENV['TWITTER_CONSUMER_SECRET']
-    config.oauth_token = ACCOUNTS['twitter']['oauth_token'] || ENV['TWITTER_OAUTH_TOKEN']
-    config.oauth_token_secret = ACCOUNTS['twitter']['oauth_token_secret'] || ENV['TWITTER_OAUTH_TOKEN_SECRET']
-  end
 end
 
 # we're using activerecord to talk to the database

@@ -148,7 +148,6 @@ def fetch_delicious(count=5, user=ACCOUNTS['delicious']['user'])
                     :source => source,
                     :imported_at => Time.now,
                     :created_at => remote['dt'])
-        tweet(remote['d'], sc, 'link')
         imported += 1
       end
     end
@@ -179,7 +178,6 @@ def fetch_pinboard(count=5, user=ACCOUNTS['pinboard']['user'], password=ACCOUNTS
                     :source => source,
                     :imported_at => Time.now,
                     :created_at => remote['dt'])
-        tweet(remote['d'], sc, 'link')
         imported += 1
       end
     end
@@ -210,7 +208,6 @@ def fetch_lastfm(count=5, user=ACCOUNTS['lastfm']['user'], api_key=ACCOUNTS['las
                     :shortcode => sc,
                     :imported_at => Time.now,
                     :created_at => Time.at(remote['date']['uts'].to_i))
-        tweet(title, sc, 'song')
         imported += 1
       end
     end
@@ -240,7 +237,6 @@ def fetch_youtube(count=5, user=ACCOUNTS['youtube']['user'])
                     :shortcode => sc,
                     :imported_at => Time.now,
                     :created_at => remote['published']['$t'])
-        tweet(title, sc, 'video')
         imported += 1
       end
     end
@@ -270,7 +266,6 @@ def fetch_flickr(count=5, user_id=ACCOUNTS['flickr']['user_id'], api_key=ACCOUNT
                     :shortcode => sc,
                     :imported_at => Time.now,
                     :created_at => remote['datetaken'])
-        tweet(remote['title'], sc, 'photo')
         imported += 1
       end
     end
@@ -299,7 +294,6 @@ def fetch_blog(count=5)
                   :shortcode => sc,
                   :imported_at => Time.now,
                   :created_at => remote['posted'])
-      tweet(remote['title'], sc, 'article')
       imported += 1
     end
   end
@@ -333,16 +327,4 @@ def unique_shortcode
     found = !item.length.zero?
   end
   sc
-end
-
-# for auto-tweeting all new content to barryfdata
-
-def tweet(content, sc, type)
-  metadata = " #{shorturl}#{sc} ##{type}"
-  # max length of content is tweet max (140) - metadata length - 3 chars for ellipses
-  maxlength_content = 140 - metadata.length - 3
-  # add ellipses if truncated
-  content = content[0..maxlength_content-1] + "..." if content.length > maxlength_content
-  # tweet content if not development (note: we won't have sinatra's settings if we're using rake)
-  Twitter.update(content + metadata) if !(defined?(settings.environment) && settings.environment == :development)
 end
