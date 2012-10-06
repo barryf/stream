@@ -8,8 +8,6 @@
 		<a href="<%= @item.created_at.strftime('/%Y/%m/%d/') %>"><time style="text-transform: lowercase;" title="<%= @item.created_at.strftime('%Y-%m-%d') %>"><%= @item.created_at.strftime('%Y-%m-%d') %></time></a>.
 		<code><a href="<%= shorturl %><%= @shortcode %>" title="Short URL to link to this article."><%= shorturl %><%= @shortcode %></a></code>
 	</p>
-	<p style="text-align: right;"><a href="http://twitter.com/share" class="twitter-share-button" data-count="horizontal" data-via="barryf" data-url="<%= shorturl + @shortcode %>" data-counturl="<%= canonicalurl + 'articles/' + @item.uid %>">Tweet</a></p>
-	<script src="http://platform.twitter.com/widgets.js"></script>
 </footer>
 
 </article>
