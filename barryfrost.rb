@@ -57,8 +57,8 @@ helpers do
     case type
     when 'articles'
       'blog'
-    when 'tweets'
-      'twitter'
+    when 'statuses'
+      ['twitter', 'appdotnet']
     when 'links'
       ['delicious', 'pinboard']
     when 'photos'
@@ -110,7 +110,7 @@ get '/build/:source/:count?' do
   count = params[:count].to_i
   count = count < 10 ? count : 10
   # is the param a valid source?
-  if ["flickr", "youtube", "twitter", "delicious", "pinboard", "lastfm", "blog"].include?(params[:source])
+  if ["flickr", "youtube", "twitter", "appdotnet", "delicious", "pinboard", "lastfm", "blog"].include?(params[:source])
     @imports[params[:source]] = send('fetch_' + params[:source], params[:count])
     # do we need to flush the cache?
     CACHE.flush if @imports[params[:source]] > 0
@@ -180,13 +180,13 @@ get %r{/rss/?|feed/?|atom\.xml} do
   File.read("blog/_site/atom.xml")
 end
 
-get %r{^/(articles|tweets|links|photos|videos|music)/?$} do |type|
+get %r{^/(articles|statuses|links|photos|videos|music)/?$} do |type|
   cache_for 10
   source = type_to_source(type)
   page = params[:page].to_i
   page = page > 0 ? page : 1
   begin
-    content = CACHE.get("#{source}_page_#{page}")
+    content = CACHE.get("#{type}_page_#{page}")
   rescue Memcached::NotFound
     @items = Item.where(:source => source).offset((page-1)*50).limit(50).order('created_at DESC')
     @title = "Barry Frost: #{type}"
@@ -194,7 +194,7 @@ get %r{^/(articles|tweets|links|photos|videos|music)/?$} do |type|
     @body_class = 'archive'
     @page = page
     content = @items.length > 0 ? erb(:index, :layout => !request.xhr?) : ''
-    CACHE.set("#{source}_page_#{page}", content)
+    CACHE.set("#{type}_page_#{page}", content)
   end
   content
 end
@@ -238,6 +238,11 @@ get %r{^/([A-Za-z0-9]{4})/?$} do |sc|
   end
   # 302 redirect
   redirect url
+end
+
+# redirect old /tweets/* links to /statuses/*
+get '/tweets/?' do
+  redirect '/statuses/'
 end
   
 not_found do

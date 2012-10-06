@@ -221,6 +221,13 @@ em {
 }
 #content .twitter a:hover { color: #34CCFF; }
 #content .twitter a:hover img { background-color: #34CCFF; }
+#content .appdotnet dl {
+	border-color: silver;
+	margin-left: 100px;	
+}
+#content .appdotnet a:hover { color: silver; }
+#content .appdotnet a:hover img { background-color: silver; }
+
 #content .delicious dl {
 	border-color: #3274D1;
 	margin-left: 200px;
@@ -306,6 +313,8 @@ body.home #types nav .home { visibility: hidden; }
 #types nav .delicious a:hover { color: #3274D1;				 }
 #types nav .twitter *					{ border-color: #34CCFF; }
 #types nav .twitter a:hover		{ color: #34CCFF;				 }
+#types nav .appdotnet *				{ border-color: silver;  }
+#types nav .appdotnet a:hover	{ color: silver;				 }
 #types nav .flickr *					{ border-color: #FF0084; }
 #types nav .flickr a:hover		{ color: #FF0084;				 }
 #types nav .lastfm *					{ border-color: #D10E05; }

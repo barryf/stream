@@ -11,7 +11,7 @@ class Item < ActiveRecord::Base; end
 # fetch all, return counts of each type imported (if any)
 def fetch_all
   imports = {}
-  ["flickr", "youtube", "twitter", "pinboard", "lastfm"].each do |s|
+  ["flickr", "youtube", "appdotnet", "pinboard", "lastfm"].each do |s|
     imports[s] = send('fetch_' + s)
   end
   imports
@@ -114,6 +114,39 @@ def fetch_twitter(count=5, screen_name=ACCOUNTS['twitter']['screen_name'])
                     :geo_name => geo_name,
                     :geo_lat => geo_lat,
                     :geo_lng => geo_lng,
+                    :shortcode => sc,
+                    :source => source,
+                    :imported_at => Time.now,
+                    :created_at => remote['created_at'])
+        imported += 1
+      end
+    end
+  end
+  imported
+end
+
+# import app.net statuses
+
+def fetch_appdotnet(count=5, user_id=ACCOUNTS['appdotnet']['user_id'])
+  imported = 0
+  url = "https://alpha-api.app.net/stream/0/users/#{user_id}/posts?count=#{count}"
+  # need to do this differently because requests are over ssl
+  uri = URI.parse(url)
+  http = Net::HTTP.new(uri.host, uri.port)
+  http.use_ssl = true
+  http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+  req = Net::HTTP::Get.new(uri.request_uri)
+  resp = http.request(req)
+  if resp.code == '200'
+    appdotnet = JSON.parse(resp.body)
+    source = 'appdotnet'
+    appdotnet.each do |remote|
+      # don't import replies
+      if Item.where('uid = ? and source = ?', remote['id'].to_s, source).count.zero? && remote['text'][0..0] != '@'
+        sc = unique_shortcode
+        Item.create(:uid => remote['id'].to_s,
+                    :body => remote['html'],
+                    :url => remote['canonical_url'],
                     :shortcode => sc,
                     :source => source,
                     :imported_at => Time.now,

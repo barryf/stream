@@ -13,7 +13,7 @@ if !request.xhr?
 			<ul>
 				<li class="home"><a href="/" title="Home">↩ Home</a></li>
 				<li class="blog <% if @source == 'blog' %>active<% end %>"><a href="/articles/" title="Articles and notes from my blog">Articles</a></li>
-				<li class="twitter <% if @source == 'twitter' %>active<% end %>"><a href="/tweets/" title="Tweets from Twitter (@barryf)">Tweets</a></li> 
+				<li class="appdotnet <% if @source == 'twitter' || @source == 'appdotnet' %>active<% end %>"><a href="/statuses/" title="Statuses from Twitter or App.Net (@barryf)">Statuses</a></li> 
 				<li class="delicious <% if @source == 'delicious' || @source == 'pinboard' %>active<% end %>"><a href="/links/" title="Bookmarked links on Delicious or Pinboard (barryf)">Links</a></li> 
 				<li class="flickr <% if @source == 'flickr' %>active<% end %>"><a href="/photos/" title="My Flickr photos (barryf)">Photos</a></li> 
 				<li class="youtube <% if @source == 'youtube' %>active<% end %>"><a href="/videos/" title="Favourite YouTube videos (barryfrost)">Videos</a></li> 
@@ -74,7 +74,7 @@ last_source = ''
 				</dt>
 				<dd class="title"><a href="<%= item.url %>"><%= h item.title %></a></dd>
 				<% if item.body != '' %><dd><%= h item.body %></dd><% end %>
-			<% when 'twitter' %>
+			<% when 'twitter', 'appdotnet' %>
 				<dt class="permalink">
 					<a href="<%= shorturl %><%= item.shortcode %>" rel="bookmark" title="<%= h item.url %>">
 						<%= item.created_at.strftime('%H:%M')%>
