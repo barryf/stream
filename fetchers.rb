@@ -140,7 +140,7 @@ def fetch_appdotnet(count=5, user_id=ACCOUNTS['appdotnet']['user_id'])
   if resp.code == '200'
     appdotnet = JSON.parse(resp.body)
     source = 'appdotnet'
-    appdotnet.each do |remote|
+    appdotnet['data'].each do |remote|
       # don't import replies
       if Item.where('uid = ? and source = ?', remote['id'].to_s, source).count.zero? && remote['text'][0..0] != '@'
         sc = unique_shortcode
