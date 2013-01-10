@@ -22,7 +22,7 @@ I'd love to say there was a life-changing moment which pushed me into finding ou
 
 So I did some research. I thankfully didn't trawl YouTube to find horror videos of surgery (don't do it), but I did enough simple Google searching and reading to be satisfied that success rates and satisfaction was high. Laser eye surgery is now wholly normal and mainstream. 
 
-I searched for reputable companies near me, including Optimax, Ultralase and [Optical Express](http://www.opticalexpress.co.uk/laser-eye-surgery.html), and picked the latter. It looked professional from the website and it was nearest me. Don't underestimate closeness as a factor: you will need to make a number of visits for pre and post check-ups.
+I searched for reputable companies near me, including Optimax, Ultralase and Optical Express, and picked the latter. It looked professional from the website and it was nearest me. Don't underestimate closeness as a factor: you will need to make a number of visits for pre and post check-ups.
 
 ## Consultation 
 
@@ -30,7 +30,7 @@ I booked a visit to Optical Express in High Wycombe on 9 October 2010. First imp
 
 I was short-sighted and so my long distance vision was poor. My prescription was approximately -3.5 in each eye. This was fine for the procedure and with a relatively low prescription, I had a lower risk of night vision glare or haloing.
 
-The optometrist was convincing. After a series of questions and measurements, including anaesthitising my eye and probing it to measure the thickness of my cornea, her recommendation was for standard [Intralase LASIK](http://www.opticalexpress.co.uk/laser-eye-surgery/intralase.html). She explained that with Intralase a second laser is used to cut a thin flap in the cornea rather than require a surgeon to use a blade.
+The optometrist was convincing. After a series of questions and measurements, including anaesthitising my eye and probing it to measure the thickness of my cornea, her recommendation was for standard Intralase LASIK. She explained that with Intralase a second laser is used to cut a thin flap in the cornea rather than require a surgeon to use a blade.
 
 The alternative method we discussed was [LASEK](http://en.wikipedia.org/wiki/Photorefractive_keratectomy): instead of a flap, a thin layer is removed from the eye's surface. I was told this requires a much longer recovery time (up to a week) and is significantly more painful. I rejected this fairly quickly. I wanted to go for the best option recommended to me with the least pain and discomfort.
 
