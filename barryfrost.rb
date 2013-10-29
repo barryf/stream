@@ -1,8 +1,6 @@
 require 'rubygems'
 require 'sinatra'
 require 'active_record'
-require 'dalli'
-require 'memcachier'
 require './fetchers'
 
 configure do
@@ -19,9 +17,6 @@ configure do
 
   # site config (dev/prd split)
   SITE = YAML.load(File.read('config/site.yml'))
-
-  # set up memcachier/dalli
-  CACHE = Dalli::Client.new
 
   # authentication password
   ADMIN_PASSWORD = ENV['ADMIN_PASSWORD'] || 'admin'
@@ -83,9 +78,6 @@ before do
   # always use utf-8 (unless overridden)
   headers "Content-Type" => "text/html; charset=utf-8"
 
-  # flush cache if we're in development mode
-  CACHE.flush if settings.environment == :development
-  
   # if we're coming via the shorturl host, redirect to / unless it's a four-char path (ignoring slash)
   if request.env['HTTP_HOST'] == 'bfr.st' && request.path.length != 5
     redirect canonicalurl
@@ -112,8 +104,6 @@ get '/build/:source/:count?' do
   # is the param a valid source?
   if ["flickr", "youtube", "twitter", "appdotnet", "delicious", "pinboard", "lastfm", "blog"].include?(params[:source])
     @imports[params[:source]] = send('fetch_' + params[:source], params[:count])
-    # do we need to flush the cache?
-    CACHE.flush if @imports[params[:source]] > 0
     erb :build, :layout => false
   else
     redirect '/'
@@ -127,49 +117,32 @@ get '/destroy/:shortcode/?' do
   erb :destroy, :layout => false
 end
 
-get '/flush/?' do
-  protected!
-  CACHE.flush
-  erb "Flushed cache at #{Time.now}", :layout => false
-end
-
 get '/' do
   cache_for 10
   page = params[:page].to_i
   page = page > 0 ? page : 1
-  begin
-    content = CACHE.get("page_#{page}")
-  rescue Memcached::NotFound
-    @items = Item.offset((page-1)*50).limit(50).order('created_at DESC')
-    @title = "Barry Frost"
-    @page = page
-    @body_class = 'home'
-    @latest_article = Item.where(:source => 'blog').order('created_at DESC').first
-    content = @items.length > 0 ? erb(:index, :layout => !request.xhr?) : ''
-    CACHE.set("page_#{page}", content)
-  end
+  @items = Item.offset((page-1)*50).limit(50).order('created_at DESC')
+  @title = "Barry Frost"
+  @page = page
+  @body_class = 'home'
+  @latest_article = Item.where(:source => 'blog').order('created_at DESC').first
+  content = @items.length > 0 ? erb(:index, :layout => !request.xhr?) : ''
   content
 end
 
 get '/articles/:title/?' do
   cache_for 60
-  # fetch from memcached
   begin
-    content = CACHE.get("article_#{params[:title]}")
-  rescue Memcached::NotFound
-    begin
-      items = Item.where({:source => 'blog', :uid => params[:title]})
-      not_found if items.length.zero?
-      @item = items[0]
-      @body_class = 'article'
-      @title = @item.title
-      @shortcode = @item.shortcode
-      @article = File.read("blog/_site/#{params[:title]}.html")
-      content = erb(:article)
-      CACHE.set("article_#{params[:title]}", content)
-    rescue Errno::ENOENT
-      not_found
-    end
+    items = Item.where({:source => 'blog', :uid => params[:title]})
+    not_found if items.length.zero?
+    @item = items[0]
+    @body_class = 'article'
+    @title = @item.title
+    @shortcode = @item.shortcode
+    @article = File.read("blog/_site/#{params[:title]}.html")
+    content = erb(:article)
+  rescue Errno::ENOENT
+    not_found
   end
   content
 end
@@ -185,17 +158,12 @@ get %r{^/(articles|statuses|links|photos|videos|music)/?$} do |type|
   source = type_to_source(type)
   page = params[:page].to_i
   page = page > 0 ? page : 1
-  begin
-    content = CACHE.get("#{type}_page_#{page}")
-  rescue Memcached::NotFound
-    @items = Item.where(:source => source).offset((page-1)*50).limit(50).order('created_at DESC')
-    @title = "Barry Frost: #{type}"
-    @source = source
-    @body_class = 'archive'
-    @page = page
-    content = @items.length > 0 ? erb(:index, :layout => !request.xhr?) : ''
-    CACHE.set("#{type}_page_#{page}", content)
-  end
+  @items = Item.where(:source => source).offset((page-1)*50).limit(50).order('created_at DESC')
+  @title = "Barry Frost: #{type}"
+  @source = source
+  @body_class = 'archive'
+  @page = page
+  content = @items.length > 0 ? erb(:index, :layout => !request.xhr?) : ''
   content
 end
 
@@ -228,14 +196,9 @@ end
 # short url redirector, e.g. /77xH => http://twitter.com/barryf/status/66118106933772290
 get %r{^/([A-Za-z0-9]{4})/?$} do |sc|
   cache_for 60
-  begin
-    url = CACHE.get("shortcode_#{sc}")
-  rescue Memcached::NotFound
-    item = Item.where(:shortcode => sc)
-    not_found if item.length.zero?
-    url = item[0].url
-    CACHE.set("shortcode_#{sc}", url)
-  end
+  item = Item.where(:shortcode => sc)
+  not_found if item.length.zero?
+  url = item[0].url
   # 302 redirect
   redirect url
 end
