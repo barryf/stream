@@ -1,7 +1,8 @@
 require 'rubygems'
 require 'sinatra'
 require 'active_record'
-
+require 'dalli'
+require 'memcachier'
 require './fetchers'
 
 configure do
@@ -19,9 +20,8 @@ configure do
   # site config (dev/prd split)
   SITE = YAML.load(File.read('config/site.yml'))
 
-  # set up memcached
-  require 'memcached'
-  CACHE = Memcached.new
+  # set up memcachier/dalli
+  CACHE = Dalli::Client.new
 
   # authentication password
   ADMIN_PASSWORD = ENV['ADMIN_PASSWORD'] || 'admin'

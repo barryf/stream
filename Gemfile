@@ -5,6 +5,8 @@ gem 'activerecord'
 gem 'memcached'
 gem 'base58'
 gem 'pg'
+gem 'memcachier'
+gem 'dalli'
 
 group :development do
   gem 'shotgun'
