@@ -1,14 +1,8 @@
-# barryfrost.com
+# stream
 
-This is my personal website. It consists of a little Sinatra app that imports my feeds and assembles items into an aggregated chronological page, plus static blog articles that were generated using Jekyll.
+This <s>is</s> was my personal website -- the app has now been refactored into a simple view of my activity on other sites.
 
-Building this has been a simple exercise that I'm using to help me learn and experiment with Ruby, Sinatra, Heroku and other things.
-
-## TODO
-
-- Allow for custom shortcodes in blog posts
-- Sort out timezones
-- Foursquare check-ins
+It consists of a little Sinatra app that imports my feeds and assembles items into an aggregated chronological page.
 
 ## SETUP
 

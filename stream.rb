@@ -147,11 +147,11 @@ get '/articles/:title/?' do
   content
 end
 
-get %r{/rss/?|feed/?|atom\.xml} do
-  cache_for 10
-  headers "Content-Type" => "application/atom+xml; charset=utf-8"
-  File.read("blog/_site/atom.xml")
-end
+#get %r{/rss/?|feed/?|atom\.xml} do
+#  cache_for 10
+#  headers "Content-Type" => "application/atom+xml; charset=utf-8"
+#  File.read("blog/_site/atom.xml")
+#end
 
 get %r{^/(articles|statuses|links|photos|videos|music)/?$} do |type|
   cache_for 10
@@ -179,12 +179,12 @@ get '/:year/:month/:day/?:type?/?' do
   erb :index
 end
 
-get '/about/?' do 
-  cache_for 60
-  @body_class = 'static'
-  @title = 'About Barry Frost'
-  erb :about
-end
+#get '/about/?' do 
+#  cache_for 60
+#  @body_class = 'static'
+#  @title = 'About Barry Frost'
+#  erb :about
+#end
 
 get '/sitemap.xml' do
   cache_for 60

@@ -3,5 +3,5 @@ require 'bundler'
 
 Bundler.require
 
-require './barryfrost.rb'
+require './stream.rb'
 run Sinatra::Application

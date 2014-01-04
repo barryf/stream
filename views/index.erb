@@ -1,12 +1,5 @@
 <% # display some extra content if this isn't an ajax call
-if !request.xhr?
-
-	# if this is the homepage include the top home header block
-    if @body_class == 'home' %>
-		<div id="home">
-			<%= erb :home %>
-		</div>
-	<% end %>
+if !request.xhr? %>
 
 	<div id="types">
 		<nav>
