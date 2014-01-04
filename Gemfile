@@ -1,10 +1,9 @@
 source 'https://rubygems.org'
 
-ruby '1.9.3'
-
 gem 'sinatra'
 gem 'json', '=1.5.1'
-gem 'activerecord'
+gem 'activesupport', '=3.2.16'
+gem 'activerecord', '=3.2.16'
 gem 'memcached'
 gem 'base58'
 gem 'pg'
