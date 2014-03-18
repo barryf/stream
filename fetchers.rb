@@ -11,7 +11,7 @@ class Item < ActiveRecord::Base; end
 # fetch all, return counts of each type imported (if any)
 def fetch_all
   imports = {}
-  ["flickr", "youtube", "appdotnet", "pinboard", "lastfm"].each do |s|
+  ["flickr", "youtube", "pinboard", "lastfm"].each do |s|
     imports[s] = send('fetch_' + s)
   end
   imports
